@@ -1,4 +1,4 @@
-import { IAppProps } from "./IAppProps";
+import { IAppProps } from "models/props/IAppProps";
 
 export {
     IAppProps
