@@ -6,7 +6,7 @@ import { IAppProps } from "models/props";
 
 class App extends React.Component<IAppProps, void> {
     public render(): JSX.Element {
-        return <div></div>;
+        return <div>Hello world</div>;
     };
 }
 

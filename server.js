@@ -1,7 +1,9 @@
-const app = require("app");
-const BrowserWindow = require("browser-window");
+const electron = require("electron");
 
-require("crash-reporter").start();
+const app = electron.app;
+const BrowserWindow = electron.BrowserWindow;
+
+let mainWindow;
 
 app.on("window-all-closed", () => {
     if (process.platform !== "darwin") {
@@ -12,7 +14,7 @@ app.on("window-all-closed", () => {
 app.on("ready", () => {
     mainWindow = new BrowserWindow({ width: 1400, height: 800 });
 
-    mainWindow.loadUrl(`file://${__dirname}/src/index.html`);
+    mainWindow.loadURL(`file://${__dirname}/src/index.html`);
     mainWindow.openDevTools();
     mainWindow.on("closed", () => {
         mainWindow = null;
