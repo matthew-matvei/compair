@@ -1,6 +1,6 @@
 import { Action, handleActions } from "redux-actions";
 
-import { ADD_SUBJECT } from "actions/types";
+import { ADD_SUBJECT, DELETE_SUBJECT } from "actions/types";
 import { ISubject } from "models";
 
 const initialState: ISubject[] = [];
@@ -27,6 +27,13 @@ export default handleActions<ISubject[], ISubject>({
         }
 
         return state;
+    },
+
+    [DELETE_SUBJECT]:
+    (state: ISubject[], action: Action<ISubject>): ISubject[] => {
+
+        return state.filter((subject: ISubject) =>
+            action.payload && subject.name !== action.payload.name);
     }
 
 }, initialState);
