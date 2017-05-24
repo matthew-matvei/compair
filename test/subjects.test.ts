@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { addSubject, deleteSubject } from "actions/subjects";
+import { addSubject, deleteSubject, renameSubject } from "actions/subjects";
 import { IKeyValue, ISubject } from "models";
 import subjectReducer from "reducers/subjects";
 
@@ -107,6 +107,29 @@ describe("Subject reducers", () => {
             expect(result.length).to.equal(1);
             expect(result.some((subject) => subject.name === testSubject2.name))
                 .to.be.true;
+        });
+    });
+
+    describe("renames", () => {
+
+        it("a subject identified by oldName", () => {
+            testSubjects.push(testSubject2);
+
+            const result = subjectReducer(testSubjects,
+                renameSubject(testSubject2.name, "New subject"));
+
+            expect(result.some((subject) => subject.name === "New subject"))
+                .to.be.true;
+        });
+
+        it("nothing when subject doesn't exist", () => {
+            testSubjects.push(testSubject2);
+
+            const result = subjectReducer(testSubjects,
+                renameSubject(testSubject3.name, "New subject"));
+
+            expect(result.some((subject) => subject.name === "New subject"))
+                .to.be.false;
         });
     });
 });
