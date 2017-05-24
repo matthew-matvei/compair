@@ -8,5 +8,5 @@ import {
 
 export const addSubject = createAction<ISubject, string>(
     ADD_SUBJECT,
-    (name: string): ISubject => { return { name }; }
+    (name: string): ISubject => { return { name, values: [] }; }
 );
