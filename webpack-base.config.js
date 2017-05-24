@@ -1,12 +1,6 @@
 const path = require("path");
 
 module.exports = {
-    entry: "./src/main",
-    output: {
-        path: __dirname + "/dist",
-        filename: "out.js"
-    },
-    devtool: "cheap-eval-source-map",
     resolve: {
         extensions: [
             ".ts",
