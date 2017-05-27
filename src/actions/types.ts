@@ -1,3 +1,5 @@
 export const ADD_SUBJECT = "ADD_SUBJECT";
 export const DELETE_SUBJECT = "DELETE_SUBJECT";
 export const RENAME_SUBJECT = "RENAME_SUBJECT";
+
+export const ADD_KEYVALUE = "ADD_KEYVALUE";
