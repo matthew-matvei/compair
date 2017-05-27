@@ -15,6 +15,13 @@
             ]
         },
         {
+            "taskName": "build:test",
+            "args": [
+                "run",
+                "build:test"
+            ]
+        },
+        {
             "taskName": "test",
             "args": [
                 "run",
