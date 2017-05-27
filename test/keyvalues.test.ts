@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { addKeyValue } from "actions/keyvalues";
+import { addKeyValue, deleteKeyValue } from "actions/keyvalues";
 import { IKeyValue } from "models";
 import keyValueReducer from "reducers/keyvalues";
 
@@ -74,6 +74,31 @@ describe("Keyvalue reducers", () => {
             expect(result.some(keyValue =>
                 keyValue.key === testKeyValueToAdd.key &&
                 keyValue.value === testKeyValueToAdd.value)).to.be.true;
+            expect(result.length).to.equal(1);
+        });
+    });
+
+    describe("delete", () => {
+
+        it("a key value identified by key", () => {
+            testKeyValues.push(testKeyValue2);
+            const result = keyValueReducer(testKeyValues, deleteKeyValue(
+                testKeyValue2.key
+            ));
+
+            expect(result.some(keyValue => keyValue.key === testKeyValue2.key))
+                .to.be.false;
+            expect(result.length).to.equal(0);
+        });
+
+        it("nothing if key value doesn't exist", () => {
+            testKeyValues.push({ key: testKeyValue2.key, value: 10 });
+            const result = keyValueReducer(testKeyValues, deleteKeyValue(
+                testKeyValueToAdd.key
+            ));
+
+            expect(result.some(keyValue => keyValue.key === testKeyValue2.key))
+                .to.be.true;
             expect(result.length).to.equal(1);
         });
     });

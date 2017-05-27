@@ -1,6 +1,6 @@
 import { Action, handleActions } from "redux-actions";
 
-import { ADD_KEYVALUE } from "actions/types";
+import { ADD_KEYVALUE, DELETE_KEYVALUE } from "actions/types";
 import { IKeyValue } from "models";
 
 const initialState: IKeyValue[] = [];
@@ -28,6 +28,16 @@ export default handleActions<IKeyValue[], IKeyValue>({
                 }
             });
         }
+    },
+
+    [DELETE_KEYVALUE]:
+    (state: IKeyValue[], action: Action<IKeyValue>): IKeyValue[] => {
+
+        if (!action.payload) {
+            return state;
+        }
+
+        return state.filter(keyValue => keyValue.key !== action.payload!.key);
     }
 
 }, initialState);
