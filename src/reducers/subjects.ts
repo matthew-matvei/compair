@@ -14,13 +14,8 @@ export default handleActions<ISubject[], ISubject>({
             return state;
         }
 
-        const subjectExists: boolean = state.some((subject: ISubject) => {
-            if (!action.payload) {
-                return false;
-            } else {
-                return subject.name === action.payload.name;
-            }
-        });
+        const subjectExists: boolean = state.some(
+            subject => action.payload!.name === subject.name);
 
         if (!subjectExists) {
             return [action.payload, ...state];

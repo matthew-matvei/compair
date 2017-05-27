@@ -1,9 +1,9 @@
-import { IKeyValue } from "models";
+import { ICriterion } from "models";
 
 interface ISubject {
     name: string;
     oldName?: string;
-    values: IKeyValue[];
+    values: ICriterion[];
 }
 
 export default ISubject;

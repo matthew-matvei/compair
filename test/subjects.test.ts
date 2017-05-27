@@ -1,7 +1,7 @@
 import { expect } from "chai";
 
 import { addSubject, deleteSubject, renameSubject } from "actions/subjects";
-import { IKeyValue, ISubject } from "models";
+import { ICriterion, ISubject } from "models";
 import subjectReducer from "reducers/subjects";
 
 describe("Subject reducers", () => {
@@ -14,12 +14,12 @@ describe("Subject reducers", () => {
     before(() => {
         testSubject2 = {
             name: "Test Subject 2",
-            values: [<IKeyValue>{ key: "2", value: 2 }]
+            values: [<ICriterion>{ key: "2", order: "asc", priority: 3 }]
         };
 
         testSubject3 = {
             name: "Test Subject 3",
-            values: [<IKeyValue>{ key: "3", value: 3 }]
+            values: [<ICriterion>{ key: "3", order: "asc", priority: 3 }]
         };
     });
 
@@ -27,11 +27,11 @@ describe("Subject reducers", () => {
         testSubjects = new Array<ISubject>();
         testSubjectToAdd = {
             name: "Test Subject",
-            values: [<IKeyValue>{ key: "1", value: 1 }]
+            values: [<ICriterion>{ key: "1", order: "asc", priority: 3 }]
         };
     });
 
-    describe("adds", () => {
+    describe("add", () => {
         it("a subject to an empty list", () => {
             const result = subjectReducer(testSubjects,
                 addSubject(testSubjectToAdd.name));
@@ -77,7 +77,7 @@ describe("Subject reducers", () => {
         it("a subject as long as it doesn't already exist", () => {
             testSubjects.push({
                 name: testSubjectToAdd.name,
-                values: [{ key: "10", value: 10 }]
+                values: [{ key: "10", order: "asc", priority: 3 }]
             });
 
             const result = subjectReducer(testSubjects,
@@ -87,7 +87,7 @@ describe("Subject reducers", () => {
         });
     });
 
-    describe("deletes", () => {
+    describe("delete", () => {
 
         it("a subject identified by name", () => {
             testSubjects.push(testSubject2);
