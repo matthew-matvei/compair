@@ -53,8 +53,7 @@ describe("Keyvalue reducers", () => {
         });
 
         it("a key value to a list of two", () => {
-            testKeyValues.push(testKeyValue2);
-            testKeyValues.push(testKeyValue3);
+            testKeyValues.push(testKeyValue2, testKeyValue3);
             const result = keyValueReducer(testKeyValues, addKeyValue(
                 testKeyValueToAdd.key, testKeyValueToAdd.value));
 

@@ -65,8 +65,7 @@ describe("Subject reducers", () => {
         });
 
         it("the new subject to the start of the list", () => {
-            testSubjects.push(testSubject2);
-            testSubjects.push(testSubject3);
+            testSubjects.push(testSubject2, testSubject3);
 
             const result = subjectReducer(testSubjects,
                 addSubject(testSubjectToAdd.name))[0];
@@ -110,7 +109,7 @@ describe("Subject reducers", () => {
         });
     });
 
-    describe("renames", () => {
+    describe("rename", () => {
 
         it("a subject identified by oldName", () => {
             testSubjects.push(testSubject2);
