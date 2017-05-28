@@ -36,6 +36,7 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
         if (event.which === 13) {
             const newSubjectName = event.target.value.trim();
             this.props.dispatch(addSubject(newSubjectName));
+            event.target.value = "";
         }
     }
 }
