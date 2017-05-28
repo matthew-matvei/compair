@@ -1,9 +1,19 @@
 import * as React from "react";
 
 import { IInstanceCardProps } from "models/props";
+import { IInstanceCardState } from "models/states";
+import { Dialog } from ".";
 
 export default class InstanceCard extends
-    React.Component<IInstanceCardProps, {}> {
+    React.Component<IInstanceCardProps, IInstanceCardState> {
+
+    constructor(props: IInstanceCardProps) {
+        super(props);
+
+        this.state = {
+            isShowingModal: false
+        } as IInstanceCardState;
+    }
 
     public render(): JSX.Element {
         const cardContent = this.props.instance ?
@@ -19,7 +29,10 @@ export default class InstanceCard extends
                 </div>
             </div> :
             <div className="card mb-4 bg-faded">
-                <div className="card-block">
+                <Dialog isShowingModal={this.state.isShowingModal}
+                    closeModal={this.handleCloseModal.bind(this)} />
+                <div className="card-block"
+                    onClick={this.handleClick.bind(this)}>
                     <p className="text-muted">Click for new instance</p>
                 </div>
             </div>;
@@ -27,5 +40,13 @@ export default class InstanceCard extends
         return <div className="col-4">
             {cardContent}
         </div>;
+    }
+
+    private handleClick() {
+        this.setState({ isShowingModal: true } as IInstanceCardState);
+    }
+
+    private handleCloseModal() {
+        this.setState({ isShowingModal: false } as IInstanceCardState)
     }
 }
