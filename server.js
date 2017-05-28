@@ -15,7 +15,6 @@ app.on("ready", () => {
     mainWindow = new BrowserWindow({ width: 1400, height: 800 });
 
     mainWindow.loadURL(`file://${__dirname}/src/index.html`);
-    mainWindow.openDevTools();
     mainWindow.on("closed", () => {
         mainWindow = null;
     });
