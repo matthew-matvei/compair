@@ -15,7 +15,8 @@
                 "--remote-debugging-port=9222"
             ],
             "webRoot": "${workspaceRoot}",
-            "sourceMaps": true
+            "sourceMaps": true,
+            "preLaunchTask": "build"
         },
         {
             "type": "node",
