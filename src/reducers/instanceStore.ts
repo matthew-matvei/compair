@@ -6,7 +6,15 @@ import {
 } from "actions/types";
 import { IInstance, IInstanceStore } from "models";
 
-const initialState: IInstanceStore = { items: [] };
+const initialState: IInstanceStore = {
+    items: [{
+        subjectName: "Cities",
+        instances: [{
+            name: "Moscow",
+            values: []
+        }]
+    }]
+};
 
 export default handleActions<IInstanceStore, IInstance>({
 
