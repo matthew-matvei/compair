@@ -1,7 +1,7 @@
-import { Dispatch } from "redux";
+import { IDispatchableProps } from ".";
 
-interface IAppProps {
-    dispatch: Dispatch<{}>;
+interface IAppProps extends IDispatchableProps {
+
 }
 
 export default IAppProps;

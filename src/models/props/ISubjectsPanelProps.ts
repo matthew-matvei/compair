@@ -1,10 +1,8 @@
-import { Dispatch } from "redux";
-
 import { ISubject } from "models";
+import { IDispatchableProps } from ".";
 
-interface ISubjectsPanelProps {
+interface ISubjectsPanelProps extends IDispatchableProps {
     subjects: ISubject[];
-    dispatch: Dispatch<{}>;
 }
 
 export default ISubjectsPanelProps;

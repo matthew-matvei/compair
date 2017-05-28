@@ -1,8 +1,9 @@
-import { ISubject } from "models";
+import { IInstance, ISubject } from "models";
 
 interface IState {
     subjects: ISubject[];
-    instanceStore: {};
+    selectedSubject: ISubject;
+    instanceStore: IInstance[][];
 }
 
 export default IState;
