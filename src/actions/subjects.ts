@@ -10,17 +10,17 @@ import {
 
 export const addSubject = createAction<ISubject, string>(
     ADD_SUBJECT,
-    (name: string): ISubject => { return { name, values: [] }; }
+    (name: string): ISubject => { return { name, criteria: [] }; }
 );
 
 export const deleteSubject = createAction<ISubject, string>(
     DELETE_SUBJECT,
-    (name: string): ISubject => { return { name, values: [] }; }
+    (name: string): ISubject => { return { name, criteria: [] }; }
 );
 
 export const renameSubject = createAction<ISubject, string, string>(
     RENAME_SUBJECT,
     (fromName: string, toName: string): ISubject => {
-        return { name: toName, oldName: fromName, values: [] };
+        return { name: toName, oldName: fromName, criteria: [] };
     }
 );

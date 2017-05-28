@@ -14,12 +14,12 @@ describe("Subject reducers", () => {
     before(() => {
         testSubject2 = {
             name: "Test Subject 2",
-            values: [<ICriterion>{ key: "2", order: "asc", priority: 3 }]
+            criteria: [<ICriterion>{ key: "2", order: "asc", priority: 3 }]
         };
 
         testSubject3 = {
             name: "Test Subject 3",
-            values: [<ICriterion>{ key: "3", order: "asc", priority: 3 }]
+            criteria: [<ICriterion>{ key: "3", order: "asc", priority: 3 }]
         };
     });
 
@@ -27,7 +27,7 @@ describe("Subject reducers", () => {
         testSubjects = new Array<ISubject>();
         testSubjectToAdd = {
             name: "Test Subject",
-            values: [<ICriterion>{ key: "1", order: "asc", priority: 3 }]
+            criteria: [<ICriterion>{ key: "1", order: "asc", priority: 3 }]
         };
     });
 
@@ -76,7 +76,7 @@ describe("Subject reducers", () => {
         it("a subject as long as it doesn't already exist", () => {
             testSubjects.push({
                 name: testSubjectToAdd.name,
-                values: [{ key: "10", order: "asc", priority: 3 }]
+                criteria: [{ key: "10", order: "asc", priority: 3 }]
             });
 
             const result = subjectReducer(testSubjects,

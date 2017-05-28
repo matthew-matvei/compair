@@ -3,7 +3,10 @@ import { Action, handleActions } from "redux-actions";
 import { ADD_SUBJECT, DELETE_SUBJECT, RENAME_SUBJECT } from "actions/types";
 import { ISubject } from "models";
 
-const initialState: ISubject[] = [];
+const initialState: ISubject[] = [{
+    name: "Cities",
+    criteria: []
+}];
 
 export default handleActions<ISubject[], ISubject>({
 
@@ -40,7 +43,7 @@ export default handleActions<ISubject[], ISubject>({
                 if (subject.name === action.payload.oldName) {
                     return <ISubject>{
                         name: action.payload.name,
-                        values: subject.values
+                        criteria: subject.criteria
                     };
                 }
             }
