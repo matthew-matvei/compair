@@ -24,6 +24,7 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
                 {subjectElements}
                 <li className="nav-item">
                     <input type="text"
+                        className="form-control"
                         placeholder="add subject"
                         onKeyDown={this.handleKeyDown.bind(this)} />
                 </li>
