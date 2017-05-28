@@ -1,7 +1,9 @@
+import { Order, Priority } from "types";
+
 interface ICriterion {
     key: string;
-    order: "asc" | "desc";
-    priority: 1 | 2 | 3 | 4 | 5;
+    order: Order;
+    priority: Priority;
 }
 
 export default ICriterion;
