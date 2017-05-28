@@ -1,6 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
+import { addSubject } from "actions/subjects";
 import { IState } from "models";
 import { ISubjectsPanelProps } from "models/props";
 
@@ -22,10 +23,20 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
             <ul className="nav nav-pills flex-column">
                 {subjectElements}
                 <li className="nav-item">
-                    <input type="text" placeholder="add subject" />
+                    <input type="text"
+                        placeholder="add subject"
+                        onKeyDown={this.handleKeyDown.bind(this)} />
                 </li>
             </ul>
         </nav>;
+    }
+
+    private handleKeyDown(event: any) {
+        // 13 = Enter key
+        if (event.which === 13) {
+            const newSubjectName = event.target.value.trim();
+            this.props.dispatch(addSubject(newSubjectName));
+        }
     }
 }
 
