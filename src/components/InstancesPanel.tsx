@@ -11,7 +11,7 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
             item => item.subjectName === this.props.selectedSubject.name)[0] ||
             [];
         const instanceElements = selectedItem.instances.map(instance =>
-            <p>instance.name</p>);
+            <p>{instance.name}</p>);
 
         return <main className="col-sm-8 offset-sm-4 col-md-9 offset-md-3 pt-3">
             {instanceElements}
