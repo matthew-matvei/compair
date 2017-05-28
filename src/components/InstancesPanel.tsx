@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import { IState } from "models";
 import { IInstancesPanelProps } from "models/props";
+import { InstanceCard } from ".";
 
 class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
 
@@ -11,10 +12,13 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
             item => item.subjectName === this.props.selectedSubject.name)[0] ||
             [];
         const instanceElements = selectedItem.instances.map(instance =>
-            <p>{instance.name}</p>);
+            <InstanceCard instance={instance} />);
 
         return <main className="col-sm-8 offset-sm-4 col-md-9 offset-md-3 pt-3">
-            {instanceElements}
+            <div className="row">
+                {instanceElements}
+                <InstanceCard instance={null} />
+            </div>
         </main>;
     }
 }

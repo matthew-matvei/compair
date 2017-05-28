@@ -9,5 +9,5 @@ module.exports = merge(baseConfig, {
         path: __dirname + "/dist",
         filename: "out.js"
     },
-    devtool: "cheap-eval-source-map"
+    devtool: "source-map"
 });
