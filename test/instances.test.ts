@@ -36,7 +36,7 @@ describe("Instance reducers", () => {
 
         it("an instance to an empty list", () => {
             const result = instanceReducers(testInstances, addInstance(
-                testInstanceToAdd.name));
+                testInstanceToAdd.name, testInstanceToAdd.values));
 
             expect(result.some(instance =>
                 instance.name === testInstanceToAdd.name)).to.be.true;
@@ -47,7 +47,7 @@ describe("Instance reducers", () => {
             testInstances.push(testInstance2);
 
             const result = instanceReducers(testInstances, addInstance(
-                testInstanceToAdd.name));
+                testInstanceToAdd.name, testInstanceToAdd.values));
 
             expect(result.some(instance =>
                 instance.name === testInstanceToAdd.name)).to.be.true;
@@ -58,7 +58,7 @@ describe("Instance reducers", () => {
             testInstances.push(testInstance2, testInstance3);
 
             const result = instanceReducers(testInstances, addInstance(
-                testInstanceToAdd.name));
+                testInstanceToAdd.name, testInstanceToAdd.values));
 
             expect(result.some(instance =>
                 instance.name === testInstanceToAdd.name)).to.be.true;
@@ -69,7 +69,7 @@ describe("Instance reducers", () => {
             testInstances.push(testInstanceToAdd);
 
             const result = instanceReducers(testInstances, addInstance(
-                testInstanceToAdd.name));
+                testInstanceToAdd.name, testInstanceToAdd.values));
 
             expect(result.length).to.equal(1);
         });

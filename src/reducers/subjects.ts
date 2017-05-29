@@ -5,7 +5,16 @@ import { ISubject } from "models";
 
 const initialState: ISubject[] = [{
     name: "Cities",
-    criteria: []
+    criteria: [{
+        key: "Cost of living per month",
+        order: "desc",
+        priority: 3
+    },
+    {
+        key: "Average salary",
+        order: "asc",
+        priority: 3
+    }]
 }];
 
 export default handleActions<ISubject[], ISubject>({

@@ -29,24 +29,11 @@ export default class InstanceCard extends
                 </div>
             </div> :
             <div className="card mb-4 bg-faded">
-                <Dialog isShowingModal={this.state.isShowingModal}
-                    closeModal={this.handleCloseModal.bind(this)} />
-                <div className="card-block"
-                    onClick={this.handleClick.bind(this)}>
-                    <p className="text-muted">Click for new instance</p>
-                </div>
+                <Dialog />
             </div>;
 
         return <div className="col-4">
             {cardContent}
         </div>;
-    }
-
-    private handleClick() {
-        this.setState({ isShowingModal: true } as IInstanceCardState);
-    }
-
-    private handleCloseModal() {
-        this.setState({ isShowingModal: false } as IInstanceCardState)
     }
 }
