@@ -1,6 +1,12 @@
 import { Action, handleActions } from "redux-actions";
 
-import { ADD_SUBJECT, DELETE_SUBJECT, RENAME_SUBJECT } from "actions/types";
+import {
+    ADD_INSTANCE,
+    ADD_SUBJECT,
+    DELETE_INSTANCE,
+    DELETE_SUBJECT,
+    RENAME_SUBJECT
+} from "actions/types";
 import { ISubject } from "models";
 
 const initialState: ISubject[] = [{
@@ -14,7 +20,8 @@ const initialState: ISubject[] = [{
         key: "Average salary",
         order: "asc",
         priority: 3
-    }]
+    }],
+    instances: []
 }];
 
 export default handleActions<ISubject[], ISubject>({
@@ -55,6 +62,57 @@ export default handleActions<ISubject[], ISubject>({
                         criteria: subject.criteria
                     };
                 }
+            }
+
+            return subject;
+        });
+    },
+
+    [ADD_INSTANCE]:
+    (state: ISubject[], action: Action<ISubject>): ISubject[] => {
+
+        if (!action.payload) {
+            return state;
+        }
+
+        return state.map((subject): ISubject => {
+            if (subject.name === action.payload!.name) {
+                const instanceExists = subject.instances.some(
+                    instance => instance.name ===
+                        action.payload!.instances[0].name);
+
+                if (!instanceExists) {
+                    return {
+                        name: subject.name,
+                        criteria: subject.criteria,
+                        instances: [
+                            ...subject.instances,
+                            action.payload!.instances[0]
+                        ]
+                    };
+                }
+            };
+
+            return subject;
+        });
+    },
+
+    [DELETE_INSTANCE]:
+    (state: ISubject[], action: Action<ISubject>): ISubject[] => {
+
+        if (!action.payload) {
+            return state;
+        }
+
+        return state.map((subject): ISubject => {
+            if (subject.name === action.payload!.name) {
+                return {
+                    name: subject.name,
+                    criteria: subject.criteria,
+                    instances: subject.instances.filter(
+                        instance => instance.name !==
+                            action.payload!.instances[0].name)
+                };
             }
 
             return subject;

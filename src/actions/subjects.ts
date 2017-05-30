@@ -11,24 +11,28 @@ import {
 
 export const addSubject = createAction<ISubject, string>(
     ADD_SUBJECT,
-    (name: string): ISubject => { return { name, criteria: [] }; }
+    (name: string): ISubject => {
+        return { name, criteria: [], instances: [] };
+    }
 );
 
 export const deleteSubject = createAction<ISubject, string>(
     DELETE_SUBJECT,
-    (name: string): ISubject => { return { name, criteria: [] }; }
+    (name: string): ISubject => {
+        return { name, criteria: [], instances: [] };
+    }
 );
 
 export const renameSubject = createAction<ISubject, string, string>(
     RENAME_SUBJECT,
     (fromName: string, toName: string): ISubject => {
-        return { name: toName, oldName: fromName, criteria: [] };
+        return { name: toName, oldName: fromName, criteria: [], instances: [] };
     }
 );
 
 export const setSelectedSubject = createAction<ISubject, string>(
     SET_SELECTED_SUBJECT,
     (name: string): ISubject => {
-        return { name, criteria: [] };
+        return { name, criteria: [], instances: [] };
     }
 );
