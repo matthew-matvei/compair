@@ -1,9 +1,9 @@
-import { IInstanceStore, ISubject } from "models";
+import { ISubject } from "models";
 import { IDispatchableProps } from ".";
 
 interface IInstancesPanelProps extends IDispatchableProps {
     selectedSubject: ISubject;
-    instanceStore: IInstanceStore;
+    subjects: ISubject[];
 }
 
 export default IInstancesPanelProps;

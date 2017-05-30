@@ -2,8 +2,8 @@ import * as React from "react";
 import * as ReactModal from "react-modal";
 import { connect } from "react-redux";
 
-import { addToInstanceStore } from "actions/instanceStore";
 import { closeModal, openModal } from "actions/modals";
+import { addInstance } from "actions/instances";
 import { IKeyValue, IState } from "models";
 import { IDialogProps } from "models/props";
 
@@ -76,9 +76,12 @@ class Dialog extends React.Component<IDialogProps, {}> {
     }
 
     private handleClickCreate() {
-        this.props.dispatch(
-            addToInstanceStore()
-        this.props.dispatch(closeModal());
+        const currentSubject = this.props.subjects.filter(
+            subject => subject.name === this.props.selectedSubjectName)[0];
+        this.props.dispatch(addInstance(currentSubject, {
+            name: this.instanceNameInput.value,
+            values: this.parseInputs()
+        }));
     }
 
     private handleRequestClose() {

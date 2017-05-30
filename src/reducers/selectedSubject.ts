@@ -5,7 +5,8 @@ import { ISubject } from "models";
 
 const initialState: ISubject = {
     name: "Cities",
-    criteria: []
+    criteria: [],
+    instances: []
 };
 
 export default handleActions<ISubject, ISubject>({
@@ -19,7 +20,8 @@ export default handleActions<ISubject, ISubject>({
 
         return {
             name: action.payload.name,
-            criteria: []
+            criteria: [],
+            instances: []
         };
     }
 

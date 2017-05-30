@@ -8,10 +8,9 @@ import { InstanceCard } from ".";
 class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
 
     public render(): JSX.Element {
-        const selectedItem = this.props.instanceStore.items.filter(
-            item => item.subjectName === this.props.selectedSubject.name)[0] ||
-            [];
-        const instanceElements = selectedItem.instances.map(instance =>
+        const selectedSubject = this.props.subjects.filter(
+            subject => subject.name === this.props.selectedSubject.name)[0];
+        const instanceElements = selectedSubject.instances.map(instance =>
             <InstanceCard instance={instance} />);
 
         return <main className="col-sm-8 offset-sm-4 col-md-9 offset-md-3 pt-3">
@@ -25,7 +24,7 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
 
 const mapStateToProps = (state: IState) => ({
     selectedSubject: state.selectedSubject,
-    instanceStore: state.instanceStore
+    subjects: state.subjects
 });
 
 export default connect(mapStateToProps)(InstancesPanel);

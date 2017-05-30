@@ -1,9 +1,8 @@
-import { IInstanceStore, ISubject } from "models";
+import { ISubject } from "models";
 
 interface IState {
     subjects: ISubject[];
     selectedSubject: ISubject;
-    instanceStore: IInstanceStore;
     isShowingModal: boolean;
 }
 

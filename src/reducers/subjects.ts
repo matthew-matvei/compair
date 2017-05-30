@@ -147,6 +147,10 @@ export default handleActions<ISubject[], ISubject>({
         });
     },
 
+    /*
+     * TODO: try to take / return single ISubject
+     */
+
     [DELETE_CRITERION]:
     (state: ISubject[], action: Action<ISubject>): ISubject[] => {
 

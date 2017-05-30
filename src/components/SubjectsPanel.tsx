@@ -1,7 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { addToInstanceStore } from "actions/instanceStore";
 import { addSubject, setSelectedSubject } from "actions/subjects";
 import { IState } from "models";
 import { ISubjectsPanelProps } from "models/props";
@@ -40,7 +39,6 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
         if (event.which === 13) {
             const newSubjectName = event.target.value.trim();
             this.props.dispatch(addSubject(newSubjectName));
-            this.props.dispatch(addToInstanceStore(newSubjectName));
             event.target.value = "";
         }
     }
