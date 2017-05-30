@@ -1,5 +1,10 @@
 import { Order, Priority } from "types";
 
+/**
+ * A criterion by which its subject is to be compared.
+ *
+ * @interface ICriterion
+ */
 interface ICriterion {
 
     /**
