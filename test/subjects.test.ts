@@ -1,7 +1,7 @@
 import { expect } from "chai";
 
 import { addSubject, deleteSubject, renameSubject } from "actions/subjects";
-import { ICriterion, ISubject } from "models";
+import { ISubject } from "models";
 import subjectReducer from "reducers/subjects";
 
 describe("Subject reducers", () => {
@@ -14,12 +14,23 @@ describe("Subject reducers", () => {
     before(() => {
         testSubject2 = {
             name: "Test Subject 2",
-            criteria: [<ICriterion>{ key: "2", order: "asc", priority: 3 }]
+            criteria: [{ key: "2", order: "asc", priority: 2 }],
+            instances: [
+                {
+                    name: "Test instance 2",
+                    values: [{ key: "2", value: 2 }]
+                }]
         };
 
         testSubject3 = {
             name: "Test Subject 3",
-            criteria: [<ICriterion>{ key: "3", order: "asc", priority: 3 }]
+            criteria: [{ key: "3", order: "asc", priority: 3 }],
+            instances: [
+                {
+                    name: "Test instance 3",
+                    values: [{ key: "3", value: 3 }]
+                }
+            ]
         };
     });
 
@@ -27,7 +38,13 @@ describe("Subject reducers", () => {
         testSubjects = new Array<ISubject>();
         testSubjectToAdd = {
             name: "Test Subject",
-            criteria: [<ICriterion>{ key: "1", order: "asc", priority: 3 }]
+            criteria: [{ key: "1", order: "asc", priority: 1 }],
+            instances: [
+                {
+                    name: "Test instance to add",
+                    values: [{ key: "1", value: 1 }]
+                }
+            ]
         };
     });
 
@@ -76,7 +93,8 @@ describe("Subject reducers", () => {
         it("a subject as long as it doesn't already exist", () => {
             testSubjects.push({
                 name: testSubjectToAdd.name,
-                criteria: [{ key: "10", order: "asc", priority: 3 }]
+                criteria: [],
+                instances: []
             });
 
             const result = subjectReducer(testSubjects,

@@ -11,7 +11,8 @@ describe("SelectedSubject reducers", () => {
     beforeEach(() => {
         testSelectedSubject = {
             name: "Cities",
-            criteria: []
+            criteria: [],
+            instances: []
         };
     });
 
