@@ -1,8 +1,10 @@
 import { Action, handleActions } from "redux-actions";
 
 import {
+    ADD_CRITERION,
     ADD_INSTANCE,
     ADD_SUBJECT,
+    DELETE_CRITERION,
     DELETE_INSTANCE,
     DELETE_SUBJECT,
     RENAME_SUBJECT
@@ -117,6 +119,53 @@ export default handleActions<ISubject[], ISubject>({
 
             return subject;
         });
-    }
+    },
 
+    [ADD_CRITERION]:
+    (state: ISubject[], action: Action<ISubject>): ISubject[] => {
+
+        if (!action.payload) {
+            return state;
+        }
+
+        return state.map((subject): ISubject => {
+            if (subject.name === action.payload!.name) {
+                const criterionExists = subject.criteria.some(
+                    criterion => criterion.key ===
+                        action.payload!.criteria[0].key);
+
+                if (!criterionExists) {
+                    return {
+                        name: subject.name,
+                        instances: subject.instances,
+                        criteria: []
+                    };
+                }
+            }
+
+            return subject;
+        });
+    },
+
+    [DELETE_CRITERION]:
+    (state: ISubject[], action: Action<ISubject>): ISubject[] => {
+
+        if (!action.payload) {
+            return state;
+        }
+
+        return state.map((subject): ISubject => {
+            if (subject.name === action.payload!.name) {
+                return {
+                    name: subject.name,
+                    instances: subject.instances,
+                    criteria: subject.criteria.filter(
+                        criterion => criterion.key !==
+                            action.payload!.criteria[0].key)
+                };
+            }
+
+            return subject;
+        });
+    }
 }, initialState);
