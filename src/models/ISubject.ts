@@ -1,9 +1,9 @@
-import { ICriterion } from "models";
+import { ICriterion, IInstance } from "models";
 
 interface ISubject {
     name: string;
-    oldName?: string;
     criteria: ICriterion[];
+    instances: IInstance[];
 }
 
 export default ISubject;
