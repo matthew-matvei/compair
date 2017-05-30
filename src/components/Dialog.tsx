@@ -82,6 +82,7 @@ class Dialog extends React.Component<IDialogProps, {}> {
             name: this.instanceNameInput.value,
             values: this.parseInputs()
         }));
+        this.props.dispatch(closeModal());
     }
 
     private handleRequestClose() {

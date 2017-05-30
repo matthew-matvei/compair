@@ -23,7 +23,10 @@ const initialState: ISubject[] = [{
         order: "asc",
         priority: 3
     }],
-    instances: []
+    instances: [{
+        name: "Moscow",
+        values: []
+    }]
 }];
 
 export default handleActions<ISubject[], ISubject>({
