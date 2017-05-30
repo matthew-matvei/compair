@@ -2,8 +2,8 @@ import * as React from "react";
 import * as ReactModal from "react-modal";
 import { connect } from "react-redux";
 
-import { closeModal, openModal } from "actions/modals";
 import { addInstance } from "actions/instances";
+import { closeModal, openModal } from "actions/modals";
 import { IKeyValue, IState } from "models";
 import { IDialogProps } from "models/props";
 
@@ -21,7 +21,7 @@ class Dialog extends React.Component<IDialogProps, {}> {
     public render(): JSX.Element {
 
         const selectedSubject = this.props.subjects.filter(subject =>
-            subject.name === this.props.selectedSubjectName)[0];
+            subject.name === this.props.selectedSubject.name)[0];
         const criteriaElements = selectedSubject.criteria.map(criterion =>
             <div className="col-12">
                 <div className="input-group">
@@ -77,7 +77,7 @@ class Dialog extends React.Component<IDialogProps, {}> {
 
     private handleClickCreate() {
         const currentSubject = this.props.subjects.filter(
-            subject => subject.name === this.props.selectedSubjectName)[0];
+            subject => subject.name === this.props.selectedSubject.name)[0];
         this.props.dispatch(addInstance(currentSubject, {
             name: this.instanceNameInput.value,
             values: this.parseInputs()
@@ -97,7 +97,7 @@ class Dialog extends React.Component<IDialogProps, {}> {
 }
 
 const mapStateToProps = (state: IState) => ({
-    selectedSubjectName: state.selectedSubject.name,
+    selectedSubject: state.selectedSubject,
     subjects: state.subjects,
     isShowingModal: state.isShowingModal
 });

@@ -3,7 +3,7 @@ import { IDispatchableProps } from ".";
 
 interface IDialogProps extends IDispatchableProps {
     subjects: ISubject[];
-    selectedSubjectName: string;
+    selectedSubject: ISubject;
     isShowingModal: boolean;
 }
 
