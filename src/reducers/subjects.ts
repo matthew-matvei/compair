@@ -141,7 +141,10 @@ export default handleActions<ISubject[], ISubject>({
                     return {
                         name: subject.name,
                         instances: subject.instances,
-                        criteria: []
+                        criteria: [
+                            ...subject.criteria,
+                            action.payload!.criteria[0]
+                        ]
                     };
                 }
             }
