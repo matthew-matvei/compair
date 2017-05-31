@@ -5,14 +5,14 @@ import { connect } from "react-redux";
 import { addInstance } from "actions/instances";
 import { closeModal, openModal } from "actions/modals";
 import { IKeyValue, IState } from "models";
-import { IDialogProps } from "models/props";
+import { IAddInstanceDialogProps } from "models/props";
 
-class Dialog extends React.Component<IDialogProps, {}> {
+class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
 
     private instanceNameInput: HTMLInputElement;
     private criteriaInputs: HTMLInputElement[];
 
-    constructor(props: IDialogProps) {
+    constructor(props: IAddInstanceDialogProps) {
         super(props);
 
         this.criteriaInputs = new Array<HTMLInputElement>();
@@ -103,4 +103,4 @@ const mapStateToProps = (state: IState) => ({
     isShowingModal: state.isShowingModal
 });
 
-export default connect(mapStateToProps)(Dialog);
+export default connect(mapStateToProps)(AddInstanceDialog);

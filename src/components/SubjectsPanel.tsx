@@ -2,6 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { addSubject, setSelectedSubject } from "actions/subjects";
+import { AddCriteriaDialog } from "components";
 import { IState } from "models";
 import { ISubjectsPanelProps } from "models/props";
 
@@ -16,7 +17,7 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
                         onClick={this.handleClick.bind(this)}>
                         {subject.name}
                     </button>
-                    <button className="nav-link btn btn-secondary">?</button>
+                    <AddCriteriaDialog />
                 </div>
             </li>
         );

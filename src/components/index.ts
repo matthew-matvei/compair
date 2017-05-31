@@ -1,5 +1,6 @@
+import AddCriteriaDialog from "components/AddCriteriaDialog";
+import AddInstanceDialog from "components/AddInstanceDialog";
 import App from "components/App";
-import Dialog from "components/Dialog";
 import Header from "components/Header";
 import InstanceCard from "components/InstanceCard";
 import InstancesPanel from "components/InstancesPanel";
@@ -8,7 +9,8 @@ import SubjectsPanel from "components/SubjectsPanel";
 
 export {
     App,
-    Dialog,
+    AddCriteriaDialog,
+    AddInstanceDialog,
     Header,
     InstanceCard,
     InstancesPanel,

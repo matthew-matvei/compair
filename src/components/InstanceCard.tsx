@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { IInstanceCardProps } from "models/props";
 import { IInstanceCardState } from "models/states";
-import { Dialog } from ".";
+import { AddInstanceDialog } from ".";
 
 export default class InstanceCard extends
     React.Component<IInstanceCardProps, IInstanceCardState> {
@@ -29,7 +29,7 @@ export default class InstanceCard extends
                 </div>
             </div> :
             <div className="card mb-4 bg-faded">
-                <Dialog />
+                <AddInstanceDialog />
             </div>;
 
         return <div className="col-4">
