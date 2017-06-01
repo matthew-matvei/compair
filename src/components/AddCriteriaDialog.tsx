@@ -15,15 +15,18 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
             <div className="col-12">
                 <div className="input-group">
                     <span className="input-group-addon">Criterion Key</span>
-                    <input type="text" className="form-control" />
+                    <input type="text" className="form-control"
+                        value={criterion.key} />
                 </div>
                 <div className="input-group">
                     <span className="input-group-addon">Order</span>
-                    <input type="checkbox" className="form-control" />
+                    <input type="checkbox" className="form-control"
+                        checked={criterion.order === "asc"} />
                 </div>
                 <div className="input-group">
                     <span className="input-group-addon">Priority</span>
-                    <input type="number" min="1" max="5" />
+                    <input type="number" min="1" max="5"
+                        value={criterion.priority} />
                 </div>
             </div>);
 
@@ -40,8 +43,6 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                             </button>
                     </div>
                     <div className="card-block">
-                        <input className="form-control"
-                            placeholder="Create instance" />
                         {criteriaElements}
                     </div>
                     <div className="card-footer text-right">
