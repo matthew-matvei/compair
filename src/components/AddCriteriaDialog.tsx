@@ -2,6 +2,7 @@ import * as React from "react";
 import * as ReactModal from "react-modal";
 import { connect } from "react-redux";
 
+import { closeModal, openModal } from "actions/modals";
 import { IState } from "models";
 import { IAddCriteriaDialogProps } from "models/props";
 
@@ -27,12 +28,14 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
             </div>);
 
         return <div>
-            <button className="nav-link btn btn-secondary">?</button>
+            <button className="nav-link btn btn-secondary"
+                onClick={this.handleClick.bind(this)}>?</button>
             <ReactModal isOpen={this.props.isShowingModal}
                 contentLabel="Modal">
                 <div className="card">
                     <div className="card-header text-right">
-                        <button className="btn btn-secondary">
+                        <button className="btn btn-secondary"
+                            onClick={this.handleRequestClose.bind(this)}>
                             x
                             </button>
                     </div>
@@ -45,7 +48,8 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                         <button className="btn btn-primary">
                             Create
                             </button>
-                        <button className="btn btn-secondary">
+                        <button className="btn btn-secondary"
+                            onClick={this.handleRequestClose.bind(this)}>
                             Cancel
                             </button>
                     </div>
@@ -53,12 +57,20 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
             </ReactModal>
         </div>;
     }
+
+    private handleClick() {
+        this.props.dispatch(openModal("addCriterionDialog"));
+    }
+
+    private handleRequestClose() {
+        this.props.dispatch(closeModal());
+    }
 }
 
 const mapStateToProps = (state: IState) => ({
     selectedSubject: state.selectedSubject,
     subjects: state.subjects,
-    isShowingModal: state.isShowingModal
+    isShowingModal: state.isShowingModal === "addCriterionDialog"
 });
 
 export default connect(mapStateToProps)(AddCriteriaDialog);

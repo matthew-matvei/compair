@@ -1,13 +1,14 @@
 import { createAction } from "redux-actions";
 
 import { CLOSE_MODAL, OPEN_MODAL } from "actions/types";
+import { Modals } from "types";
 
-export const openModal = createAction<boolean>(
+export const openModal = createAction<Modals, Modals>(
     OPEN_MODAL,
-    (): boolean => true
+    (modal: Modals): Modals => modal
 );
 
-export const closeModal = createAction<boolean>(
+export const closeModal = createAction<Modals>(
     CLOSE_MODAL,
-    (): boolean => false
+    (): Modals => false
 );

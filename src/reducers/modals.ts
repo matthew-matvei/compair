@@ -1,15 +1,28 @@
 import { Action, handleActions } from "redux-actions";
 
 import { CLOSE_MODAL, OPEN_MODAL } from "actions/types";
+import { Modals } from "types";
 
-const initialState: boolean = false;
+const initialState: Modals = false;
 
-export default handleActions<boolean, boolean>({
+export default handleActions<Modals, Modals>({
 
     [OPEN_MODAL]:
-    (state: boolean, action: Action<boolean>): boolean => action.payload!,
+    (state: Modals, action: Action<Modals>): Modals => {
+        if (action.payload === undefined) {
+            return state;
+        }
+
+        return action.payload;
+    },
 
     [CLOSE_MODAL]:
-    (state: boolean, action: Action<boolean>): boolean => action.payload!
+    (state: Modals, action: Action<Modals>): Modals => {
+        if (action.payload === undefined) {
+            return state;
+        }
+
+        return action.payload;
+    }
 
 }, initialState);

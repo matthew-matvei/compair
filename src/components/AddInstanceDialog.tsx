@@ -72,7 +72,7 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
     }
 
     private handleClick() {
-        this.props.dispatch(openModal());
+        this.props.dispatch(openModal("addInstanceDialog"));
     }
 
     private handleClickCreate() {
@@ -100,7 +100,7 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
 const mapStateToProps = (state: IState) => ({
     selectedSubject: state.selectedSubject,
     subjects: state.subjects,
-    isShowingModal: state.isShowingModal
+    isShowingModal: state.isShowingModal === "addInstanceDialog"
 });
 
 export default connect(mapStateToProps)(AddInstanceDialog);
