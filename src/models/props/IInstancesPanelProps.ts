@@ -2,7 +2,7 @@ import { ISubject } from "models";
 import { IDispatchableProps } from ".";
 
 interface IInstancesPanelProps extends IDispatchableProps {
-    selectedSubject: ISubject;
+    selectedSubjectName: string;
     subjects: ISubject[];
 }
 

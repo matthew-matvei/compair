@@ -10,7 +10,7 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
 
     public render(): JSX.Element {
         const selectedSubject = this.props.subjects.filter(
-            subject => subject.name === this.props.selectedSubject.name)[0];
+            subject => subject.name === this.props.selectedSubjectName)[0];
         const instanceElements = orderInstances(
             selectedSubject.criteria, selectedSubject.instances)
             .map(instance =>
@@ -27,7 +27,7 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
 }
 
 const mapStateToProps = (state: IState) => ({
-    selectedSubject: state.selectedSubject,
+    selectedSubjectName: state.selectedSubjectName,
     subjects: state.subjects
 });
 

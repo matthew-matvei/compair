@@ -17,7 +17,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
     public render(): JSX.Element {
 
         const selectedSubject = this.props.subjects.filter(subject =>
-            subject.name === this.props.selectedSubject.name)[0];
+            subject.name === this.props.selectedSubjectName)[0];
         const criteriaElements = selectedSubject.criteria.map(criterion =>
             <div className="col-12">
                 <div className="input-group">
@@ -87,7 +87,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
 
     private handleClickCreate() {
         const currentSubject = this.props.subjects.filter(
-            subject => subject.name === this.props.selectedSubject.name)[0];
+            subject => subject.name === this.props.selectedSubjectName)[0];
         this.props.dispatch(addCriterion(currentSubject, {
             key: this.criterionKeyInput.value,
             order: this.criterionOrderInput.checked ? "asc" : "desc",
@@ -109,7 +109,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
 }
 
 const mapStateToProps = (state: IState) => ({
-    selectedSubject: state.selectedSubject,
+    selectedSubjectName: state.selectedSubjectName,
     subjects: state.subjects,
     isShowingModal: state.isShowingModal === "addCriterionDialog"
 });
