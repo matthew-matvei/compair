@@ -13,12 +13,14 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
             subject => subject.name === this.props.selectedSubject.name)[0];
         const instanceElements = orderInstances(
             selectedSubject.criteria, selectedSubject.instances)
-            .map(instance => <InstanceCard instance={instance} />);
+            .map(instance =>
+                <InstanceCard instance={instance}
+                    currentSubject={this.props.selectedSubject} />);
 
         return <main className="col-sm-8 offset-sm-4 col-md-9 offset-md-3 pt-3">
             <div className="row">
                 {instanceElements}
-                <InstanceCard instance={null} />
+                <InstanceCard instance={null} currentSubject={null} />
             </div>
         </main>;
     }
