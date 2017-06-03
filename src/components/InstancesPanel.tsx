@@ -15,7 +15,7 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
             selectedSubject.criteria, selectedSubject.instances)
             .map(instance =>
                 <InstanceCard instance={instance}
-                    currentSubject={this.props.selectedSubject} />);
+                    currentSubject={selectedSubject} />);
 
         return <main className="col-sm-8 offset-sm-4 col-md-9 offset-md-3 pt-3">
             <div className="row">
