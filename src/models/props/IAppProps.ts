@@ -1,6 +1,4 @@
-import { IDispatchableProps } from ".";
-
-interface IAppProps extends IDispatchableProps {
+interface IAppProps {
 
 }
 
