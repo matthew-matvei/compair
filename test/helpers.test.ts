@@ -180,9 +180,17 @@ describe("Helper function", () => {
             expect(result).to.be.true;
         });
 
-        it("returns true when criterion exists that's not in keyValues", () => {
+        it("returns true when criterion not in keyValues exists", () => {
             testCriteria.push(testCriterion1);
             testKeyValues.push(testKeyValue2);
+            const result = isMissingKeyValue(testCriteria, testKeyValues);
+
+            expect(result).to.be.true;
+        });
+
+        it("returns true when criterion not in keyValues exists (2)", () => {
+            testCriteria.push(testCriterion1, testCriterion2);
+            testKeyValues.push(testKeyValue1, testKeyValue3);
             const result = isMissingKeyValue(testCriteria, testKeyValues);
 
             expect(result).to.be.true;
@@ -191,6 +199,14 @@ describe("Helper function", () => {
         it("returns false when all criteria have keyValues", () => {
             testCriteria.push(testCriterion1);
             testKeyValues.push(testKeyValue1);
+            const result = isMissingKeyValue(testCriteria, testKeyValues);
+
+            expect(result).to.be.false;
+        });
+
+        it("returns false when all criteria have keyValues (2)", () => {
+            testCriteria.push(testCriterion1, testCriterion2);
+            testKeyValues.push(testKeyValue1, testKeyValue2);
             const result = isMissingKeyValue(testCriteria, testKeyValues);
 
             expect(result).to.be.false;
