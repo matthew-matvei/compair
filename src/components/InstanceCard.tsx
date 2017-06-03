@@ -1,21 +1,12 @@
-import * as React from "react";
 import * as classNames from "classnames";
+import * as React from "react";
 
 import { isMissingKeyValue } from "helpers";
 import { IInstanceCardProps } from "models/props";
-import { IInstanceCardState } from "models/states";
 import { AddInstanceDialog } from ".";
 
 export default class InstanceCard extends
-    React.Component<IInstanceCardProps, IInstanceCardState> {
-
-    constructor(props: IInstanceCardProps) {
-        super(props);
-
-        this.state = {
-            isShowingModal: false
-        } as IInstanceCardState;
-    }
+    React.Component<IInstanceCardProps, {}> {
 
     public render(): JSX.Element {
         const { currentSubject, instance } = this.props;
