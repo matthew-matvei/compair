@@ -54,7 +54,14 @@ function calculateValue(criterion: ICriterion, keyValue: IKeyValue): number {
 export function isMissingKeyValue(criteria: ICriterion[],
     keyValues: IKeyValue[]): boolean {
 
-    return criteria.length === keyValues.length && criteria.every(criterion =>
-        keyValues.filter(keyValue =>
+    if (criteria.length !== keyValues.length) {
+        return true;
+    }
+
+    if (criteria.length > 0) {
+        return !criteria.every(criterion => keyValues.filter(keyValue =>
             criterion.key === keyValue.key).length === 1);
+    }
+
+    return false;
 }
