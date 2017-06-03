@@ -19,14 +19,14 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
     }
 
     public render(): JSX.Element {
-
         const selectedSubject = this.props.subjects.filter(subject =>
-            subject.name === this.props.selectedSubject.name)[0];
+            subject.name === this.props.selectedSubjectName)[0];
         const criteriaElements = selectedSubject.criteria.map(criterion =>
             <div className="col-12">
                 <div className="input-group">
                     <span className="input-group-addon">{criterion.key}</span>
                     <input type="number"
+                        id={criterion.key}
                         className="form-control"
                         ref={(input) => this.criteriaInputs.push(input)} />
                 </div>
@@ -40,7 +40,7 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
                     <p className="text-muted">Click for new instance</p>
                 </div>
                 <ReactModal isOpen={this.props.isShowingModal}
-                    contentLabel="Modal"
+                    contentLabel="AddInstanceDialog"
                     onRequestClose={this.handleRequestClose.bind(this)}>
                     <div className="card">
                         <div className="card-header text-right">
@@ -77,20 +77,26 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
 
     private handleClickCreate() {
         const currentSubject = this.props.subjects.filter(
-            subject => subject.name === this.props.selectedSubject.name)[0];
+            subject => subject.name === this.props.selectedSubjectName)[0];
         this.props.dispatch(addInstance(currentSubject, {
             name: this.instanceNameInput.value,
             values: this.parseInputs()
         }));
-        this.props.dispatch(closeModal());
+        this.handleRequestClose();
     }
 
     private handleRequestClose() {
         this.props.dispatch(closeModal());
+        this.cleanInputs();
+    }
+
+    private cleanInputs() {
+        this.instanceNameInput.value = "";
+        this.criteriaInputs = new Array<HTMLInputElement>();
     }
 
     private parseInputs(): IKeyValue[] {
-        return this.criteriaInputs.map(input => ({
+        return this.criteriaInputs.filter(input => input).map(input => ({
             key: input.id,
             value: parseInt(input.value)
         } as IKeyValue));
@@ -98,7 +104,7 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
 }
 
 const mapStateToProps = (state: IState) => ({
-    selectedSubject: state.selectedSubject,
+    selectedSubjectName: state.selectedSubjectName,
     subjects: state.subjects,
     isShowingModal: state.isShowingModal === "addInstanceDialog"
 });

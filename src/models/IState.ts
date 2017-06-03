@@ -3,7 +3,7 @@ import { Modals } from "types";
 
 interface IState {
     subjects: ISubject[];
-    selectedSubject: ISubject;
+    selectedSubjectName: string;
     isShowingModal: Modals;
 }
 

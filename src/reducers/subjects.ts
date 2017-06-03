@@ -25,7 +25,14 @@ const initialState: ISubject[] = [{
     }],
     instances: [{
         name: "Moscow",
-        values: []
+        values: [{
+            key: "Cost of living per month",
+            value: 100
+        },
+        {
+            key: "Average salary",
+            value: 1000
+        }]
     }]
 }];
 

@@ -17,7 +17,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
     public render(): JSX.Element {
 
         const selectedSubject = this.props.subjects.filter(subject =>
-            subject.name === this.props.selectedSubject.name)[0];
+            subject.name === this.props.selectedSubjectName)[0];
         const criteriaElements = selectedSubject.criteria.map(criterion =>
             <div className="col-12">
                 <div className="input-group">
@@ -41,7 +41,8 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
             <button className="nav-link btn btn-secondary"
                 onClick={this.handleClick.bind(this)}>?</button>
             <ReactModal isOpen={this.props.isShowingModal}
-                contentLabel="Modal">
+                contentLabel="AddCriteraDialog"
+                onRequestClose={this.handleRequestClose.bind(this)}>
                 <div className="card">
                     <div className="card-header text-right">
                         <button className="btn btn-secondary"
@@ -86,22 +87,29 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
 
     private handleClickCreate() {
         const currentSubject = this.props.subjects.filter(
-            subject => subject.name === this.props.selectedSubject.name)[0];
+            subject => subject.name === this.props.selectedSubjectName)[0];
         this.props.dispatch(addCriterion(currentSubject, {
             key: this.criterionKeyInput.value,
             order: this.criterionOrderInput.checked ? "asc" : "desc",
             priority: parseInt(this.criterionPriorityInput.value) as Priority
         }));
-        this.props.dispatch(closeModal());
+        this.handleRequestClose();
     }
 
     private handleRequestClose() {
         this.props.dispatch(closeModal());
+        this.cleanInputs();
+    }
+
+    private cleanInputs() {
+        this.criterionKeyInput.value = "";
+        this.criterionOrderInput.checked = false;
+        this.criterionPriorityInput.value = "";
     }
 }
 
 const mapStateToProps = (state: IState) => ({
-    selectedSubject: state.selectedSubject,
+    selectedSubjectName: state.selectedSubjectName,
     subjects: state.subjects,
     isShowingModal: state.isShowingModal === "addCriterionDialog"
 });
