@@ -25,7 +25,10 @@ export default class InstanceCard extends
                 <div className="card-footer">
                     <div className="btn-group">
                         <button className="btn btn-sm">?</button>
-                        <button className="btn btn-sm">x</button>
+                        <button className="btn btn-sm"
+                            onClick={this.handleClickDelete.bind(this)}>
+                            x
+                        </button>
                     </div>
                 </div>
             </div > :
@@ -36,5 +39,9 @@ export default class InstanceCard extends
         return <div className="col-4">
             {cardContent}
         </div>;
+    }
+
+    private handleClickDelete() {
+        this.props.deleteInstance!(this.props.instance!);
     }
 }

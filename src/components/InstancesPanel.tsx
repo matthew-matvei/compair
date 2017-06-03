@@ -1,8 +1,9 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
+import { deleteInstance } from "actions/instances";
 import { orderInstances } from "helpers";
-import { IState } from "models";
+import { IInstance, IState } from "models";
 import { IInstancesPanelProps } from "models/props";
 import { InstanceCard } from ".";
 
@@ -15,7 +16,8 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
             selectedSubject.criteria, selectedSubject.instances)
             .map(instance =>
                 <InstanceCard instance={instance}
-                    currentSubject={selectedSubject} />);
+                    currentSubject={selectedSubject}
+                    deleteInstance={this.handleDeleteInstance.bind(this)} />);
 
         return <main className="col-sm-8 offset-sm-4 col-md-9 offset-md-3 pt-3">
             <div className="row">
@@ -23,6 +25,12 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
                 <InstanceCard instance={null} currentSubject={null} />
             </div>
         </main>;
+    }
+
+    private handleDeleteInstance(instance: IInstance) {
+        const selectedSubject = this.props.subjects.filter(
+            subject => subject.name === this.props.selectedSubjectName)[0];
+        this.props.dispatch(deleteInstance(selectedSubject, instance.name));
     }
 }
 
