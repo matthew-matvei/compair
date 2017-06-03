@@ -41,7 +41,8 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
             <button className="nav-link btn btn-secondary"
                 onClick={this.handleClick.bind(this)}>?</button>
             <ReactModal isOpen={this.props.isShowingModal}
-                contentLabel="Modal">
+                contentLabel="AddCriteraDialog"
+                onRequestClose={this.handleRequestClose.bind(this)}>
                 <div className="card">
                     <div className="card-header text-right">
                         <button className="btn btn-secondary"
@@ -92,11 +93,18 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
             order: this.criterionOrderInput.checked ? "asc" : "desc",
             priority: parseInt(this.criterionPriorityInput.value) as Priority
         }));
-        this.props.dispatch(closeModal());
+        this.handleRequestClose();
     }
 
     private handleRequestClose() {
         this.props.dispatch(closeModal());
+        this.cleanInputs();
+    }
+
+    private cleanInputs() {
+        this.criterionKeyInput.value = "";
+        this.criterionOrderInput.checked = false;
+        this.criterionPriorityInput.value = "";
     }
 }
 
