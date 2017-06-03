@@ -9,9 +9,26 @@ describe("Helper function", () => {
 
         let testCriteria: ICriterion[];
         let testInstances: IInstance[];
+
+        /**
+         * The instance that should be first in the ordered list.
+         */
         let testInstance1: IInstance;
+
+        /**
+         * The instance that should be second in the ordered list.
+         */
         let testInstance2: IInstance;
+
+        /**
+         * The instance that should be third in the ordered list.
+         */
         let testInstance3: IInstance;
+
+        /**
+         * An instance missing some criteria.
+         */
+        let testInstanceEmpty: IInstance;
 
         before(() => {
             testCriteria = [{
@@ -35,10 +52,6 @@ describe("Helper function", () => {
                 priority: 5
             }];
 
-            /*
-             * Values in testInstance1 are engineered so that it will be 1st
-             * in the ordered output.
-             */
             testInstance1 = {
                 name: "Test Instance 1",
                 values: [
@@ -49,10 +62,6 @@ describe("Helper function", () => {
                 ]
             };
 
-            /*
-            * Values in testInstance2 are engineered so that it will be 2nd
-            * in the ordered output.
-            */
             testInstance2 = {
                 name: "Test Instance 2",
                 values: [
@@ -63,10 +72,6 @@ describe("Helper function", () => {
                 ]
             };
 
-            /*
-            * Values in testInstance3 are engineered so that it will be 3rd
-            * in the ordered output.
-            */
             testInstance3 = {
                 name: "Test Instance 3",
                 values: [
@@ -74,6 +79,13 @@ describe("Helper function", () => {
                     { key: "Test Criterion 2", value: 60 },
                     { key: "Test Criterion 3", value: 14 },
                     { key: "Test Criterion 4", value: 1.4 }
+                ]
+            };
+
+            testInstanceEmpty = {
+                name: "Test Instance Missing Criteria",
+                values: [
+                    { key: "Test Criterion 1", value: 10000 }
                 ]
             };
         });
@@ -108,6 +120,13 @@ describe("Helper function", () => {
 
             expect(result).to.deep.equal(
                 [testInstance1, testInstance2, testInstance3]);
+        });
+
+        it("handles a list including an instance with missing criteria", () => {
+            testInstances.push(testInstanceEmpty);
+            const result = orderInstances(testCriteria, testInstances);
+
+            expect(result).to.deep.equal([testInstanceEmpty]);
         });
     });
 });
