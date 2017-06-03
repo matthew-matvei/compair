@@ -11,6 +11,7 @@
         "module": "es2015",
         "moduleResolution": "node",
         "noUnusedLocals": true,
+        "noUnusedParameters": true,
         "removeComments": true,
         "strictNullChecks": true,
         "target": "es5"
