@@ -1,5 +1,6 @@
-import IAddCriteriaDialogProps from "models/props/IAddCriteriaDialogProps";
-import IAddInstanceDialogProps from "models/props/IAddInstanceDialogProps";
+import IAddCriteriaDialogProps from "models/props/dialogs/IAddCriteriaDialogProps";
+import IAddInstanceDialogProps from "models/props/dialogs/IAddInstanceDialogProps";
+import IEditInstanceDialogProps from "models/props/dialogs/IEditInstanceDialogProps";
 import IAppProps from "models/props/IAppProps";
 import IDialogProps from "models/props/IDialogProps";
 import IDispatchableProps from "models/props/IDispatchableProps";
@@ -15,6 +16,7 @@ export {
     IAppProps,
     IDialogProps,
     IDispatchableProps,
+    IEditInstanceDialogProps,
     IHeaderProps,
     IInstanceCardProps,
     IInstancesPanelProps,

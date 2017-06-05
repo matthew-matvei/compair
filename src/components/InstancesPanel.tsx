@@ -1,7 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { deleteInstance } from "actions/instances";
+import { deleteInstance, setSelectedInstanceName } from "actions/instances";
+import { openModal } from "actions/modals";
 import { orderInstances } from "helpers";
 import { IInstance, IState } from "models";
 import { IInstancesPanelProps } from "models/props";
@@ -17,7 +18,8 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
             .map(instance =>
                 <InstanceCard instance={instance}
                     currentSubject={selectedSubject}
-                    deleteInstance={this.handleDeleteInstance.bind(this)} />);
+                    deleteInstance={this.handleDeleteInstance.bind(this)}
+                    editInstance={this.handleEditInstance.bind(this)} />);
 
         return <main className="col-sm-8 offset-sm-4 col-md-9 offset-md-3 pt-3">
             <div className="row">
@@ -31,6 +33,11 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
         const selectedSubject = this.props.subjects.filter(
             subject => subject.name === this.props.selectedSubjectName)[0];
         this.props.dispatch(deleteInstance(selectedSubject, instance.name));
+    }
+
+    private handleEditInstance(instance: IInstance) {
+        this.props.dispatch(setSelectedInstanceName(instance.name));
+        this.props.dispatch(openModal("editInstanceDialog"));
     }
 }
 

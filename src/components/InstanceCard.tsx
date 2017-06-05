@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { isMissingKeyValue } from "helpers";
 import { IInstanceCardProps } from "models/props";
-import { AddInstanceDialog } from ".";
+import { AddInstanceDialog, EditInstanceDialog } from ".";
 
 export default class InstanceCard extends
     React.Component<IInstanceCardProps, {}> {
@@ -24,7 +24,9 @@ export default class InstanceCard extends
                 </div>
                 <div className="card-footer">
                     <div className="btn-group">
-                        <button className="btn btn-sm">?</button>
+                        <button className="nav-link btn btn-secondary"
+                            onClick={this.handleClick.bind(this)}>?</button>
+                        <EditInstanceDialog />
                         <button className="btn btn-sm"
                             onClick={this.handleClickDelete.bind(this)}>
                             x
@@ -39,6 +41,10 @@ export default class InstanceCard extends
         return <div className="col-4">
             {cardContent}
         </div>;
+    }
+
+    private handleClick() {
+        this.props.editInstance!(this.props.instance!);
     }
 
     private handleClickDelete() {

@@ -4,6 +4,7 @@ interface IInstanceCardProps {
     instance: IInstance | null;
     currentSubject: ISubject | null;
     deleteInstance?: (instance: IInstance) => void;
+    editInstance?: (instance: IInstance) => void;
 }
 
 export default IInstanceCardProps;

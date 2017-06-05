@@ -184,5 +184,7 @@ export default handleActions<ISubject[], ISubject>({
 
             return subject;
         });
-    }
+    },
+
+
 }, initialState);
