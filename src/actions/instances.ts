@@ -1,6 +1,11 @@
 import { createAction } from "redux-actions";
 
-import { ADD_INSTANCE, DELETE_INSTANCE } from "actions/types";
+import {
+    ADD_INSTANCE,
+    DELETE_INSTANCE,
+    RENAME_INSTANCE,
+    SET_SELECTED_INSTANCE_NAME
+} from "actions/types";
 import { IInstance, ISubject } from "models";
 
 export const addInstance = createAction<ISubject, ISubject, IInstance>(
@@ -24,3 +29,21 @@ export const deleteInstance = createAction<ISubject, ISubject, string>(
         };
     }
 );
+
+export const renameInstance = createAction<IInstance, string, string>(
+    RENAME_INSTANCE,
+    (fromName: string, toName: string): IInstance => {
+        return {
+            name: toName,
+            oldName: fromName,
+            values: []
+        };
+    }
+);
+
+export const setSelectedInstanceName = createAction<string | null,
+    string | null>(
+
+    SET_SELECTED_INSTANCE_NAME,
+    (name: string | null): string | null => name
+    );
