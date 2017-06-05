@@ -24,10 +24,10 @@ export default class InstanceCard extends
                 </div>
                 <div className="card-footer">
                     <div className="btn-group">
-                        <button className="nav-link btn btn-secondary"
+                        <button className="btn btn-sm btn-secondary"
                             onClick={this.handleClick.bind(this)}>?</button>
                         <EditInstanceDialog />
-                        <button className="btn btn-sm"
+                        <button className="btn btn-sm btn-danger"
                             onClick={this.handleClickDelete.bind(this)}>
                             x
                         </button>
