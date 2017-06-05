@@ -1,4 +1,4 @@
-import { IDialogProps } from ".";
+import { IDialogProps } from "models/props";
 
 interface IAddInstanceDialogProps extends IDialogProps {
 }
