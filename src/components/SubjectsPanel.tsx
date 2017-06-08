@@ -1,5 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import * as classNames from "classnames";
 
 import { addSubject, setSelectedSubject } from "actions/subjects";
 import { AddCriteriaDialog } from "components";
@@ -9,23 +10,27 @@ import { ISubjectsPanelProps } from "models/props";
 class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
 
     public render(): JSX.Element {
-        const subjectElements = this.props.subjects.map(subject =>
-            <li className="nav-item" key={subject.name}>
+        const subjectElements = this.props.subjects.map(subject => {
+            const selected = classNames({
+                "active": subject.name === this.props.selectedSubjectName
+            });
+
+            return <li className="list-group-item" key={subject.name}>
                 <div className="btn-group btn-block">
-                    <button className="nav-link btn btn-primary btn-block"
+                    <button className={`btn btn-primary btn-block ${selected}`}
                         id={subject.name}
                         onClick={this.handleClick.bind(this)}>
                         {subject.name}
                     </button>
                     <AddCriteriaDialog />
                 </div>
-            </li>
-        );
+            </li>;
+        });
 
         return <nav className="col-sm-4 col-md-3 bg-faded sidebar">
-            <ul className="nav nav-pills flex-column">
+            <ul className="list-group flex-column">
                 {subjectElements}
-                <li className="nav-item">
+                <li className="list-group-item">
                     <input type="text"
                         className="form-control"
                         placeholder="add subject"
@@ -51,7 +56,8 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
 }
 
 const mapStateToProps = (state: IState) => ({
-    subjects: state.subjects
+    subjects: state.subjects,
+    selectedSubjectName: state.selectedSubjectName
 });
 
 export default connect(mapStateToProps)(SubjectsPanel);
