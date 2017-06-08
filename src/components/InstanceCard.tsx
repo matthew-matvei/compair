@@ -34,7 +34,7 @@ export default class InstanceCard extends
                     </div>
                 </div>
             </div > :
-            <div className="card mb-4 bg-faded">
+            <div className="card mb-4 bg-faded clickable">
                 <AddInstanceDialog />
             </div>;
 

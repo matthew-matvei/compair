@@ -21,3 +21,11 @@
  .ReactModal__Overlay {
    z-index: 1000;
  }
+
+/*
+ * Custom styles
+ */
+
+.clickable:hover, .btn:hover {
+  cursor: pointer;
+}
