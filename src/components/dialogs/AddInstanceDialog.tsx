@@ -54,6 +54,8 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
                                 placeholder="Create instance"
                                 ref={(input) =>
                                     this.instanceNameInput = input} />
+                        </div>
+                        <div className="card-block">
                             {criteriaElements}
                         </div>
                         <div className="card-footer text-right">
