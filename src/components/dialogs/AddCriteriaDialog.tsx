@@ -68,7 +68,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                                 <input type="checkbox"
                                     className="form-check-input"
                                     ref={(input) =>
-                                        this.criterionPriorityInput = input} />
+                                        this.criterionOrderInput = input} />
                                 Ascending
                             </label>
                         </div>
