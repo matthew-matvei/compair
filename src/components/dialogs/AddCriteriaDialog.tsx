@@ -20,19 +20,19 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
             subject.name === this.props.selectedSubjectName)[0];
         const criteriaElements = selectedSubject.criteria.map(criterion =>
             <form className="form-inline">
-                <div className="input-group">
+                <div className="input-group col-6">
                     <span className="input-group-addon">Criterion Key</span>
                     <input type="text" className="form-control"
                         value={criterion.key} />
                 </div>
-                <div className="input-group">
+                <div className="input-group col-2">
                     <label className="form-check-label">
                         <input type="checkbox" className="form-check-input"
                             checked={criterion.order === "asc"} />
                         Ascending
                     </label>
                 </div>
-                <div className="input-group">
+                <div className="input-group col-4">
                     <span className="input-group-addon">Priority</span>
                     <input type="number" min="1" max="5"
                         value={criterion.priority} />
@@ -53,31 +53,35 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                             </button>
                     </div>
                     <div className="card-block">
-                        <div className="input-group">
-                            <span className="input-group-addon">
-                                Criterion Key
+                        <form className="form-inline">
+                            <div className="input-group col-6">
+                                <span className="input-group-addon">
+                                    Criterion Key
                             </span>
-                            <input type="text"
-                                className="form-control"
-                                placeholder="Create criterion"
-                                ref={(input) =>
-                                    this.criterionKeyInput = input} />
-                        </div>
-                        <div className="input-group">
-                            <label className="form-check-label">
-                                <input type="checkbox"
-                                    className="form-check-input"
+                                <input type="text"
+                                    className="form-control"
+                                    placeholder="Create criterion"
                                     ref={(input) =>
-                                        this.criterionOrderInput = input} />
-                                Ascending
+                                        this.criterionKeyInput = input} />
+                            </div>
+                            <div className="input-group col-2">
+                                <label className="form-check-label">
+                                    <input type="checkbox"
+                                        className="form-check-input"
+                                        ref={(input) =>
+                                            this.criterionOrderInput = input} />
+                                    Ascending
                             </label>
-                        </div>
-                        <div className="input-group">
-                            <span className="input-group-addon">Priority</span>
-                            <input type="number" min="1" max="5"
-                                ref={(input) =>
-                                    this.criterionPriorityInput = input} />
-                        </div>
+                            </div>
+                            <div className="input-group col-4">
+                                <span className="input-group-addon">
+                                    Priority
+                                </span>
+                                <input type="number" min="1" max="5"
+                                    ref={(input) =>
+                                        this.criterionPriorityInput = input} />
+                            </div>
+                        </form>
                     </div>
                     <div className="card-block">
                         {criteriaElements}
