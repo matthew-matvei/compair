@@ -29,12 +29,19 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
         const selectedInstance = selectedSubject.instances.filter(
             instance => instance.name === this.props.selectedInstanceName)[0];
 
-        const criteriaElements = selectedSubject.criteria.map(criterion => {
+        let rows: JSX.Element[] = [];
+        for (let i = 0; i < selectedSubject.criteria.length; i += 2) {
+            const criterion = selectedSubject.criteria[i];
+            const nextCriterion = i < selectedSubject.criteria.length - 1 ?
+                selectedSubject.criteria[i + 1] : null;
             const relevantKeyValue = selectedInstance &&
                 selectedInstance.values.filter(
                     keyValue => keyValue.key === criterion.key)[0];
-
-            return <div className="col-12">
+            const nextRelevantKeyValue = selectedInstance &&
+                selectedInstance.values.filter(
+                    keyValue => nextCriterion &&
+                        keyValue.key === nextCriterion.key)[0];
+            const thisElement = <div className="col-6">
                 <div className="input-group">
                     <span className="input-group-addon">{criterion.key}</span>
                     <input type="number"
@@ -44,7 +51,27 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
                         ref={(input) => this.criteriaInputs.push(input)} />
                 </div>
             </div>;
-        });
+            const nextElement = nextCriterion ?
+                <div className="col-6">
+                    <div className="input-group">
+                        <span className="input-group-addon">
+                            {nextCriterion.key}
+                        </span>
+                        <input type="number"
+                            id={nextCriterion.key}
+                            value={nextRelevantKeyValue &&
+                                nextRelevantKeyValue.value}
+                            className="form-control"
+                            ref={(input) => this.criteriaInputs.push(input)} />
+                    </div>
+                </div> : null;
+            const row = <div className="row">
+                {thisElement}
+                {nextElement}
+            </div>;
+
+            rows.push(row);
+        }
 
         return <ReactModal isOpen={this.props.isShowingModal}
             contentLabel="EditCriteraDialog"
@@ -61,7 +88,9 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
                         value={selectedInstance.name}
                         ref={(input) =>
                             this.instanceNameInput = input} />}
-                    {criteriaElements}
+                </div>
+                <div className="card-block">
+                    {rows}
                 </div>
                 <div className="card-footer text-right">
                     <button className="btn btn-primary"
@@ -74,7 +103,7 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
                             </button>
                 </div>
             </div>
-        </ReactModal>;
+        </ReactModal >;
     }
 
     private handleClickEdit() {
