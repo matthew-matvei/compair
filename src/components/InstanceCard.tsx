@@ -19,19 +19,16 @@ export default class InstanceCard extends
 
         const cardContent = instance && currentSubject ?
             <div className={`card mb4 ${classes}`}>
-                <div className="card-block">
+                <div className="card-block clickable"
+                    onClick={this.handleClick.bind(this)}>
                     <h3 className="card-title">{instance.name}</h3>
                 </div>
-                <div className="card-footer">
-                    <div className="btn-group">
-                        <button className="btn btn-sm btn-secondary"
-                            onClick={this.handleClick.bind(this)}>?</button>
-                        <EditInstanceDialog />
-                        <button className="btn btn-sm btn-danger"
-                            onClick={this.handleClickDelete.bind(this)}>
-                            x
-                        </button>
-                    </div>
+                <div className="card-footer text-right">
+                    <EditInstanceDialog />
+                    <button className="btn btn-sm btn-danger"
+                        onClick={this.handleClickDelete.bind(this)}>
+                        x
+                    </button>
                 </div>
             </div > :
             <div className="card mb-4 bg-faded clickable">
