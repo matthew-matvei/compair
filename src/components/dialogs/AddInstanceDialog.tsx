@@ -21,8 +21,13 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
     public render(): JSX.Element {
         const selectedSubject = this.props.subjects.filter(subject =>
             subject.name === this.props.selectedSubjectName)[0];
-        const criteriaElements = selectedSubject.criteria.map(criterion =>
-            <div className="col-12">
+
+        let rows: JSX.Element[] = [];
+        for (let i = 0; i < selectedSubject.criteria.length; i += 2) {
+            const criterion = selectedSubject.criteria[i];
+            const nextCriterion = i < selectedSubject.criteria.length - 1 ?
+                selectedSubject.criteria[i + 1] : null;
+            const thisElement = <div className="col-6">
                 <div className="input-group">
                     <span className="input-group-addon">{criterion.key}</span>
                     <input type="number"
@@ -30,8 +35,26 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
                         className="form-control"
                         ref={(input) => this.criteriaInputs.push(input)} />
                 </div>
-            </div>
-        );
+            </div>;
+            const nextElement = nextCriterion ?
+                <div className="col-6">
+                    <div className="input-group">
+                        <span className="input-group-addon">
+                            {nextCriterion.key}
+                        </span>
+                        <input type="number"
+                            id={nextCriterion.key}
+                            className="form-control"
+                            ref={(input) => this.criteriaInputs.push(input)} />
+                    </div>
+                </div> : null;
+            const row = <div className="row">
+                {thisElement}
+                {nextElement}
+            </div>;
+
+            rows.push(row);
+        }
 
         return (
             <div>
@@ -56,7 +79,7 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
                                     this.instanceNameInput = input} />
                         </div>
                         <div className="card-block">
-                            {criteriaElements}
+                            {rows}
                         </div>
                         <div className="card-footer text-right">
                             <button className="btn btn-primary"
