@@ -40,7 +40,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
             </form>);
 
         return <div>
-            <button className="nav-link btn btn-secondary"
+            <button className="btn btn-secondary"
                 onClick={this.handleClick.bind(this)}>?</button>
             <ReactModal isOpen={this.props.isShowingModal}
                 contentLabel="AddCriteraDialog"
