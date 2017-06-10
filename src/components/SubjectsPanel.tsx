@@ -1,6 +1,6 @@
+import * as classNames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
-import * as classNames from "classnames";
 
 import { addSubject, setSelectedSubject } from "actions/subjects";
 import { AddCriteriaDialog } from "components";
@@ -15,21 +15,21 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
                 "active": subject.name === this.props.selectedSubjectName
             });
 
-            return <li className="list-group-item" key={subject.name}>
-                <div className="btn-group btn-block">
-                    <button className={`btn btn-primary btn-block ${selected}`}
-                        id={subject.name}
-                        onClick={this.handleClick.bind(this)}>
-                        {subject.name}
-                    </button>
-                    <AddCriteriaDialog />
-                </div>
-            </li>;
+            return <div className="btn-group btn-block">
+                <button className={`btn btn-primary btn-block ${selected}`}
+                    id={subject.name}
+                    onClick={this.handleClick.bind(this)}>
+                    {subject.name}
+                </button>
+                <AddCriteriaDialog />
+            </div>;
         });
 
         return <nav className="col-sm-4 col-md-3 bg-faded sidebar">
             <ul className="list-group flex-column">
-                {subjectElements}
+                <li className="list-group-item">
+                    {subjectElements}
+                </li>
                 <li className="list-group-item">
                     <input type="text"
                         className="form-control"
