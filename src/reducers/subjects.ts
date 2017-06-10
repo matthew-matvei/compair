@@ -38,6 +38,14 @@ const initialState: ISubject[] = [{
 
 export default handleActions<ISubject[], ISubject>({
 
+    /**
+     * @function ADD_SUBJECT - Prepends a subject to the list of subjects.
+     *
+     * @param state - The current list of subjects
+     * @param action - The action containing the subject to add
+     *
+     * @returns - A list of subjects containing the given one
+     */
     [ADD_SUBJECT]:
     (state: ISubject[], action: Action<ISubject>): ISubject[] => {
 
@@ -55,6 +63,14 @@ export default handleActions<ISubject[], ISubject>({
         return state;
     },
 
+    /**
+     * @function DELETE_SUBJECT - Deletes a subject from a list of subjects.
+     *
+     * @param state - The current list of subjects
+     * @param action - An action containing the subject to delete
+     *
+     * @returns - A list of subjects not containing the given one
+     */
     [DELETE_SUBJECT]:
     (state: ISubject[], action: Action<ISubject>): ISubject[] => {
 
@@ -62,6 +78,14 @@ export default handleActions<ISubject[], ISubject>({
             action.payload && subject.name !== action.payload.name);
     },
 
+    /**
+     * @function RENAME_SUBJECT - Renames the given subject.
+     *
+     * @param state - The current list of subjects
+     * @param action - An action containing the newly-named subject
+     *
+     * @returns - A list of subjects containing the given one's name
+     */
     [RENAME_SUBJECT]:
     (state: ISubject[], action: Action<ISubject>): ISubject[] => {
 
@@ -80,6 +104,14 @@ export default handleActions<ISubject[], ISubject>({
         });
     },
 
+    /**
+     * @function ADD_INSTANCE - Adds an instance to a subject.
+     *
+     * @param state - The current list of subjects
+     * @param action - An action containing the subject with the new instance
+     *
+     * @returns - A list of subjects containing one with the added instance
+     */
     [ADD_INSTANCE]:
     (state: ISubject[], action: Action<ISubject>): ISubject[] => {
 
@@ -109,6 +141,15 @@ export default handleActions<ISubject[], ISubject>({
         });
     },
 
+    /**
+     * @function DELETE_INSTANCE - Deletes an instance from a subject.
+     *
+     * @param state - The current list of subjects
+     * @param action - An action containing the subject with the instance to
+     *      delete
+     *
+     * @returns - A list of subjects with the given instance removed
+     */
     [DELETE_INSTANCE]:
     (state: ISubject[], action: Action<ISubject>): ISubject[] => {
 
@@ -131,6 +172,14 @@ export default handleActions<ISubject[], ISubject>({
         });
     },
 
+    /**
+     * @function ADD_CRITERION - Adds criterion to a list of criteria.
+     *
+     * @param state - The current list of subjects
+     * @param action - An action containing the subject with the new criterion
+     *
+     * @returns - A list of subjects containing one with the added criterion
+     */
     [ADD_CRITERION]:
     (state: ISubject[], action: Action<ISubject>): ISubject[] => {
 
@@ -164,6 +213,15 @@ export default handleActions<ISubject[], ISubject>({
      * TODO: try to take / return single ISubject
      */
 
+    /**
+     * @function DELETE_CRITERION - Deletes criterion from a list of criteria.
+     *
+     * @param state - The current list of subjects
+     * @param action - An action containing the subject with the criterion to
+     *      delete
+     *
+     * @returns - A list of subjects with the given criterion removed
+     */
     [DELETE_CRITERION]:
     (state: ISubject[], action: Action<ISubject>): ISubject[] => {
 
