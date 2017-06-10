@@ -7,8 +7,21 @@ import { AddCriteriaDialog } from "components";
 import { IState } from "models";
 import { ISubjectsPanelProps } from "models/props";
 
+/**
+ * The panel containing all the current subjects in the application.
+ *
+ * @class SubjectsPanel
+ * @extends {React.Component<ISubjectsPanelProps, {}>}
+ */
 class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
 
+    /**
+     * Defines the rendering of this component.
+     *
+     * @returns {JSX.Element} - The JSX required to create this component
+     *
+     * @memberof SubjectsPanel
+     */
     public render(): JSX.Element {
         const subjectElements = this.props.subjects.map(subject => {
             const selected = classNames({
@@ -40,6 +53,14 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
         </nav>;
     }
 
+    /**
+     * Handles adding a subject on user pressing a key down.
+     *
+     * @private
+     * @param {*} event - The key event
+     *
+     * @memberof SubjectsPanel
+     */
     private handleKeyDown(event: any) {
         // 13 = Enter key
         if (event.which === 13) {
@@ -49,12 +70,26 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
         }
     }
 
+    /**
+     * Handles setting the selected subject on user clicking its button.
+     *
+     * @private
+     * @param {Event} event
+     *
+     * @memberof SubjectsPanel
+     */
     private handleClick(event: Event) {
         const typedTarget = event.target as HTMLButtonElement;
         this.props.dispatch(setSelectedSubject(typedTarget.id));
     }
 }
 
+/**
+ * @function mapStateToProps - Maps the relevant properties of the application's
+ *      state to this component's props.
+ * @param state - The central state of the application
+ * @returns - This component's props, taken from the application state
+ */
 const mapStateToProps = (state: IState) => ({
     subjects: state.subjects,
     selectedSubjectName: state.selectedSubjectName

@@ -8,8 +8,21 @@ import { IInstance, IState } from "models";
 import { IInstancesPanelProps } from "models/props";
 import { InstanceCard } from ".";
 
+/**
+ * The panel containing all the current instances in the application.
+ *
+ * @class InstancesPanel
+ * @extends {React.Component<IInstancesPanelProps, {}>}
+ */
 class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
 
+    /**
+     * Defines the rendering of this component.
+     *
+     * @returns {JSX.Element} - The JSX required to create this component
+     *
+     * @memberof InstancesPanel
+     */
     public render(): JSX.Element {
         const selectedSubject = this.props.subjects.filter(
             subject => subject.name === this.props.selectedSubjectName)[0];
@@ -29,18 +42,40 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
         </main>;
     }
 
+    /**
+     * Handles deleting the given instance.
+     *
+     * @private
+     * @param {IInstance} instance - the instance to delete
+     *
+     * @memberof InstancesPanel
+     */
     private handleDeleteInstance(instance: IInstance) {
         const selectedSubject = this.props.subjects.filter(
             subject => subject.name === this.props.selectedSubjectName)[0];
         this.props.dispatch(deleteInstance(selectedSubject, instance.name));
     }
 
+    /**
+     * Handles editing the given instance.
+     *
+     * @private
+     * @param {IInstance} instance - the instance to edit
+     *
+     * @memberof InstancesPanel
+     */
     private handleEditInstance(instance: IInstance) {
         this.props.dispatch(setSelectedInstanceName(instance.name));
         this.props.dispatch(openModal("editInstanceDialog"));
     }
 }
 
+/**
+ * @function mapStateToProps - Maps the relevant properties of the application's
+ *      state to this component's props.
+ * @param state - The central state of the application
+ * @returns - This component's props, taken from the application state
+ */
 const mapStateToProps = (state: IState) => ({
     selectedSubjectName: state.selectedSubjectName,
     subjects: state.subjects
