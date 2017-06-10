@@ -8,12 +8,48 @@ import { IState } from "models";
 import { IAddCriteriaDialogProps } from "models/props";
 import { Priority } from "types";
 
+/**
+ * A dialog for creating new criteria.
+ *
+ * @class AddCriteriaDialog
+ * @extends {React.Component<IAddCriteriaDialogProps, {}>}
+ */
 class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
 
+    /**
+     * The text input for the new criterion's key.
+     *
+     * @private
+     * @type {HTMLInputElement}
+     * @memberof AddCriteriaDialog
+     */
     private criterionKeyInput: HTMLInputElement;
+
+    /**
+     * The checkbox input for the new criterion's order.
+     *
+     * @private
+     * @type {HTMLInputElement}
+     * @memberof AddCriteriaDialog
+     */
     private criterionOrderInput: HTMLInputElement;
+
+    /**
+     * The number input for the new criterion's priority.
+     *
+     * @private
+     * @type {HTMLInputElement}
+     * @memberof AddCriteriaDialog
+     */
     private criterionPriorityInput: HTMLInputElement;
 
+    /**
+     * Defines the rendering of this component.
+     *
+     * @returns {JSX.Element} - The JSX required to create this component
+     *
+     * @memberof AddCriteriaDialog
+     */
     public render(): JSX.Element {
 
         const selectedSubject = this.props.subjects.filter(subject =>
@@ -101,10 +137,24 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
         </div>;
     }
 
+    /**
+     * Handles opening the modal on a user clicking the button.
+     *
+     * @private
+     *
+     * @memberof AddCriteriaDialog
+     */
     private handleClick() {
         this.props.dispatch(openModal("addCriterionDialog"));
     }
 
+    /**
+     * Handles creating the new criterion on the user clicking 'create'.
+     *
+     * @private
+     *
+     * @memberof AddCriteriaDialog
+     */
     private handleClickCreate() {
         const currentSubject = this.props.subjects.filter(
             subject => subject.name === this.props.selectedSubjectName)[0];
@@ -116,11 +166,26 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
         this.handleRequestClose();
     }
 
+    /**
+     * Handles closing the modal and nulling the modals inputs, since the
+     * dialog component is not actually dismounted from the DOM.
+     *
+     * @private
+     *
+     * @memberof AddCriteriaDialog
+     */
     private handleRequestClose() {
         this.props.dispatch(closeModal());
         this.cleanInputs();
     }
 
+    /**
+     * Clears the values for the modals inputs.
+     *
+     * @private
+     *
+     * @memberof AddCriteriaDialog
+     */
     private cleanInputs() {
         this.criterionKeyInput.value = "";
         this.criterionOrderInput.checked = false;
@@ -128,6 +193,12 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
     }
 }
 
+/**
+ * @function mapStateToProps - Maps the relevant properties of the application's
+ *      state to this component's props.
+ * @param state - The central state of the application
+ * @returns - This component's props, taken from the application state
+ */
 const mapStateToProps = (state: IState) => ({
     selectedSubjectName: state.selectedSubjectName,
     subjects: state.subjects,

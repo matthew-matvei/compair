@@ -11,17 +11,51 @@ import { closeModal } from "actions/modals";
 import { IKeyValue, IState } from "models";
 import { IEditInstanceDialogProps } from "models/props";
 
+/**
+ * A dialog for creating new criteria.
+ *
+ * @class EditInstanceDialog
+ * @extends {React.Component<IEditInstanceDialogProps, {}>}
+ */
 class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
 
+    /**
+     * The text input for the instance's name.
+     *
+     * @private
+     * @type {HTMLInputElement}
+     * @memberof EditInstanceDialog
+     */
     private instanceNameInput: HTMLInputElement;
+
+    /**
+     * An array of the number inputs for the instance's key values.
+     *
+     * @private
+     * @type {HTMLInputElement[]}
+     * @memberof EditInstanceDialog
+     */
     private criteriaInputs: HTMLInputElement[];
 
+    /**
+     * Creates an instance of EditInstanceDialog.
+     * @param {IEditInstanceDialogProps} props - The props for this component
+     *
+     * @memberof EditInstanceDialog
+     */
     constructor(props: IEditInstanceDialogProps) {
         super(props);
 
         this.criteriaInputs = new Array<HTMLInputElement>();
     }
 
+    /**
+     * Defines the rendering of this component.
+     *
+     * @returns {JSX.Element} - The JSX required to create this component
+     *
+     * @memberof EditInstanceDialog
+     */
     public render(): JSX.Element {
         const selectedSubject = this.props.subjects.filter(
             subject => subject.name === this.props.selectedSubjectName)[0];
@@ -106,6 +140,13 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
         </ReactModal >;
     }
 
+    /**
+     * Handles editing the criterion on the user clicking 'edit'.
+     *
+     * @private
+     *
+     * @memberof EditInstanceDialog
+     */
     private handleClickEdit() {
         const currentSubject = this.props.subjects.filter(
             subject => subject.name === this.props.selectedSubjectName)[0];
@@ -119,11 +160,27 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
         this.handleRequestClose();
     }
 
+    /**
+     * Handles closing the modal and nulling the modals inputs, since the
+     * dialog component is not actually dismounted from the DOM.
+     *
+     * @private
+     *
+     * @memberof EditInstanceDialog
+     */
     private handleRequestClose() {
         this.props.dispatch(setSelectedInstanceName(null));
         this.props.dispatch(closeModal());
     }
 
+    /**
+     * Parses the values of the inputs and returns corresponding key values.
+     *
+     * @private
+     * @returns {IKeyValue[]} - Key values based on the parsed inputs
+     *
+     * @memberof EditInstanceDialog
+     */
     private parseInputs(): IKeyValue[] {
         return this.criteriaInputs.filter(input => input).map(input => ({
             key: input.id,
@@ -132,6 +189,12 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
     }
 };
 
+/**
+ * @function mapStateToProps - Maps the relevant properties of the application's
+ *      state to this component's props.
+ * @param state - The central state of the application
+ * @returns - This component's props, taken from the application state
+ */
 const mapStateToProps = (state: IState) => ({
     selectedSubjectName: state.selectedSubjectName,
     selectedInstanceName: state.selectedInstanceName,
