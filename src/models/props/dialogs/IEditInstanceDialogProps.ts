@@ -1,11 +1,20 @@
-import { ISubject } from "models";
-import { IDispatchableProps } from "models/props";
+import { IDialogProps } from "models/props/dialogs";
 
-interface IEditInstanceDialogProps extends IDispatchableProps {
+/**
+ * The properties for an EditInstanceDialog.
+ *
+ * @interface IEditInstanceDialogProps
+ * @extends {IDispatchableProps}
+ */
+interface IEditInstanceDialogProps extends IDialogProps {
+
+    /**
+     * The selected instance's name, if any.
+     *
+     * @type {(string | null)}
+     * @memberof IEditInstanceDialogProps
+     */
     selectedInstanceName: string | null;
-    selectedSubjectName: string;
-    subjects: ISubject[];
-    isShowingModal: boolean;
 }
 
 export default IEditInstanceDialogProps;
