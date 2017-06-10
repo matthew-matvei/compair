@@ -1,4 +1,4 @@
-import { IDialogProps } from "models/props";
+import { IDialogProps } from "models/props/dialogs";
 
 /**
  * The properties for an AddCriteriaDialog.

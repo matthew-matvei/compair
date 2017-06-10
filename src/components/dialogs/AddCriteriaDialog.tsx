@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { addCriterion } from "actions/criteria";
 import { closeModal, openModal } from "actions/modals";
 import { IState } from "models";
-import { IAddCriteriaDialogProps } from "models/props";
+import { IAddCriteriaDialogProps } from "models/props/dialogs";
 import { Priority } from "types";
 
 /**
