@@ -48,7 +48,7 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
                             ref={(input) => this.criteriaInputs.push(input)} />
                     </div>
                 </div> : null;
-            const row = <div className="row">
+            const row = <div className="row pb-2">
                 {thisElement}
                 {nextElement}
             </div>;

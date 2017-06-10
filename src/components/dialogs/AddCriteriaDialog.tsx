@@ -19,7 +19,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
         const selectedSubject = this.props.subjects.filter(subject =>
             subject.name === this.props.selectedSubjectName)[0];
         const criteriaElements = selectedSubject.criteria.map(criterion =>
-            <form className="form-inline">
+            <form className="form-inline pb-2">
                 <div className="input-group col-6">
                     <span className="input-group-addon">Criterion Key</span>
                     <input type="text" className="form-control"
