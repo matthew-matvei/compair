@@ -1,5 +1,10 @@
 import { IKeyValue } from "models";
 
+/**
+ * A single instance of a subject.
+ *
+ * @interface IInstance
+ */
 interface IInstance {
 
     /**

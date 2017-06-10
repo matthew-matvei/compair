@@ -1,3 +1,8 @@
+/**
+ * The properties for the Main component.
+ *
+ * @interface IMainProps
+ */
 interface IMainProps {
 
 }

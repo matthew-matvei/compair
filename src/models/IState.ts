@@ -1,6 +1,11 @@
 import { ISubject } from "models";
 import { Modals } from "types";
 
+/**
+ * The state of the application's central store.
+ *
+ * @interface IState
+ */
 interface IState {
 
     /**

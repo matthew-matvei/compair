@@ -1,3 +1,8 @@
+/**
+ * The properties for the App component.
+ *
+ * @interface IAppProps
+ */
 interface IAppProps {
 
 }

@@ -1,5 +1,10 @@
 import { ICriterion, IInstance } from "models";
 
+/**
+ * A subject containing instances.
+ *
+ * @interface ISubject
+ */
 interface ISubject {
 
     /**
