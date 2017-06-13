@@ -52,16 +52,20 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
     /**
      * Defines the rendering of this component.
      *
-     * @returns {JSX.Element} - The JSX required to create this component
+     * @returns {JSX.Element | null} - The JSX required to create this component
      *
      * @memberof EditInstanceDialog
      */
-    public render(): JSX.Element {
-        const selectedSubject = this.props.subjects.filter(
-            subject => subject.name === this.props.selectedSubjectName)[0];
+    public render(): JSX.Element | null {
+        const selectedSubject = this.props.subjects.find(
+            subject => subject.name === this.props.selectedSubjectName);
 
-        const selectedInstance = selectedSubject.instances.filter(
-            instance => instance.name === this.props.selectedInstanceName)[0];
+        if (!selectedSubject) {
+            return null;
+        }
+
+        const selectedInstance = selectedSubject.instances.find(
+            instance => instance.name === this.props.selectedInstanceName);
 
         let rows: JSX.Element[] = [];
         for (let i = 0; i < selectedSubject.criteria.length; i += 2) {
@@ -69,12 +73,17 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
             const nextCriterion = i < selectedSubject.criteria.length - 1 ?
                 selectedSubject.criteria[i + 1] : null;
             const relevantKeyValue = selectedInstance &&
-                selectedInstance.values.filter(
-                    keyValue => keyValue.key === criterion.key)[0];
+                selectedInstance.values.find(
+                    keyValue => keyValue.key === criterion.key);
             const nextRelevantKeyValue = selectedInstance &&
-                selectedInstance.values.filter(
-                    keyValue => nextCriterion &&
-                        keyValue.key === nextCriterion.key)[0];
+                selectedInstance.values.find(
+                    keyValue => {
+                        if (nextCriterion) {
+                            return keyValue.key === nextCriterion.key;
+                        }
+
+                        return false;
+                    });
             const thisElement = <div className="col-6">
                 <div className="input-group">
                     <span className="input-group-addon">{criterion.key}</span>
@@ -148,8 +157,8 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
      * @memberof EditInstanceDialog
      */
     private handleClickEdit() {
-        const currentSubject = this.props.subjects.filter(
-            subject => subject.name === this.props.selectedSubjectName)[0];
+        const currentSubject = this.props.subjects.find(
+            subject => subject.name === this.props.selectedSubjectName)!;
         this.props.dispatch(deleteInstance(currentSubject,
             this.props.selectedInstanceName!));
         this.props.dispatch(addInstance(currentSubject, {

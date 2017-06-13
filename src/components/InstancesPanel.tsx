@@ -19,13 +19,18 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
     /**
      * Defines the rendering of this component.
      *
-     * @returns {JSX.Element} - The JSX required to create this component
+     * @returns {JSX.Element | null} - The JSX required to create this component
      *
      * @memberof InstancesPanel
      */
-    public render(): JSX.Element {
-        const selectedSubject = this.props.subjects.filter(
-            subject => subject.name === this.props.selectedSubjectName)[0];
+    public render(): JSX.Element | null {
+        const selectedSubject = this.props.subjects.find(
+            subject => subject.name === this.props.selectedSubjectName);
+
+        if (!selectedSubject) {
+            return null;
+        }
+
         const instanceElements = orderInstances(
             selectedSubject.criteria, selectedSubject.instances)
             .map(instance =>
@@ -53,8 +58,8 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
      * @memberof InstancesPanel
      */
     private handleDeleteInstance(instance: IInstance) {
-        const selectedSubject = this.props.subjects.filter(
-            subject => subject.name === this.props.selectedSubjectName)[0];
+        const selectedSubject = this.props.subjects.find(
+            subject => subject.name === this.props.selectedSubjectName)!;
         this.props.dispatch(deleteInstance(selectedSubject, instance.name));
     }
 

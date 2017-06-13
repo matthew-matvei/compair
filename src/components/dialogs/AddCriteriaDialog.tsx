@@ -46,14 +46,19 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
     /**
      * Defines the rendering of this component.
      *
-     * @returns {JSX.Element} - The JSX required to create this component
+     * @returns {JSX.Element | null} - The JSX required to create this component
      *
      * @memberof AddCriteriaDialog
      */
-    public render(): JSX.Element {
+    public render(): JSX.Element | null {
 
-        const selectedSubject = this.props.subjects.filter(subject =>
-            subject.name === this.props.selectedSubjectName)[0];
+        const selectedSubject = this.props.subjects.find(subject =>
+            subject.name === this.props.selectedSubjectName);
+
+        if (!selectedSubject) {
+            return null;
+        }
+
         const criteriaElements = selectedSubject.criteria.map(criterion =>
             <form className="form-inline pb-2">
                 <div className="input-group col-6">
@@ -141,8 +146,9 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
      * @memberof AddCriteriaDialog
      */
     private handleClickCreate() {
-        const currentSubject = this.props.subjects.filter(
-            subject => subject.name === this.props.selectedSubjectName)[0];
+        const currentSubject = this.props.subjects.find(
+            subject => subject.name === this.props.selectedSubjectName)!;
+
         this.props.dispatch(addCriterion(currentSubject, {
             key: this.criterionKeyInput.value,
             order: this.criterionOrderInput.checked ? "asc" : "desc",

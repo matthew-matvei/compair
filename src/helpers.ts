@@ -14,17 +14,19 @@ export function orderInstances(criteria: ICriterion[],
 
     return instances.sort((instanceA, instanceB): number => {
         const valueA = instanceA.values.reduce((total, keyValue) => {
-            const relevantCriterion = criteria.filter(
-                criterion => criterion.key === keyValue.key)[0];
+            const relevantCriterion = criteria.find(
+                criterion => criterion.key === keyValue.key);
 
-            return total + calculateValue(relevantCriterion, keyValue);
+            return relevantCriterion ? total + calculateValue(
+                relevantCriterion, keyValue) : total;
         }, 0);
 
         const valueB = instanceB.values.reduce((total, keyValue) => {
-            const relevantCriterion = criteria.filter(
-                criterion => criterion.key === keyValue.key)[0];
+            const relevantCriterion = criteria.find(
+                criterion => criterion.key === keyValue.key);
 
-            return total + calculateValue(relevantCriterion, keyValue);
+            return relevantCriterion ? total + calculateValue(
+                relevantCriterion, keyValue) : total;
         }, 0);
 
         return valueB - valueA;
@@ -59,8 +61,8 @@ export function isMissingKeyValue(criteria: ICriterion[],
     }
 
     if (criteria.length > 0) {
-        return !criteria.every(criterion => keyValues.filter(keyValue =>
-            criterion.key === keyValue.key).length === 1);
+        return !criteria.every(criterion => keyValues.find(keyValue =>
+            criterion.key === keyValue.key) !== undefined);
     }
 
     return false;

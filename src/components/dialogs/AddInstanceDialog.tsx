@@ -48,13 +48,17 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
     /**
      * Defines the rendering of this component.
      *
-     * @returns {JSX.Element} - The JSX required to create this component
+     * @returns {JSX.Element | null} - The JSX required to create this component
      *
      * @memberof AddInstanceDialog
      */
-    public render(): JSX.Element {
-        const selectedSubject = this.props.subjects.filter(subject =>
-            subject.name === this.props.selectedSubjectName)[0];
+    public render(): JSX.Element | null {
+        const selectedSubject = this.props.subjects.find(
+            subject => subject.name === this.props.selectedSubjectName);
+
+        if (!selectedSubject) {
+            return null;
+        }
 
         let rows: JSX.Element[] = [];
         for (let i = 0; i < selectedSubject.criteria.length; i += 2) {
@@ -132,8 +136,8 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
      * @memberof AddInstanceDialog
      */
     private handleClickCreate() {
-        const currentSubject = this.props.subjects.filter(
-            subject => subject.name === this.props.selectedSubjectName)[0];
+        const currentSubject = this.props.subjects.find(
+            subject => subject.name === this.props.selectedSubjectName)!;
         this.props.dispatch(addInstance(currentSubject, {
             name: this.instanceNameInput.value,
             values: this.parseInputs()
