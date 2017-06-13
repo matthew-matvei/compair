@@ -27,3 +27,4 @@ for contribution would be:
 * Sorting Algorithm - the app uses a very unresearched method of sorting
     instances according to direction and priority, based purely on my
     gut feeling
+* Tidying up dialogs - some repetitive code exists
