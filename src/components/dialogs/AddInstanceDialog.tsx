@@ -3,7 +3,7 @@ import * as ReactModal from "react-modal";
 import { connect } from "react-redux";
 
 import { addInstance } from "actions/instances";
-import { closeModal, openModal } from "actions/modals";
+import { closeModal } from "actions/modals";
 import { IKeyValue, IState } from "models";
 import { IAddInstanceDialogProps } from "models/props";
 
@@ -91,54 +91,37 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
         }
 
         return (
-            <div>
-                <div className="card-block"
-                    onClick={this.handleClick.bind(this)}>
-                    <p className="text-muted">Click for new instance</p>
-                </div>
-                <ReactModal isOpen={this.props.isShowingModal}
-                    contentLabel="AddInstanceDialog"
-                    onRequestClose={this.handleRequestClose.bind(this)}>
-                    <div className="card">
-                        <div className="card-header text-right">
-                            <button className="btn btn-secondary"
-                                onClick={this.handleRequestClose.bind(this)}>
-                                x
+            <ReactModal isOpen={this.props.isShowingModal}
+                contentLabel="AddInstanceDialog"
+                onRequestClose={this.handleRequestClose.bind(this)}>
+                <div className="card">
+                    <div className="card-header text-right">
+                        <button className="btn btn-secondary"
+                            onClick={this.handleRequestClose.bind(this)}>
+                            x
                             </button>
-                        </div>
-                        <div className="card-block">
-                            <input className="form-control"
-                                placeholder="Create instance"
-                                ref={(input) =>
-                                    this.instanceNameInput = input} />
-                        </div>
-                        <div className="card-block">
-                            {rows}
-                        </div>
-                        <div className="card-footer text-right">
-                            <button className="btn btn-primary"
-                                onClick={this.handleClickCreate.bind(this)}>
-                                Create
-                            </button>
-                            <button className="btn btn-secondary"
-                                onClick={this.handleRequestClose.bind(this)}>
-                                Cancel
-                            </button>
-                        </div>
                     </div>
-                </ReactModal>
-            </div>);
-    }
-
-    /**
-     * Handles opening the modal on a user clicking the button.
-     *
-     * @private
-     *
-     * @memberof AddInstanceDialog
-     */
-    private handleClick() {
-        this.props.dispatch(openModal("addInstanceDialog"));
+                    <div className="card-block">
+                        <input className="form-control"
+                            placeholder="Create instance"
+                            ref={(input) =>
+                                this.instanceNameInput = input} />
+                    </div>
+                    <div className="card-block">
+                        {rows}
+                    </div>
+                    <div className="card-footer text-right">
+                        <button className="btn btn-primary"
+                            onClick={this.handleClickCreate.bind(this)}>
+                            Create
+                            </button>
+                        <button className="btn btn-secondary"
+                            onClick={this.handleRequestClose.bind(this)}>
+                            Cancel
+                            </button>
+                    </div>
+                </div>
+            </ReactModal>);
     }
 
     /**

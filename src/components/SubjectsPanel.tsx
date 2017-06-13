@@ -2,6 +2,7 @@ import * as classNames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
+import { openModal } from "actions/modals";
 import { addSubject, setSelectedSubject } from "actions/subjects";
 import { AddCriteriaDialog } from "components";
 import { IState } from "models";
@@ -31,9 +32,11 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
             return <div className="btn-group btn-block">
                 <button className={`btn btn-primary btn-block ${selected}`}
                     id={subject.name}
-                    onClick={this.handleClick.bind(this)}>
+                    onClick={this.handleClickSetSelectedSubject.bind(this)}>
                     {subject.name}
                 </button>
+                <button className="btn btn-secondary"
+                    onClick={this.handleClickOpenDialog.bind(this)}>?</button>
                 <AddCriteriaDialog />
             </div>;
         });
@@ -70,6 +73,10 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
         }
     }
 
+    private handleClickOpenDialog() {
+        this.props.dispatch(openModal("addCriterionDialog"));
+    }
+
     /**
      * Handles setting the selected subject on user clicking its button.
      *
@@ -78,7 +85,7 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
      *
      * @memberof SubjectsPanel
      */
-    private handleClick(event: Event) {
+    private handleClickSetSelectedSubject(event: Event) {
         const typedTarget = event.target as HTMLButtonElement;
         this.props.dispatch(setSelectedSubject(typedTarget.id));
     }

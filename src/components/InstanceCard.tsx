@@ -46,12 +46,20 @@ export default class InstanceCard extends
                 </div>
             </div > :
             <div className="card mb-4 bg-faded clickable">
+                <div className="card-block"
+                    onClick={this.handleClickOpenDialog.bind(this)}>
+                    <p className="text-muted">Click for new instance</p>
+                </div>
                 <AddInstanceDialog />
             </div>;
 
         return <div className="col-4">
             {cardContent}
         </div>;
+    }
+
+    private handleClickOpenDialog() {
+        this.props.openDialog!();
     }
 
     /**

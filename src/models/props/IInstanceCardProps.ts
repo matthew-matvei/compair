@@ -36,6 +36,13 @@ interface IInstanceCardProps {
      * @memberof IInstanceCardProps
      */
     editInstance?: (instance: IInstance) => void;
+
+    /**
+     * A callback function to open the AddInstanceDialog.
+     *
+     * @memberof IInstanceCardProps
+     */
+    openDialog?: () => void;
 }
 
 export default IInstanceCardProps;

@@ -37,7 +37,9 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
         return <main className="col-sm-8 offset-sm-4 col-md-9 offset-md-3 pt-3">
             <div className="row">
                 {instanceElements}
-                <InstanceCard instance={null} currentSubject={null} />
+                <InstanceCard instance={null}
+                    currentSubject={null}
+                    openDialog={this.handleOpenDialog.bind(this)} />
             </div>
         </main>;
     }
@@ -67,6 +69,10 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
     private handleEditInstance(instance: IInstance) {
         this.props.dispatch(setSelectedInstanceName(instance.name));
         this.props.dispatch(openModal("editInstanceDialog"));
+    }
+
+    private handleOpenDialog() {
+        this.props.dispatch(openModal("addInstanceDialog"));
     }
 }
 

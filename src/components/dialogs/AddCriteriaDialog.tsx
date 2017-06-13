@@ -3,7 +3,7 @@ import * as ReactModal from "react-modal";
 import { connect } from "react-redux";
 
 import { addCriterion } from "actions/criteria";
-import { closeModal, openModal } from "actions/modals";
+import { closeModal } from "actions/modals";
 import { IState } from "models";
 import { IAddCriteriaDialogProps } from "models/props/dialogs";
 import { Priority } from "types";
@@ -75,77 +75,62 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                 </div>
             </form>);
 
-        return <div>
-            <button className="btn btn-secondary"
-                onClick={this.handleClick.bind(this)}>?</button>
-            <ReactModal isOpen={this.props.isShowingModal}
-                contentLabel="AddCriteraDialog"
-                onRequestClose={this.handleRequestClose.bind(this)}>
-                <div className="card">
-                    <div className="card-header text-right">
-                        <button className="btn btn-secondary"
-                            onClick={this.handleRequestClose.bind(this)}>
-                            x
+        return <ReactModal isOpen={this.props.isShowingModal}
+            contentLabel="AddCriteraDialog"
+            onRequestClose={this.handleRequestClose.bind(this)}>
+            <div className="card">
+                <div className="card-header text-right">
+                    <button className="btn btn-secondary"
+                        onClick={this.handleRequestClose.bind(this)}>
+                        x
                             </button>
-                    </div>
-                    <div className="card-block">
-                        <form className="form-inline">
-                            <div className="input-group col-6">
-                                <span className="input-group-addon">
-                                    Criterion Key
-                            </span>
-                                <input type="text"
-                                    className="form-control"
-                                    placeholder="Create criterion"
-                                    ref={(input) =>
-                                        this.criterionKeyInput = input} />
-                            </div>
-                            <div className="input-group col-2">
-                                <label className="form-check-label">
-                                    <input type="checkbox"
-                                        className="form-check-input"
-                                        ref={(input) =>
-                                            this.criterionOrderInput = input} />
-                                    Ascending
-                            </label>
-                            </div>
-                            <div className="input-group col-4">
-                                <span className="input-group-addon">
-                                    Priority
-                                </span>
-                                <input type="number" min="1" max="5"
-                                    ref={(input) =>
-                                        this.criterionPriorityInput = input} />
-                            </div>
-                        </form>
-                    </div>
-                    <div className="card-block">
-                        {criteriaElements}
-                    </div>
-                    <div className="card-footer text-right">
-                        <button className="btn btn-primary"
-                            onClick={this.handleClickCreate.bind(this)}>
-                            Create
-                            </button>
-                        <button className="btn btn-secondary"
-                            onClick={this.handleRequestClose.bind(this)}>
-                            Cancel
-                            </button>
-                    </div>
                 </div>
-            </ReactModal>
-        </div>;
-    }
-
-    /**
-     * Handles opening the modal on a user clicking the button.
-     *
-     * @private
-     *
-     * @memberof AddCriteriaDialog
-     */
-    private handleClick() {
-        this.props.dispatch(openModal("addCriterionDialog"));
+                <div className="card-block">
+                    <form className="form-inline">
+                        <div className="input-group col-6">
+                            <span className="input-group-addon">
+                                Criterion Key
+                            </span>
+                            <input type="text"
+                                className="form-control"
+                                placeholder="Create criterion"
+                                ref={(input) =>
+                                    this.criterionKeyInput = input} />
+                        </div>
+                        <div className="input-group col-2">
+                            <label className="form-check-label">
+                                <input type="checkbox"
+                                    className="form-check-input"
+                                    ref={(input) =>
+                                        this.criterionOrderInput = input} />
+                                Ascending
+                            </label>
+                        </div>
+                        <div className="input-group col-4">
+                            <span className="input-group-addon">
+                                Priority
+                                </span>
+                            <input type="number" min="1" max="5"
+                                ref={(input) =>
+                                    this.criterionPriorityInput = input} />
+                        </div>
+                    </form>
+                </div>
+                <div className="card-block">
+                    {criteriaElements}
+                </div>
+                <div className="card-footer text-right">
+                    <button className="btn btn-primary"
+                        onClick={this.handleClickCreate.bind(this)}>
+                        Create
+                            </button>
+                    <button className="btn btn-secondary"
+                        onClick={this.handleRequestClose.bind(this)}>
+                        Cancel
+                            </button>
+                </div>
+            </div>
+        </ReactModal>;
     }
 
     /**
