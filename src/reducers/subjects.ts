@@ -14,6 +14,15 @@ import { ISubject } from "models";
 
 const initialState: ISubject[] = [];
 
+/**
+ * @function makeSubject - Helper function that handles making a subject, both a
+ * new one (using just the name) and a full subject read from disk.
+ *
+ * @param state - the initial array of subjects
+ * @param action - the action containing the payload with the subject to make
+ *
+ * @returns - a list of subjects including the newly made one
+ */
 const makeSubject = (state: ISubject[], action: Action<ISubject>): ISubject[] => {
     if (!action.payload) {
         return state;
@@ -32,7 +41,7 @@ const makeSubject = (state: ISubject[], action: Action<ISubject>): ISubject[] =>
 export default handleActions<ISubject[], ISubject>({
 
     /**
-     * @function ADD_SUBJECT - Prepends a subject to the list of subjects.
+     * @function ADD_SUBJECT - Prepends a full subject to the list of subjects.
      *
      * @param state - The current list of subjects
      * @param action - The action containing the subject to add
@@ -45,6 +54,15 @@ export default handleActions<ISubject[], ISubject>({
         return makeSubject(state, action);
     },
 
+    /**
+     * @function CREATE_SUBJECT - Prepends a newly created subject to the list
+     *      of subjects.
+     *
+     * @param state - The current list of subjects
+     * @param action - The action containing the subject to add
+     *
+     * @returns - A list of subjects containing the given one
+     */
     [CREATE_SUBJECT]:
     (state: ISubject[], action: Action<ISubject>): ISubject[] => {
 

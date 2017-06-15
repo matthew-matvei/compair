@@ -30,13 +30,15 @@ import rootReducer from "reducers";
 
 const store: Store<any> = createStore(rootReducer);
 
-window.addEventListener("unload", () => {
-    saveSubjects(app.getPath("userData"), store.getState().subjects);
-});
-
+// Subjects are read from userData on loading of the main window
 window.addEventListener("load", () => {
     const subjects: ISubject[] = readSubjects(app.getPath("userData"));
     subjects.forEach(subject => store.dispatch(addSubject(subject)));
+});
+
+// Subjects are stored in userData on closing of the main window
+window.addEventListener("unload", () => {
+    saveSubjects(app.getPath("userData"), store.getState().subjects);
 });
 
 ReactDOM.render(<Provider store={store}>

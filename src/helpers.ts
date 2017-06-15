@@ -73,11 +73,25 @@ export function isMissingKeyValue(criteria: ICriterion[],
     return false;
 }
 
+/**
+ * Synchronously saves given subjects at the given filepath.
+ *
+ * @export
+ * @param {string} filepath - the directory in which to store the subjects
+ * @param {ISubject[]} subjects - the subjects to store
+ */
 export function saveSubjects(filepath: string, subjects: ISubject[]) {
     fs.writeFileSync(path.join(filepath, subjectsFile),
         JSON.stringify(subjects));
 }
 
+/**
+ * Synchronously reads subjects from given filepath.
+ *
+ * @export
+ * @param {string} filepath - the directory where subjects can be read
+ * @returns {ISubject[]} - the subjects read from disk
+ */
 export function readSubjects(filepath: string): ISubject[] {
     return <ISubject[]>(JSON.parse(fs.readFileSync(path.join(
         filepath, subjectsFile)).toString()));
