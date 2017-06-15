@@ -1,4 +1,10 @@
-import { ICriterion, IInstance, IKeyValue } from "models";
+import * as fs from "fs";
+import * as path from "path";
+
+import { ICriterion, IInstance, IKeyValue, ISubject } from "models";
+
+const appDir = ".app";
+const subjectsFile = ".subjects";
 
 /**
  * Orders given instances according to the given criteria.
@@ -66,4 +72,10 @@ export function isMissingKeyValue(criteria: ICriterion[],
     }
 
     return false;
+}
+
+export function saveSubjects(subjects: ISubject[]) {
+    const filename = path.join(path.resolve(
+        __dirname), "../", appDir, subjectsFile);
+    fs.writeFileSync(filename, JSON.stringify(subjects));
 }

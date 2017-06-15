@@ -20,15 +20,19 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { createStore, Store } from "redux";
-const remote = require("electron").remote;
+const app = (window as any).require("electron").remote.app;
+console.log(app);
 
 import { App } from "components";
+import { saveSubjects } from "helpers";
 import rootReducer from "reducers";
 
-const store: Store<{}> = createStore(rootReducer);
+window.onload = () => console.log("Loaded");
 
-remote.getCurrentWindow().on("close", () => {
-    console.log("window was closed!");
+const store: Store<any> = createStore(rootReducer);
+
+window.addEventListener("unload", () => {
+    saveSubjects(store.getState().subjects);
 });
 
 ReactDOM.render(<Provider store={store}>
