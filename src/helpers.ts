@@ -3,7 +3,6 @@ import * as path from "path";
 
 import { ICriterion, IInstance, IKeyValue, ISubject } from "models";
 
-const appDir = ".app";
 const subjectsFile = ".subjects";
 
 /**
@@ -74,8 +73,7 @@ export function isMissingKeyValue(criteria: ICriterion[],
     return false;
 }
 
-export function saveSubjects(subjects: ISubject[]) {
-    const filename = path.join(path.resolve(
-        __dirname), "../", appDir, subjectsFile);
-    fs.writeFileSync(filename, JSON.stringify(subjects));
+export function saveSubjects(filepath: string, subjects: ISubject[]) {
+    fs.writeFileSync(path.join(filepath, subjectsFile),
+        JSON.stringify(subjects));
 }
