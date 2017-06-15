@@ -22,10 +22,10 @@ import { Provider } from "react-redux";
 import { createStore, Store } from "redux";
 const app = (window as any).require("electron").remote.app;
 
-import { App } from "components";
-import { ISubject } from "models";
 import { addSubject } from "actions/subjects";
+import { App } from "components";
 import { readSubjects, saveSubjects } from "helpers";
+import { ISubject } from "models";
 import rootReducer from "reducers";
 
 const store: Store<any> = createStore(rootReducer);
@@ -36,8 +36,8 @@ window.addEventListener("unload", () => {
 
 window.addEventListener("load", () => {
     const subjects: ISubject[] = readSubjects(app.getPath("userData"));
-    subjects.forEach(subject => store.dispatch(addSubject())
-})
+    subjects.forEach(subject => store.dispatch(addSubject(subject)));
+});
 
 ReactDOM.render(<Provider store={store}>
     <App />

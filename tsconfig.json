@@ -6,7 +6,6 @@
         "noImplicitReturns": true,
         "noEmitOnError": true,
         "noImplicitThis": true,
-        "downlevelIteration": true,
         "jsx": "react",
         "module": "es2015",
         "moduleResolution": "node",
@@ -23,5 +22,8 @@
     "include": [
         "src",
         "test"
+    ],
+    "exclude": [
+        "node_modules"
     ]
 }

@@ -79,5 +79,6 @@ export function saveSubjects(filepath: string, subjects: ISubject[]) {
 }
 
 export function readSubjects(filepath: string): ISubject[] {
-    return <ISubject[]>(JSON.parse(fs.readFileSync(filepath).toString()));
+    return <ISubject[]>(JSON.parse(fs.readFileSync(path.join(
+        filepath, subjectsFile)).toString()));
 }

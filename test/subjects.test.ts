@@ -2,7 +2,7 @@ import { expect } from "chai";
 
 import { addCriterion, deleteCriterion } from "actions/criteria";
 import { addInstance, deleteInstance } from "actions/instances";
-import { addSubject, deleteSubject, renameSubject } from "actions/subjects";
+import { createSubject, deleteSubject, renameSubject } from "actions/subjects";
 import { ICriterion, IInstance, ISubject } from "models";
 import subjectReducer from "reducers/subjects";
 
@@ -143,9 +143,9 @@ describe("Subject reducers", () => {
                 testSubjects.pop();
             });
 
-            it("a subject to an empty list", () => {
+            it("to an empty list", () => {
                 const result = subjectReducer(testSubjects,
-                    addSubject(testSubjectToAdd.name));
+                    createSubject(testSubjectToAdd.name));
 
                 expect(result.some(
                     subject => subject.name === testSubjectToAdd.name))
@@ -153,11 +153,11 @@ describe("Subject reducers", () => {
                 expect(result.length).to.equal(1);
             });
 
-            it("a subject to a list of one", () => {
+            it("to a list of one", () => {
                 testSubjects.push(testSubject2);
 
                 const result = subjectReducer(testSubjects,
-                    addSubject(testSubjectToAdd.name));
+                    createSubject(testSubjectToAdd.name));
 
                 expect(result.some(
                     subject => subject.name === testSubjectToAdd.name))
@@ -165,12 +165,12 @@ describe("Subject reducers", () => {
                 expect(result.length).to.equal(2);
             });
 
-            it("a subject to a list of two", () => {
+            it("to a list of two", () => {
                 testSubjects.push(testSubject2);
                 testSubjects.push(testSubject3);
 
                 const result = subjectReducer(testSubjects,
-                    addSubject(testSubjectToAdd.name));
+                    createSubject(testSubjectToAdd.name));
 
                 expect(result.some(
                     subject => subject.name === testSubjectToAdd.name))
@@ -178,16 +178,16 @@ describe("Subject reducers", () => {
                 expect(result.length).to.equal(3);
             });
 
-            it("the new subject to the start of the list", () => {
+            it("to the start of the list", () => {
                 testSubjects.push(testSubject2, testSubject3);
 
                 const result = subjectReducer(testSubjects,
-                    addSubject(testSubjectToAdd.name))[0];
+                    createSubject(testSubjectToAdd.name))[0];
 
                 expect(result.name === testSubjectToAdd.name);
             });
 
-            it("a subject as long as it doesn't already exist", () => {
+            it("as long as it doesn't already exist", () => {
                 testSubjects.push({
                     name: testSubjectToAdd.name,
                     criteria: [],
@@ -195,7 +195,7 @@ describe("Subject reducers", () => {
                 });
 
                 const result = subjectReducer(testSubjects,
-                    addSubject(testSubjectToAdd.name));
+                    createSubject(testSubjectToAdd.name));
 
                 expect(result.length).to.equal(1);
             });

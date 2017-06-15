@@ -4,6 +4,7 @@ import {
     ADD_CRITERION,
     ADD_INSTANCE,
     ADD_SUBJECT,
+    CREATE_SUBJECT,
     DELETE_CRITERION,
     DELETE_INSTANCE,
     DELETE_SUBJECT,
@@ -11,30 +12,22 @@ import {
 } from "actions/types";
 import { ISubject } from "models";
 
-const initialState: ISubject[] = [{
-    name: "Cities",
-    criteria: [{
-        key: "Cost of living per month",
-        order: "desc",
-        priority: 3
-    },
-    {
-        key: "Average salary",
-        order: "asc",
-        priority: 3
-    }],
-    instances: [{
-        name: "Moscow",
-        values: [{
-            key: "Cost of living per month",
-            value: 100
-        },
-        {
-            key: "Average salary",
-            value: 1000
-        }]
-    }]
-}];
+const initialState: ISubject[] = [];
+
+const makeSubject = (state: ISubject[], action: Action<ISubject>): ISubject[] => {
+    if (!action.payload) {
+        return state;
+    }
+
+    const subjectExists: boolean = state.some(
+        subject => action.payload!.name === subject.name);
+
+    if (!subjectExists) {
+        return [action.payload, ...state];
+    }
+
+    return state;
+};
 
 export default handleActions<ISubject[], ISubject>({
 
@@ -49,18 +42,13 @@ export default handleActions<ISubject[], ISubject>({
     [ADD_SUBJECT]:
     (state: ISubject[], action: Action<ISubject>): ISubject[] => {
 
-        if (!action.payload) {
-            return state;
-        }
+        return makeSubject(state, action);
+    },
 
-        const subjectExists: boolean = state.some(
-            subject => action.payload!.name === subject.name);
+    [CREATE_SUBJECT]:
+    (state: ISubject[], action: Action<ISubject>): ISubject[] => {
 
-        if (!subjectExists) {
-            return [action.payload, ...state];
-        }
-
-        return state;
+        return makeSubject(state, action);
     },
 
     /**
@@ -243,6 +231,5 @@ export default handleActions<ISubject[], ISubject>({
             return subject;
         });
     },
-
 
 }, initialState);

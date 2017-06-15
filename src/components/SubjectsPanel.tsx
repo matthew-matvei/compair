@@ -3,7 +3,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { openModal } from "actions/modals";
-import { addSubject, setSelectedSubject } from "actions/subjects";
+import { createSubject, setSelectedSubject } from "actions/subjects";
 import { AddCriteriaDialog } from "components";
 import { IState } from "models";
 import { ISubjectsPanelProps } from "models/props";
@@ -68,7 +68,7 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
         // 13 = Enter key
         if (event.which === 13) {
             const newSubjectName = event.target.value.trim();
-            this.props.dispatch(addSubject(newSubjectName));
+            this.props.dispatch(createSubject(newSubjectName));
             event.target.value = "";
         }
     }
