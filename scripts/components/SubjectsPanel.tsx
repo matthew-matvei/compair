@@ -52,7 +52,7 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
                 <li className="list-group-item">
                     <input type="text"
                         className="form-control"
-                        placeholder="add subject"
+                        placeholder="Subject name..."
                         onKeyDown={this.handleKeyDown.bind(this)} />
                 </li>
             </ul>
