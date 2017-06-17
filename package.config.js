@@ -4,7 +4,7 @@ const ignore = (filePath) => filePath.includes(".js.map") ||
     filePath.includes("Test");
 
 const options = {
-    dir: "app",
+    dir: "dist",
     arch: "all",
     out: "packages",
     overwrite: "true",
