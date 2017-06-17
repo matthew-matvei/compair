@@ -87,7 +87,8 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
             onRequestClose={this.handleRequestClose.bind(this)}
             style={dialogStyles}>
             <div className="card">
-                <div className="card-header text-right">
+                <div className="card-header dialog-header">
+                    <h2 className="card-title text-muted">Add a criterion</h2>
                     <button className="btn btn-secondary"
                         onClick={this.handleRequestClose.bind(this)}>
                         <Icon name="close" />
@@ -101,7 +102,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                             </span>
                             <input type="text"
                                 className="form-control"
-                                placeholder="Create criterion"
+                                placeholder="Criterion name..."
                                 ref={(input) =>
                                     this.criterionKeyInput = input} />
                         </div>

@@ -96,39 +96,39 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
             rows.push(row);
         }
 
-        return (
-            <ReactModal isOpen={this.props.isShowingModal}
-                contentLabel="AddInstanceDialog"
-                onRequestClose={this.handleRequestClose.bind(this)}
-                style={dialogStyles}>
-                <div className="card">
-                    <div className="card-header text-right">
-                        <button className="btn btn-secondary"
-                            onClick={this.handleRequestClose.bind(this)}>
-                            <Icon name="close" />
-                        </button>
-                    </div>
-                    <div className="card-block">
-                        <input className="form-control"
-                            placeholder="Create instance"
-                            ref={(input) =>
-                                this.instanceNameInput = input} />
-                    </div>
-                    <div className="card-block">
-                        {rows}
-                    </div>
-                    <div className="card-footer text-right">
-                        <button className="btn btn-primary mr-3"
-                            onClick={this.handleClickCreate.bind(this)}>
-                            Create
-                            </button>
-                        <button className="btn btn-secondary"
-                            onClick={this.handleRequestClose.bind(this)}>
-                            Cancel
-                            </button>
-                    </div>
+        return <ReactModal isOpen={this.props.isShowingModal}
+            contentLabel="AddInstanceDialog"
+            onRequestClose={this.handleRequestClose.bind(this)}
+            style={dialogStyles}>
+            <div className="card">
+                <div className="card-header dialog-header">
+                    <h2 className="card-title text-muted">Add an instance</h2>
+                    <button className="btn btn-secondary"
+                        onClick={this.handleRequestClose.bind(this)}>
+                        <Icon name="close" />
+                    </button>
                 </div>
-            </ReactModal>);
+                <div className="card-block">
+                    <input className="form-control"
+                        placeholder="Instance name..."
+                        ref={(input) =>
+                            this.instanceNameInput = input} />
+                </div>
+                <div className="card-block">
+                    {rows}
+                </div>
+                <div className="card-footer text-right">
+                    <button className="btn btn-primary mr-3"
+                        onClick={this.handleClickCreate.bind(this)}>
+                        Create
+                            </button>
+                    <button className="btn btn-secondary"
+                        onClick={this.handleRequestClose.bind(this)}>
+                        Cancel
+                            </button>
+                </div>
+            </div>
+        </ReactModal>;
     }
 
     /**

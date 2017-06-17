@@ -22,6 +22,11 @@
    z-index: 1000;
  }
 
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+}
+
 /*
  * Custom styles
  */
