@@ -33,7 +33,7 @@ export default class InstanceCard extends
             }) : "";
 
         const cardContent = instance && currentSubject ?
-            <div className={`card mb4 ${classes}`}>
+            <div className={`card mb-4 ${classes}`}>
                 <div className="card-block clickable"
                     onClick={this.handleClick.bind(this)}>
                     <h3 className="card-title">{instance.name}</h3>
