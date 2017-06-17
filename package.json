@@ -42,6 +42,7 @@
     "@types/react-redux": "^4.4.40",
     "@types/redux-actions": "^1.2.4",
     "chai": "^3.5.0",
+    "electron-packager": "^8.7.1",
     "mocha": "^3.4.1"
   }
 }
