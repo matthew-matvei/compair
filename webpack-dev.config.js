@@ -5,7 +5,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const baseConfig = require("./webpack-base.config");
 
 module.exports = merge(baseConfig, {
-    entry: "./src/main",
+    entry: "./scripts/main",
     output: {
         path: __dirname + "/dist",
         filename: "out.js"

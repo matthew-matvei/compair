@@ -83,7 +83,8 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
 
         return <ReactModal isOpen={this.props.isShowingModal}
             contentLabel="AddCriteraDialog"
-            onRequestClose={this.handleRequestClose.bind(this)}>
+            onRequestClose={this.handleRequestClose.bind(this)}
+            overlayClassName="dialog-overlay" >
             <div className="card">
                 <div className="card-header text-right">
                     <button className="btn btn-secondary"

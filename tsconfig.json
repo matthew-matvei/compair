@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "baseUrl": "src",
+        "baseUrl": "scripts",
         "sourceMap": true,
         "noImplicitAny": true,
         "noImplicitReturns": true,

@@ -8,7 +8,7 @@ module.exports = {
             ".js"
         ],
         modules: [
-            path.resolve(__dirname, "src"),
+            path.resolve(__dirname, "scripts"),
             "node_modules"
         ]
     },
