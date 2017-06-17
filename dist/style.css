@@ -15,10 +15,10 @@
 }
 
 /*
- * Modal
+ * Dialogs
  */
 
- .ReactModal__Overlay {
+ .ReactModal__Overlay, .ReactModal__Overlay--after-open {
    z-index: 1000;
  }
 

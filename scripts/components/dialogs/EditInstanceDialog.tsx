@@ -1,7 +1,7 @@
 import * as React from "react";
+import { Icon } from "react-fa";
 import * as ReactModal from "react-modal";
 import { connect } from "react-redux";
-import { Icon } from "react-fa";
 
 import {
     addInstance,
@@ -9,6 +9,7 @@ import {
     setSelectedInstanceName
 } from "actions/instances";
 import { closeModal } from "actions/modals";
+import { dialogStyles } from "const";
 import { IKeyValue, IState } from "models";
 import { IEditInstanceDialogProps } from "models/props";
 
@@ -119,7 +120,8 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
 
         return <ReactModal isOpen={this.props.isShowingModal}
             contentLabel="EditCriteraDialog"
-            onRequestClose={this.handleRequestClose.bind(this)}>
+            onRequestClose={this.handleRequestClose.bind(this)}
+            style={dialogStyles}>
             <div className="card">
                 <div className="card-header text-right">
                     <button className="btn btn-secondary"
@@ -137,7 +139,7 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
                     {rows}
                 </div>
                 <div className="card-footer text-right">
-                    <button className="btn btn-primary"
+                    <button className="btn btn-primary mr-3"
                         onClick={this.handleClickEdit.bind(this)}>
                         Edit
                             </button>

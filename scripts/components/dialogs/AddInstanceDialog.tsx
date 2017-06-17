@@ -1,10 +1,11 @@
 import * as React from "react";
+import { Icon } from "react-fa";
 import * as ReactModal from "react-modal";
 import { connect } from "react-redux";
-import { Icon } from "react-fa";
 
 import { addInstance } from "actions/instances";
 import { closeModal } from "actions/modals";
+import { dialogStyles } from "const";
 import { IKeyValue, IState } from "models";
 import { IAddInstanceDialogProps } from "models/props";
 
@@ -98,7 +99,8 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
         return (
             <ReactModal isOpen={this.props.isShowingModal}
                 contentLabel="AddInstanceDialog"
-                onRequestClose={this.handleRequestClose.bind(this)}>
+                onRequestClose={this.handleRequestClose.bind(this)}
+                style={dialogStyles}>
                 <div className="card">
                     <div className="card-header text-right">
                         <button className="btn btn-secondary"
@@ -116,7 +118,7 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
                         {rows}
                     </div>
                     <div className="card-footer text-right">
-                        <button className="btn btn-primary"
+                        <button className="btn btn-primary mr-3"
                             onClick={this.handleClickCreate.bind(this)}>
                             Create
                             </button>

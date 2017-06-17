@@ -1,10 +1,11 @@
 import * as React from "react";
+import { Icon } from "react-fa";
 import * as ReactModal from "react-modal";
 import { connect } from "react-redux";
-import { Icon } from "react-fa";
 
 import { addCriterion } from "actions/criteria";
 import { closeModal } from "actions/modals";
+import { dialogStyles } from "const";
 import { IState } from "models";
 import { IAddCriteriaDialogProps } from "models/props/dialogs";
 import { Priority } from "types";
@@ -76,15 +77,15 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                 </div>
                 <div className="input-group col-4">
                     <span className="input-group-addon">Priority</span>
-                    <input type="number" min="1" max="5"
-                        value={criterion.priority} />
+                    <input type="number" className="form-control"
+                        min="1" max="5" value={criterion.priority} />
                 </div>
             </form>);
 
         return <ReactModal isOpen={this.props.isShowingModal}
             contentLabel="AddCriteraDialog"
             onRequestClose={this.handleRequestClose.bind(this)}
-            overlayClassName="dialog-overlay" >
+            style={dialogStyles}>
             <div className="card">
                 <div className="card-header text-right">
                     <button className="btn btn-secondary"
@@ -117,8 +118,8 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                             <span className="input-group-addon">
                                 Priority
                                 </span>
-                            <input type="number" min="1" max="5"
-                                ref={(input) =>
+                            <input type="number" className="form-control"
+                                min="1" max="5" ref={(input) =>
                                     this.criterionPriorityInput = input} />
                         </div>
                     </form>
@@ -127,7 +128,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                     {criteriaElements}
                 </div>
                 <div className="card-footer text-right">
-                    <button className="btn btn-primary"
+                    <button className="btn btn-primary mr-3"
                         onClick={this.handleClickCreate.bind(this)}>
                         Create
                             </button>
