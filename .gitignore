@@ -1,2 +1,7 @@
 node_modules
-dist
+.vscode/settings.json
+dist/*
+!dist/index.html
+!dist/style.css
+!dist/server.js
+packages
