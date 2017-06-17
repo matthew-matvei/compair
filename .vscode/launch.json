@@ -10,7 +10,7 @@
             "request": "launch",
             "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
             "runtimeArgs": [
-                "${workspaceRoot}/server.js",
+                "${workspaceRoot}/dist/server.js",
                 "--enable-logging",
                 "--remote-debugging-port=9222"
             ],
