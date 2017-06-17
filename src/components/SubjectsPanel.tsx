@@ -1,5 +1,6 @@
 import * as classNames from "classnames";
 import * as React from "react";
+import { Icon } from "react-fa";
 import { connect } from "react-redux";
 
 import { openModal } from "actions/modals";
@@ -36,7 +37,9 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
                     {subject.name}
                 </button>
                 <button className="btn btn-secondary"
-                    onClick={this.handleClickOpenDialog.bind(this)}>?</button>
+                    onClick={this.handleClickOpenDialog.bind(this)}>
+                    <Icon name="bars" />
+                </button>
                 <AddCriteriaDialog />
             </div>;
         });

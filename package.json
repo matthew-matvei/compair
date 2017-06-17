@@ -29,6 +29,7 @@
     "express": "^4.15.3",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-fa": "^4.2.0",
     "react-modal": "^1.7.7",
     "react-redux": "^5.0.5",
     "redux": "^3.6.0",
@@ -45,12 +46,18 @@
     "@types/node": "^7.0.31",
     "@types/react": "^15.0.24",
     "@types/react-dom": "^15.5.0",
+    "@types/react-fa": "^4.1.1",
     "@types/react-modal": "^1.6.6",
     "@types/react-redux": "^4.4.40",
     "@types/redux-actions": "^1.2.4",
     "chai": "^3.5.0",
     "cp-cli": "^1.0.2",
+    "css-loader": "^0.28.4",
     "electron-packager": "^8.7.1",
-    "mocha": "^3.4.1"
+    "extract-text-webpack-plugin": "^2.1.2",
+    "file-loader": "^0.11.2",
+    "mocha": "^3.4.1",
+    "style-loader": "^0.18.2",
+    "url-loader": "^0.5.9"
   }
 }

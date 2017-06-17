@@ -1,5 +1,6 @@
 import * as classNames from "classnames";
 import * as React from "react";
+import { Icon } from "react-fa";
 
 import { isMissingKeyValue } from "helpers";
 import { IInstanceCardProps } from "models/props";
@@ -41,7 +42,7 @@ export default class InstanceCard extends
                     <EditInstanceDialog />
                     <button className="btn btn-sm btn-danger"
                         onClick={this.handleClickDelete.bind(this)}>
-                        x
+                        <Icon name="close" />
                     </button>
                 </div>
             </div > :

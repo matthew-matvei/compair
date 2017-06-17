@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as ReactModal from "react-modal";
 import { connect } from "react-redux";
+import { Icon } from "react-fa";
 
 import {
     addInstance,
@@ -123,8 +124,8 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
                 <div className="card-header text-right">
                     <button className="btn btn-secondary"
                         onClick={this.handleRequestClose.bind(this)}>
-                        x
-                            </button>
+                        <Icon name="close" />
+                    </button>
                 </div>
                 <div className="card-block">
                     {selectedInstance && <input className="form-control"
