@@ -93,6 +93,12 @@ export function saveSubjects(filepath: string, subjects: ISubject[]) {
  * @returns {ISubject[]} - the subjects read from disk
  */
 export function readSubjects(filepath: string): ISubject[] {
-    return <ISubject[]>(JSON.parse(fs.readFileSync(path.join(
-        filepath, subjectsFile)).toString()));
+    const filename = path.join(filepath, subjectsFile);
+
+    if (fs.existsSync(filename)) {
+        return <ISubject[]>(JSON.parse(fs.readFileSync(path.join(
+            filepath, subjectsFile)).toString()));
+    }
+
+    return [];
 }
