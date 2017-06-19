@@ -66,6 +66,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                 <div className="input-group col-6">
                     <span className="input-group-addon">Criterion Key</span>
                     <input type="text" className="form-control"
+                        id={criterion.key}
                         value={criterion.key} />
                 </div>
                 <div className="input-group col-2">
@@ -88,7 +89,9 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
             style={dialogStyles}>
             <div className="card">
                 <div className="card-header dialog-header">
-                    <h2 className="card-title text-muted">Add a criterion</h2>
+                    <h2 className="card-title text-muted">
+                        {`Add a criterion - ${this.props.selectedSubjectName}`}
+                    </h2>
                     <button className="btn btn-secondary"
                         onClick={this.handleRequestClose.bind(this)}>
                         <Icon name="close" />

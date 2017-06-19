@@ -124,7 +124,9 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
             style={dialogStyles}>
             <div className="card">
                 <div className="card-header dialog-header">
-                    <h2 className="card-title text-muted">Edit an instance</h2>
+                    <h2 className="card-title text-muted">
+                        {`Edit an instance - ${this.props.selectedSubjectName}`}
+                    </h2>
                     <button className="btn btn-secondary"
                         onClick={this.handleRequestClose.bind(this)}>
                         <Icon name="close" />
