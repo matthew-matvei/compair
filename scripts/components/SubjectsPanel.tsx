@@ -37,8 +37,10 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
                     {subject.name}
                 </button>
                 <button className="btn btn-secondary"
+                    id={subject.name}
                     onClick={this.handleClickOpenDialog.bind(this)}>
-                    <Icon name="bars" />
+                    <Icon id={subject.name} name="bars"
+                        onClick={this.handleClickOpenDialog.bind(this)} />
                 </button>
                 <AddCriteriaDialog />
             </div>;
@@ -76,7 +78,8 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
         }
     }
 
-    private handleClickOpenDialog() {
+    private handleClickOpenDialog(event: Event) {
+        this.handleClickSetSelectedSubject(event);
         this.props.dispatch(openModal("addCriterionDialog"));
     }
 
