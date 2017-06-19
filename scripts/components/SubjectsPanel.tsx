@@ -78,6 +78,15 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
         }
     }
 
+    /**
+     * Handles opening the dialog to add a criterion and sets the selected
+     * subject.
+     *
+     * @private
+     * @param {Event} event - the event from which to take the target's id
+     *
+     * @memberof SubjectsPanel
+     */
     private handleClickOpenDialog(event: Event) {
         this.handleClickSetSelectedSubject(event);
         this.props.dispatch(openModal("addCriterionDialog"));
@@ -87,7 +96,7 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
      * Handles setting the selected subject on user clicking its button.
      *
      * @private
-     * @param {Event} event
+     * @param {Event} event - the event from which to take the target's id
      *
      * @memberof SubjectsPanel
      */
