@@ -1,3 +1,4 @@
+import Tooltip from "rc-tooltip";
 import * as React from "react";
 import { Icon } from "react-fa";
 import * as ReactModal from "react-modal";
@@ -61,27 +62,40 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
             return null;
         }
 
-        const criteriaElements = selectedSubject.criteria.map(criterion =>
-            <form className="form-inline pb-2">
-                <div className="input-group col-6">
-                    <span className="input-group-addon">Criterion Key</span>
-                    <input type="text" className="form-control"
-                        id={criterion.key}
-                        value={criterion.key} />
-                </div>
-                <div className="input-group col-2">
-                    <label className="form-check-label">
-                        <input type="checkbox" className="form-check-input"
-                            checked={criterion.order === "asc"} />
-                        Ascending
-                    </label>
-                </div>
-                <div className="input-group col-4">
-                    <span className="input-group-addon">Priority</span>
-                    <input type="number" className="form-control"
-                        min="1" max="5" value={criterion.priority} />
-                </div>
-            </form>);
+        const criteriaElements = selectedSubject.criteria.map(criterion => {
+            const orderTooltip = criterion.order === "asc" ?
+                "The more the merrier!" : "Smaller wins, like golf!";
+
+            return (
+                <form className="form-inline pb-2"
+                    key={`form-${criterion.key}`}>
+                    <div className="input-group col-6">
+                        <span className="input-group-addon">Criterion Key</span>
+                        <input type="text" className="form-control"
+                            id={criterion.key}
+                            value={criterion.key} />
+                    </div>
+                    <div className="input-group col-2">
+                        <Tooltip overlay={<span>{orderTooltip}</span>}>
+                            <label className="form-check-label">
+                                <input type="checkbox"
+                                    className="form-check-input"
+                                    checked={criterion.order === "asc"} />
+                                Ascending
+                            </label>
+                        </Tooltip>
+                    </div>
+                    <div className="input-group col-4">
+                        <span className="input-group-addon">Priority</span>
+                        <input type="number" className="form-control"
+                            min="1" max="5" value={criterion.priority} />
+                    </div>
+                </form>);
+        });
+
+        const orderTooltip = this.criterionOrderInput &&
+            this.criterionOrderInput.value ? "The more the merrier!" :
+            "Smaller wins, like golf!";
 
         return <ReactModal isOpen={this.props.isShowingModal}
             contentLabel="AddCriteraDialog"
@@ -110,13 +124,15 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                                     this.criterionKeyInput = input} />
                         </div>
                         <div className="input-group col-2">
-                            <label className="form-check-label">
-                                <input type="checkbox"
-                                    className="form-check-input"
-                                    ref={(input) =>
-                                        this.criterionOrderInput = input} />
-                                Ascending
+                            <Tooltip overlay={<span>{orderTooltip}</span>}>
+                                <label className="form-check-label">
+                                    <input type="checkbox"
+                                        className="form-check-input"
+                                        ref={(input) =>
+                                            this.criterionOrderInput = input} />
+                                    Ascending
                             </label>
+                            </Tooltip>
                         </div>
                         <div className="input-group col-4">
                             <span className="input-group-addon">
