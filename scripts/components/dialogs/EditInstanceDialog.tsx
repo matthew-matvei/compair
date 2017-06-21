@@ -86,7 +86,7 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
 
                         return false;
                     });
-            const thisElement = <div className="col-6">
+            const thisElement = <div className="col-6" key={criterion.key}>
                 <div className="input-group">
                     <span className="input-group-addon">{criterion.key}</span>
                     <input type="number"
@@ -97,7 +97,7 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
                 </div>
             </div>;
             const nextElement = nextCriterion ?
-                <div className="col-6">
+                <div className="col-6" key={nextCriterion.key}>
                     <div className="input-group">
                         <span className="input-group-addon">
                             {nextCriterion.key}
@@ -110,7 +110,7 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
                             ref={(input) => this.criteriaInputs.push(input)} />
                     </div>
                 </div> : null;
-            const row = <div className="row pb-2">
+            const row = <div className="row pb-2" key={`row-${i}`}>
                 {thisElement}
                 {nextElement}
             </div>;

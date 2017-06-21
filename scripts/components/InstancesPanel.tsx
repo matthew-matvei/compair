@@ -35,6 +35,7 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
             selectedSubject.criteria, selectedSubject.instances)
             .map(instance =>
                 <InstanceCard instance={instance}
+                    key={instance.name}
                     currentSubject={selectedSubject}
                     deleteInstance={this.handleDeleteInstance.bind(this)}
                     editInstance={this.handleEditInstance.bind(this)} />);
@@ -43,6 +44,7 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
             <div className="row">
                 {instanceElements}
                 <InstanceCard instance={null}
+                    key="New Instance"
                     currentSubject={null}
                     openDialog={this.handleOpenDialog.bind(this)} />
             </div>

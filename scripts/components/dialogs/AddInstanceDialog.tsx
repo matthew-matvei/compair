@@ -67,7 +67,7 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
             const criterion = selectedSubject.criteria[i];
             const nextCriterion = i < selectedSubject.criteria.length - 1 ?
                 selectedSubject.criteria[i + 1] : null;
-            const thisElement = <div className="col-6">
+            const thisElement = <div className="col-6" key={criterion.key}>
                 <div className="input-group">
                     <span className="input-group-addon">{criterion.key}</span>
                     <input type="number"
@@ -77,7 +77,7 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
                 </div>
             </div>;
             const nextElement = nextCriterion ?
-                <div className="col-6">
+                <div className="col-6" key={nextCriterion.key}>
                     <div className="input-group">
                         <span className="input-group-addon">
                             {nextCriterion.key}
