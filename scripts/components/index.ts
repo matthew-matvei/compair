@@ -1,4 +1,5 @@
 import App from "components/App";
+import Criterion from "components/blocks/Criterion";
 import AddCriteriaDialog from "components/dialogs/AddCriteriaDialog";
 import AddInstanceDialog from "components/dialogs/AddInstanceDialog";
 import EditInstanceDialog from "components/dialogs/EditInstanceDialog";
@@ -12,6 +13,7 @@ export {
     App,
     AddCriteriaDialog,
     AddInstanceDialog,
+    Criterion,
     EditInstanceDialog,
     Header,
     InstanceCard,
