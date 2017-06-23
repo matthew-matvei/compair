@@ -87,8 +87,13 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                     </div>
                     <div className="input-group col-4">
                         <span className="input-group-addon">Priority</span>
-                        <input type="number" className="form-control"
-                            min="1" max="5" value={criterion.priority} />
+                        <Tooltip overlay={
+                            <span>
+                                1 = unimportant; 5 = very important
+                            </span>}>
+                            <input type="number" className="form-control"
+                                min="1" max="5" value={criterion.priority} />
+                        </Tooltip>
                     </div>
                 </form>);
         });
@@ -138,9 +143,14 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                             <span className="input-group-addon">
                                 Priority
                                 </span>
-                            <input type="number" className="form-control"
-                                min="1" max="5" ref={(input) =>
-                                    this.criterionPriorityInput = input} />
+                            <Tooltip overlay={
+                                <span>
+                                    1 = unimportant; 5 = very important
+                                </span>}>
+                                <input type="number" className="form-control"
+                                    min="1" max="5" ref={(input) =>
+                                        this.criterionPriorityInput = input} />
+                            </Tooltip>
                         </div>
                     </form>
                 </div>
