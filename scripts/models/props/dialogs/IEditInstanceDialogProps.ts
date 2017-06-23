@@ -1,4 +1,4 @@
-import { IDialogProps } from "models/props/dialogs";
+import { IDialogProps } from "models/props";
 
 /**
  * The properties for an EditInstanceDialog.
