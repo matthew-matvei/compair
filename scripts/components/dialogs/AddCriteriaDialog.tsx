@@ -4,20 +4,17 @@ import { Icon } from "react-fa";
 import * as ReactModal from "react-modal";
 import { connect } from "react-redux";
 
-import { addCriterion } from "actions/criteria";
+import { addCriterion, editCriterion } from "actions/criteria";
 import { closeModal } from "actions/modals";
 import { deleteSubject } from "actions/subjects";
 import { Criterion } from "components";
 import { dialogStyles } from "const";
-import { IState } from "models";
+import { ICriterion, IState } from "models";
 import { IAddCriteriaDialogProps } from "models/props";
 import { Priority } from "types";
 
 /**
  * A dialog for creating new criteria.
- *
- * @class AddCriteriaDialog
- * @extends {React.Component<IAddCriteriaDialogProps, {}>}
  */
 class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
 
@@ -29,10 +26,6 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
 
     /**
      * Defines the rendering of this component.
-     *
-     * @returns {JSX.Element | null} - The JSX required to create this component
-     *
-     * @memberof AddCriteriaDialog
      */
     public render(): JSX.Element | null {
 
@@ -47,6 +40,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
             return <Criterion key={criterion.key}
                 ref={(criterionElement) =>
                     this.criteria[criterion.key] = criterionElement}
+                onChange={this.handleCriterionChange.bind(this)}
                 keyInputValue={criterion.key}
                 orderInputChecked={criterion.order === "asc"}
                 priorityInputValue={criterion.priority} />;
@@ -68,7 +62,8 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                 </div>
                 <div className="card-block">
                     <Criterion ref={(criterion) =>
-                        this.newCriterion = criterion} />
+                        this.newCriterion = criterion}
+                        newCriterion />
                 </div>
                 <div className="card-block">
                     {criteriaElements}
@@ -84,7 +79,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                     </button>
                     <button className="btn btn-secondary"
                         onClick={this.handleRequestClose.bind(this)}>
-                        Cancel
+                        Close
                     </button>
                 </div>
             </div>
@@ -93,10 +88,6 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
 
     /**
      * Handles creating the new criterion on the user clicking 'create'.
-     *
-     * @private
-     *
-     * @memberof AddCriteriaDialog
      */
     private handleClickCreate() {
         const currentSubject = this.props.subjects.find(
@@ -120,30 +111,19 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
         this.handleRequestClose();
     }
 
-    /**
-     * Handles closing the modal and nulling the modals inputs, since the
-     * dialog component is not actually dismounted from the DOM.
-     *
-     * @private
-     *
-     * @memberof AddCriteriaDialog
-     */
-    private handleRequestClose() {
-        this.props.dispatch(closeModal());
-        this.cleanInputs();
+    private handleCriterionChange(criterion: ICriterion) {
+        const currentSubject = this.props.subjects.find(
+            subject => subject.name === this.props.selectedSubjectName)!;
+
+        this.props.dispatch(editCriterion(currentSubject, criterion));
     }
 
     /**
-     * Clears the values for the modals inputs.
-     *
-     * @private
-     *
-     * @memberof AddCriteriaDialog
+     * Handles closing the modal and nulling the modals inputs, since the
+     * dialog component is not actually dismounted from the DOM.
      */
-    private cleanInputs() {
-        /*this.criterionKeyInput.value = "";
-        this.criterionOrderInput.checked = false;
-        this.criterionPriorityInput.value = "";*/
+    private handleRequestClose() {
+        this.props.dispatch(closeModal());
     }
 }
 

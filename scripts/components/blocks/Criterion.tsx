@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { SimpleTooltip } from "components";
+import { ICriterion } from "models";
 import { ICriterionProps } from "models/props";
 import { ICriterionState } from "models/states";
 import { Priority } from "types";
@@ -26,12 +27,13 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
             <div className="input-group col-6">
                 <span className="input-group-addon">
                     Criterion Key
-                            </span>
+                </span>
                 <input type="text"
                     className="form-control"
                     placeholder="Criterion name..."
                     value={this.state.keyInputValue}
-                    onChange={this.handleKeyChange.bind(this)} />
+                    onChange={this.props.newCriterion ?
+                        this.handleChangeKey.bind(this) : undefined} />
             </div>
             <div className="input-group col-2">
                 <SimpleTooltip message={orderTooltip}>
@@ -39,9 +41,9 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
                         <input type="checkbox"
                             className="form-check-input"
                             checked={this.state.orderInputChecked}
-                            onClick={this.handleClickOrder.bind(this)} />
+                            onChange={this.handleClickOrder.bind(this)} />
                         Ascending
-                            </label>
+                    </label>
                 </SimpleTooltip>
             </div>
             <div className="input-group col-4">
@@ -59,21 +61,37 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
         </form>;
     }
 
-    private handleClickOrder(event: React.MouseEvent<HTMLInputElement>) {
-        const typedTarget = event.target as HTMLInputElement;
-        this.setState({ orderInputChecked: typedTarget.checked });
-    }
-
-    private handleKeyChange(event: React.ChangeEvent<HTMLInputElement>) {
+    private handleChangeKey(event: React.ChangeEvent<HTMLInputElement>) {
         const typedTarget = event.target as HTMLInputElement;
         this.setState({ keyInputValue: typedTarget.value });
+    }
+
+    private handleClickOrder(event: React.MouseEvent<HTMLInputElement>) {
+        const typedTarget = event.target as HTMLInputElement;
+        this.setState({ orderInputChecked: typedTarget.checked }, () => {
+            this.sendCriterionUp();
+        });
     }
 
     private handlePriorityChange(event: React.ChangeEvent<HTMLInputElement>) {
         const typedTarget = event.target as HTMLInputElement;
         this.setState({
             priorityInputValue: parseInt(typedTarget.value) as Priority
+        }, () => {
+            this.sendCriterionUp();
         });
+    }
+
+    private sendCriterionUp() {
+        if (this.props.onChange) {
+            const criterion: ICriterion = {
+                key: this.state.keyInputValue,
+                order: this.state.orderInputChecked ? "asc" : "desc",
+                priority: this.state.priorityInputValue || 1
+            };
+
+            this.props.onChange(criterion);
+        }
     }
 }
 

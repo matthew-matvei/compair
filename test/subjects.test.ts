@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { addCriterion, deleteCriterion } from "actions/criteria";
+import { addCriterion, deleteCriterion, editCriterion } from "actions/criteria";
 import { addInstance, deleteInstance } from "actions/instances";
 import { createSubject, deleteSubject, renameSubject } from "actions/subjects";
 import { ICriterion, IInstance, ISubject } from "models";
@@ -199,6 +199,33 @@ describe("Subject reducers", () => {
 
                 expect(result.length).to.equal(1);
             });
+        });
+    });
+
+    describe("edit", () => {
+
+        it("a criterion", () => {
+            testSubjectToAdd.criteria.push(testCriterionToAdd);
+            const result = subjectReducer(testSubjects, editCriterion(
+                testSubjectToAdd, {
+                    key: testCriterionToAdd.key,
+                    order: "desc",
+                    priority: 5
+                }));
+
+            expect(result.some(subject => subject.criteria.some(
+                criterion => criterion.key === testCriterionToAdd.key &&
+                    criterion.order === "desc" &&
+                    criterion.priority === 5))).to.be.true;
+        });
+
+        it("nothing when criterion doesn't exist", () => {
+            testSubjectToAdd.criteria.push(testCriterion2);
+            const result = subjectReducer(testSubjects, editCriterion(
+                testSubjectToAdd, testCriterion3));
+
+            expect(result.some(subject => subject.criteria.some(
+                criterion => criterion.key === testCriterion3.key))).to.be.false;
         });
     });
 

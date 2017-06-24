@@ -8,6 +8,7 @@ import {
     DELETE_CRITERION,
     DELETE_INSTANCE,
     DELETE_SUBJECT,
+    EDIT_CRITERION,
     RENAME_SUBJECT
 } from "actions/types";
 import { ISubject } from "models";
@@ -80,7 +81,7 @@ export default handleActions<ISubject[], ISubject>({
     [DELETE_SUBJECT]:
     (state: ISubject[], action: Action<ISubject>): ISubject[] => {
 
-        return state.filter((subject: ISubject) =>
+        return state.filter(subject =>
             action.payload && subject.name !== action.payload.name);
     },
 
@@ -95,7 +96,7 @@ export default handleActions<ISubject[], ISubject>({
     [RENAME_SUBJECT]:
     (state: ISubject[], action: Action<ISubject>): ISubject[] => {
 
-        return state.map((subject: ISubject) => {
+        return state.map(subject => {
 
             if (action.payload && action.payload.oldName) {
                 if (subject.name === action.payload.oldName) {
@@ -125,7 +126,7 @@ export default handleActions<ISubject[], ISubject>({
             return state;
         }
 
-        return state.map((subject): ISubject => {
+        return state.map(subject => {
             if (subject.name === action.payload!.name) {
                 const instanceExists = subject.instances.some(
                     instance => instance.name ===
@@ -163,7 +164,7 @@ export default handleActions<ISubject[], ISubject>({
             return state;
         }
 
-        return state.map((subject): ISubject => {
+        return state.map(subject => {
             if (subject.name === action.payload!.name) {
                 return {
                     name: subject.name,
@@ -193,7 +194,7 @@ export default handleActions<ISubject[], ISubject>({
             return state;
         }
 
-        return state.map((subject): ISubject => {
+        return state.map(subject => {
             if (subject.name === action.payload!.name) {
                 const criterionExists = subject.criteria.some(
                     criterion => criterion.key ===
@@ -215,10 +216,6 @@ export default handleActions<ISubject[], ISubject>({
         });
     },
 
-    /*
-     * TODO: try to take / return single ISubject
-     */
-
     /**
      * @function DELETE_CRITERION - Deletes criterion from a list of criteria.
      *
@@ -235,7 +232,7 @@ export default handleActions<ISubject[], ISubject>({
             return state;
         }
 
-        return state.map((subject): ISubject => {
+        return state.map(subject => {
             if (subject.name === action.payload!.name) {
                 return {
                     name: subject.name,
@@ -249,5 +246,40 @@ export default handleActions<ISubject[], ISubject>({
             return subject;
         });
     },
+
+    /**
+     * @function EDIT_CRITERION - Edits criterion from a list of criteria.
+     *
+     * @param state - The current list of subjects
+     * @param action - An action containing the subject with the edited
+     *      criterion
+     *
+     * @returns - A list of subjects with the given criterion edited
+     */
+    [EDIT_CRITERION]:
+    (state: ISubject[], action: Action<ISubject>): ISubject[] => {
+
+        if (!action.payload) {
+            return state;
+        }
+
+        return state.map(subject => {
+            if (subject.name === action.payload!.name) {
+                return <ISubject>{
+                    name: subject.name,
+                    instances: subject.instances,
+                    criteria: subject.criteria.map(criterion => {
+                        if (criterion.key === action.payload!.criteria[0].key) {
+                            return action.payload!.criteria[0];
+                        }
+
+                        return criterion;
+                    })
+                };
+            }
+
+            return subject;
+        });
+    }
 
 }, initialState);

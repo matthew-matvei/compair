@@ -9,17 +9,11 @@ interface ISubject {
 
     /**
      * The name of the subject.
-     *
-     * @type {string}
-     * @memberof ISubject
      */
     name: string;
 
     /**
      * The previous name of the subject, if any.
-     *
-     * @type {string}
-     * @memberof ISubject
      */
     oldName?: string;
 

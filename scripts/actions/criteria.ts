@@ -1,6 +1,6 @@
 import { createAction } from "redux-actions";
 
-import { ADD_CRITERION, DELETE_CRITERION } from "actions/types";
+import { ADD_CRITERION, DELETE_CRITERION, EDIT_CRITERION } from "actions/types";
 import { ICriterion, ISubject } from "models";
 
 export const addCriterion = createAction<ISubject, ISubject, ICriterion>(
@@ -21,6 +21,17 @@ export const deleteCriterion = createAction<ISubject, ISubject, string>(
             name: subject.name,
             instances: subject.instances,
             criteria: [{ key, order: "asc", priority: 1 }]
+        };
+    }
+);
+
+export const editCriterion = createAction<ISubject, ISubject, ICriterion>(
+    EDIT_CRITERION,
+    (subject: ISubject, criterion: ICriterion): ISubject => {
+        return {
+            name: subject.name,
+            instances: subject.instances,
+            criteria: [criterion]
         };
     }
 );
