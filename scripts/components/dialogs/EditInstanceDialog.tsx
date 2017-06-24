@@ -67,7 +67,7 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
                     ref={(keyValueElement) => this.keyValues[criterion.key] = keyValueElement} />
                 {nextCriterion ?
                     <KeyValue key={nextCriterion.key}
-                        keyName={criterion.key}
+                        keyName={nextCriterion.key}
                         value={nextRelevantKeyValue && nextRelevantKeyValue.value}
                         ref={(keyValueElement) => this.keyValues[nextCriterion.key] = keyValueElement} />
                     : null}
