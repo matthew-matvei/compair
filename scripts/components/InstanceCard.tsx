@@ -8,10 +8,6 @@ import { AddInstanceDialog, EditInstanceDialog } from ".";
 
 /**
  * A card representing an instance of a subject.
- *
- * @export
- * @class InstanceCard
- * @extends {React.Component<IInstanceCardProps, {}>}
  */
 export default class InstanceCard extends
     React.Component<IInstanceCardProps, {}> {
@@ -19,9 +15,7 @@ export default class InstanceCard extends
     /**
      * Defines the rendering of this component.
      *
-     * @returns {JSX.Element} - The JSX required to create this component
-     *
-     * @memberof InstanceCard
+     * @return - The JSX required to create this component
      */
     public render(): JSX.Element {
         const { currentSubject, instance } = this.props;

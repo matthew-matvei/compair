@@ -10,18 +10,13 @@ import { InstanceCard } from ".";
 
 /**
  * The panel containing all the current instances in the application.
- *
- * @class InstancesPanel
- * @extends {React.Component<IInstancesPanelProps, {}>}
  */
 class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
 
     /**
      * Defines the rendering of this component.
      *
-     * @returns {JSX.Element | null} - The JSX required to create this component
-     *
-     * @memberof InstancesPanel
+     * @returns - The JSX required to create this component
      */
     public render(): JSX.Element | null {
         const selectedSubject = this.props.subjects.find(
@@ -53,11 +48,6 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
 
     /**
      * Handles deleting the given instance.
-     *
-     * @private
-     * @param {IInstance} instance - the instance to delete
-     *
-     * @memberof InstancesPanel
      */
     private handleDeleteInstance(instance: IInstance) {
         const selectedSubject = this.props.subjects.find(
@@ -67,17 +57,15 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
 
     /**
      * Handles editing the given instance.
-     *
-     * @private
-     * @param {IInstance} instance - the instance to edit
-     *
-     * @memberof InstancesPanel
      */
     private handleEditInstance(instance: IInstance) {
         this.props.dispatch(setSelectedInstanceName(instance.name));
         this.props.dispatch(openModal("editInstanceDialog"));
     }
 
+    /**
+     * Handles opening the addInstanceDialog.
+     */
     private handleOpenDialog() {
         this.props.dispatch(openModal("addInstanceDialog"));
     }
