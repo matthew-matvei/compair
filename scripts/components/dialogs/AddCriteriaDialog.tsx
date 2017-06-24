@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import { Icon } from "react-fa";
 import * as ReactModal from "react-modal";
@@ -22,7 +21,6 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
      * A reference to the new criterion to be created.
      */
     private newCriterion: Criterion;
-
 
     /**
      * Defines the rendering of this component.
@@ -73,7 +71,8 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                         Delete
                     </button>
                     <button className="btn btn-primary mr-3"
-                        onClick={this.handleClickCreate.bind(this)}>
+                        onClick={this.handleClickCreate.bind(this)}
+                        disabled={this.newCriterion && this.newCriterion.state.keyInputValue === ""}>
                         Create
                     </button>
                     <button className="btn btn-secondary"
@@ -94,12 +93,14 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
 
         const criterion = this.newCriterion.state;
 
-        this.props.dispatch(addCriterion(currentSubject, {
-            key: criterion.keyInputValue,
-            order: criterion.orderInputChecked ? "asc" : "desc",
-            priority: (criterion.priorityInputValue || 1) as Priority
-        }));
-        this.handleRequestClose();
+        if (criterion.keyInputValue) {
+            this.props.dispatch(addCriterion(currentSubject, {
+                key: criterion.keyInputValue,
+                order: criterion.orderInputChecked ? "asc" : "desc",
+                priority: (criterion.priorityInputValue || 1) as Priority
+            }));
+            this.handleRequestClose();
+        }
     }
 
     /**
