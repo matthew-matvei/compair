@@ -1,8 +1,8 @@
-import Tooltip from "rc-tooltip";
 import * as React from "react";
 
+import { SimpleTooltip } from "components";
 import { ICriterionProps } from "models/props";
-import { ICriterionState } from "models/states/blocks";
+import { ICriterionState } from "models/states";
 import { Priority } from "types";
 
 class Criterion extends React.Component<ICriterionProps, ICriterionState> {
@@ -19,7 +19,8 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
 
     public render(): JSX.Element {
         const orderTooltip = this.state.orderInputChecked ?
-            "Smaller wins, like golf!" : "The more the merrier!";
+            "Ascending = Smaller wins, like golf!" :
+            "Descending = The more the merrier!";
 
         return <form className="form-inline">
             <div className="input-group col-6">
@@ -33,7 +34,7 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
                     onChange={this.handleKeyChange.bind(this)} />
             </div>
             <div className="input-group col-2">
-                <Tooltip overlay={<span>{orderTooltip}</span>}>
+                <SimpleTooltip message={orderTooltip}>
                     <label className="form-check-label">
                         <input type="checkbox"
                             className="form-check-input"
@@ -41,22 +42,19 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
                             onClick={this.handleClickOrder.bind(this)} />
                         Ascending
                             </label>
-                </Tooltip>
+                </SimpleTooltip>
             </div>
             <div className="input-group col-4">
                 <span className="input-group-addon">
                     Priority
                 </span>
-                <Tooltip overlay={
-                    <span>
-                        1 = unimportant; 5 = very important
-                    </span>}>
+                <SimpleTooltip message={"1 = unimportant; 5 = very important"}>
                     <input type="number"
                         className="form-control"
                         value={this.state.priorityInputValue}
                         onChange={this.handlePriorityChange.bind(this)}
                         min="1" max="5" />
-                </Tooltip>
+                </SimpleTooltip>
             </div>
         </form>;
     }
