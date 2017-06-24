@@ -1,4 +1,5 @@
 import ICriterionProps from "models/props/blocks/ICriterionProps";
+import ISimpleTooltipProps from "models/props/blocks/ISimpleTooltipProps";
 import IAddCriteriaDialogProps from "models/props/dialogs/IAddCriteriaDialogProps";
 import IAddInstanceDialogProps from "models/props/dialogs/IAddInstanceDialogProps";
 import IDialogProps from "models/props/dialogs/IDialogProps";
@@ -23,5 +24,6 @@ export {
     IInstanceCardProps,
     IInstancesPanelProps,
     IMainProps,
+    ISimpleTooltipProps,
     ISubjectsPanelProps
 };

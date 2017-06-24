@@ -1,5 +1,6 @@
 import App from "components/App";
 import Criterion from "components/blocks/Criterion";
+import SimpleTooltip from "components/blocks/SimpleTooltip";
 import AddCriteriaDialog from "components/dialogs/AddCriteriaDialog";
 import AddInstanceDialog from "components/dialogs/AddInstanceDialog";
 import EditInstanceDialog from "components/dialogs/EditInstanceDialog";
@@ -19,5 +20,6 @@ export {
     InstanceCard,
     InstancesPanel,
     Main,
+    SimpleTooltip,
     SubjectsPanel
 }
