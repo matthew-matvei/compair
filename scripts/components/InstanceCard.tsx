@@ -60,10 +60,6 @@ export default class InstanceCard extends
     /**
      * Handles editing the instance on user clicking a card with one by passing
      * it to a callback funciton.
-     *
-     * @private
-     *
-     * @memberof InstanceCard
      */
     private handleClick() {
         this.props.editInstance!(this.props.instance!);
@@ -72,10 +68,6 @@ export default class InstanceCard extends
     /**
      * Handles deleting the instance on user clicking the delete button by
      * passing it to a callback funciton.
-     *
-     * @private
-     *
-     * @memberof InstanceCard
      */
     private handleClickDelete() {
         this.props.deleteInstance!(this.props.instance!);

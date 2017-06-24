@@ -4,6 +4,7 @@ import { Icon } from "react-fa";
 import { connect } from "react-redux";
 
 import { openModal } from "actions/modals";
+import { enterKey } from "const";
 import { createSubject, setSelectedSubject } from "actions/subjects";
 import { AddCriteriaDialog } from "components";
 import { IState } from "models";
@@ -11,23 +12,18 @@ import { ISubjectsPanelProps } from "models/props";
 
 /**
  * The panel containing all the current subjects in the application.
- *
- * @class SubjectsPanel
- * @extends {React.Component<ISubjectsPanelProps, {}>}
  */
 class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
 
     /**
      * Defines the rendering of this component.
      *
-     * @returns {JSX.Element} - The JSX required to create this component
-     *
-     * @memberof SubjectsPanel
+     * @returns - The JSX required to create this component
      */
     public render(): JSX.Element {
         const subjectElements = this.props.subjects.map(subject => {
             const selected = classNames({
-                "active": subject.name === this.props.selectedSubjectName
+                "active": subject.name === this.props.selectedSubject.name
             });
 
             return <div className="btn-group btn-block">
@@ -48,9 +44,9 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
 
         return <nav className="col-sm-4 col-md-3 bg-faded sidebar">
             <ul className="list-group flex-column">
-                <li className="list-group-item">
+                {this.props.subjects.length > 0 && <li className="list-group-item">
                     {subjectElements}
-                </li>
+                </li>}
                 <li className="list-group-item">
                     <input type="text"
                         className="form-control"
@@ -62,19 +58,16 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
     }
 
     /**
-     * Handles adding a subject on user pressing a key down.
+     * Handles adding a subject on user pressing the Enter key.
      *
-     * @private
-     * @param {*} event - The key event
-     *
-     * @memberof SubjectsPanel
+     * @param event - The key event
      */
-    private handleKeyDown(event: any) {
-        // 13 = Enter key
-        if (event.which === 13) {
-            const newSubjectName = event.target.value.trim();
+    private handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+        if (event.which === enterKey) {
+            const typedTarget = event.target as HTMLInputElement;
+            const newSubjectName = typedTarget.value.trim();
             this.props.dispatch(createSubject(newSubjectName));
-            event.target.value = "";
+            typedTarget.value = "";
         }
     }
 
@@ -82,12 +75,9 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
      * Handles opening the dialog to add a criterion and sets the selected
      * subject.
      *
-     * @private
-     * @param {Event} event - the event from which to take the target's id
-     *
-     * @memberof SubjectsPanel
+     * @param event - the event from which to take the target's id
      */
-    private handleClickOpenDialog(event: Event) {
+    private handleClickOpenDialog(event: React.MouseEvent<HTMLInputElement>) {
         this.handleClickSetSelectedSubject(event);
         this.props.dispatch(openModal("addCriterionDialog"));
     }
@@ -95,26 +85,25 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
     /**
      * Handles setting the selected subject on user clicking its button.
      *
-     * @private
-     * @param {Event} event - the event from which to take the target's id
-     *
-     * @memberof SubjectsPanel
+     * @param event - the event from which to identify the selected subject
      */
-    private handleClickSetSelectedSubject(event: Event) {
+    private handleClickSetSelectedSubject(event: React.MouseEvent<HTMLButtonElement>) {
         const typedTarget = event.target as HTMLButtonElement;
-        this.props.dispatch(setSelectedSubject(typedTarget.id));
+        const subject = this.props.subjects.find(subject => subject.name === typedTarget.id)!;
+        this.props.dispatch(setSelectedSubject(subject));
     }
 }
 
 /**
  * @function mapStateToProps - Maps the relevant properties of the application's
  *      state to this component's props.
+ *
  * @param state - The central state of the application
  * @returns - This component's props, taken from the application state
  */
 const mapStateToProps = (state: IState) => ({
     subjects: state.subjects,
-    selectedSubjectName: state.selectedSubjectName
+    selectedSubject: state.selectedSubject
 });
 
 export default connect(mapStateToProps)(SubjectsPanel);

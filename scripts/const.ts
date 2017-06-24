@@ -17,3 +17,8 @@ export const dialogStyles: Styles = {
  * Filename for user-saved subjects.
  */
 export const subjectsFile = ".subjects";
+
+/**
+ * The numeric value of the Enter key.
+ */
+export const enterKey = 13;

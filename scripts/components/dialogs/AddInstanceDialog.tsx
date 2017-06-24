@@ -3,6 +3,7 @@ import { Icon } from "react-fa";
 import * as ReactModal from "react-modal";
 import { connect } from "react-redux";
 
+import { KeyValue } from "components";
 import { addInstance } from "actions/instances";
 import { closeModal } from "actions/modals";
 import { dialogStyles } from "const";
@@ -19,43 +20,23 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
 
     /**
      * The text input for the new instance's name.
-     *
-     * @private
-     * @type {HTMLInputElement}
-     * @memberof AddInstanceDialog
      */
     private instanceNameInput: HTMLInputElement;
 
     /**
-     * An array of the number inputs for the instance's key values.
-     *
-     * @private
-     * @type {HTMLInputElement[]}
-     * @memberof AddInstanceDialog
+     * A lookup to the keyValues for this instance.
      */
-    private criteriaInputs: HTMLInputElement[];
-
-    /**
-     * Creates an instance of AddInstanceDialog.
-     *
-     * @param props - The props for this component
-     */
-    constructor(props: IAddInstanceDialogProps) {
-        super(props);
-
-        this.criteriaInputs = new Array<HTMLInputElement>();
+    private keyValues: {
+        [keyName: string]: KeyValue;
     }
 
     /**
      * Defines the rendering of this component.
      *
-     * @returns {JSX.Element | null} - The JSX required to create this component
-     *
-     * @memberof AddInstanceDialog
+     * @returns - The JSX required to create this component
      */
     public render(): JSX.Element | null {
-        const selectedSubject = this.props.subjects.find(
-            subject => subject.name === this.props.selectedSubjectName);
+        const { selectedSubject } = this.props;
 
         if (!selectedSubject) {
             return null;
@@ -66,30 +47,15 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
             const criterion = selectedSubject.criteria[i];
             const nextCriterion = i < selectedSubject.criteria.length - 1 ?
                 selectedSubject.criteria[i + 1] : null;
-            const thisElement = <div className="col-6" key={criterion.key}>
-                <div className="input-group">
-                    <span className="input-group-addon">{criterion.key}</span>
-                    <input type="number"
-                        id={criterion.key}
-                        className="form-control"
-                        ref={(input) => this.criteriaInputs.push(input)} />
-                </div>
-            </div>;
-            const nextElement = nextCriterion ?
-                <div className="col-6" key={nextCriterion.key}>
-                    <div className="input-group">
-                        <span className="input-group-addon">
-                            {nextCriterion.key}
-                        </span>
-                        <input type="number"
-                            id={nextCriterion.key}
-                            className="form-control"
-                            ref={(input) => this.criteriaInputs.push(input)} />
-                    </div>
-                </div> : null;
             const row = <div className="row pb-2">
-                {thisElement}
-                {nextElement}
+                <KeyValue key={criterion.key}
+                    keyName={criterion.key}
+                    ref={(keyValueElement) => this.keyValues[criterion.key] = keyValueElement} />
+                {nextCriterion ?
+                    <KeyValue key={nextCriterion.key}
+                        keyName={nextCriterion.key}
+                        ref={(keyValueElement) => this.keyValues[nextCriterion.key] = keyValueElement} />
+                    : null}
             </div>;
 
             rows.push(row);
@@ -102,7 +68,7 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
             <div className="card">
                 <div className="card-header dialog-header">
                     <h2 className="card-title text-muted">
-                        {`Add an instance - ${this.props.selectedSubjectName}`}
+                        {`Add an instance - ${this.props.selectedSubject.name}`}
                     </h2>
                     <button className="btn btn-secondary"
                         onClick={this.handleRequestClose.bind(this)}>
@@ -122,11 +88,11 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
                     <button className="btn btn-primary mr-3"
                         onClick={this.handleClickCreate.bind(this)}>
                         Create
-                            </button>
+                    </button>
                     <button className="btn btn-secondary"
                         onClick={this.handleRequestClose.bind(this)}>
                         Cancel
-                            </button>
+                    </button>
                 </div>
             </div>
         </ReactModal>;
@@ -134,15 +100,9 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
 
     /**
      * Handles creating the new criterion on the user clicking 'create'.
-     *
-     * @private
-     *
-     * @memberof AddInstanceDialog
      */
     private handleClickCreate() {
-        const currentSubject = this.props.subjects.find(
-            subject => subject.name === this.props.selectedSubjectName)!;
-        this.props.dispatch(addInstance(currentSubject, {
+        this.props.dispatch(addInstance(this.props.selectedSubject, {
             name: this.instanceNameInput.value,
             values: this.parseInputs()
         }));
@@ -152,40 +112,20 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
     /**
      * Handles closing the modal and nulling the modals inputs, since the
      * dialog component is not actually dismounted from the DOM.
-     *
-     * @private
-     *
-     * @memberof AddInstanceDialog
      */
     private handleRequestClose() {
         this.props.dispatch(closeModal());
-        this.cleanInputs();
-    }
-
-    /**
-     * Clears the values for the modals inputs.
-     *
-     * @private
-     *
-     * @memberof AddInstanceDialog
-     */
-    private cleanInputs() {
-        this.instanceNameInput.value = "";
-        this.criteriaInputs = new Array<HTMLInputElement>();
     }
 
     /**
      * Parses the values of the inputs and returns corresponding key values.
      *
-     * @private
-     * @returns {IKeyValue[]} - Key values based on the parsed inputs
-     *
-     * @memberof AddInstanceDialog
+     * @returns - Key values based on the parsed inputs
      */
     private parseInputs(): IKeyValue[] {
-        return this.criteriaInputs.filter(input => input).map(input => ({
-            key: input.id,
-            value: parseInt(input.value)
+        return Object.keys(this.keyValues).map(key => ({
+            key,
+            value: this.keyValues[key].state.value || 0
         } as IKeyValue));
     }
 }
@@ -193,11 +133,12 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
 /**
  * @function mapStateToProps - Maps the relevant properties of the application's
  *      state to this component's props.
+ *
  * @param state - The central state of the application
  * @returns - This component's props, taken from the application state
  */
 const mapStateToProps = (state: IState) => ({
-    selectedSubjectName: state.selectedSubjectName,
+    selectedSubject: state.selectedSubject,
     subjects: state.subjects,
     isShowingModal: state.isShowingModal === "addInstanceDialog"
 });

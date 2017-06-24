@@ -7,7 +7,7 @@ import { KeyValue } from "components";
 import {
     addInstance,
     deleteInstance,
-    setSelectedInstanceName
+    setSelectedInstance
 } from "actions/instances";
 import { closeModal } from "actions/modals";
 import { dialogStyles } from "const";
@@ -37,26 +37,22 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
      * @returns - The JSX required to create this component
      */
     public render(): JSX.Element | null {
-        const selectedSubject = this.props.subjects.find(
-            subject => subject.name === this.props.selectedSubjectName);
+        const { selectedInstance, selectedSubject } = this.props;
 
         if (!selectedSubject) {
             return null;
         }
-
-        const selectedInstance = selectedSubject.instances.find(
-            instance => instance.name === this.props.selectedInstanceName);
 
         let rows: JSX.Element[] = [];
         for (let i = 0; i < selectedSubject.criteria.length; i += 2) {
             const criterion = selectedSubject.criteria[i];
             const nextCriterion = i < selectedSubject.criteria.length - 1 ?
                 selectedSubject.criteria[i + 1] : null;
-            const relevantKeyValue = selectedInstance &&
-                selectedInstance.values.find(
+            const relevantKeyValue = selectedInstance! &&
+                selectedInstance!.values.find(
                     keyValue => keyValue.key === criterion.key);
-            const nextRelevantKeyValue = selectedInstance &&
-                selectedInstance.values.find(
+            const nextRelevantKeyValue = selectedInstance! &&
+                selectedInstance!.values.find(
                     keyValue => nextCriterion !== null &&
                         keyValue.key === nextCriterion.key);
 
@@ -83,7 +79,7 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
             <div className="card">
                 <div className="card-header dialog-header">
                     <h2 className="card-title text-muted">
-                        {`Edit an instance - ${this.props.selectedSubjectName}`}
+                        {`Edit an instance - ${this.props.selectedSubject.name}`}
                     </h2>
                     <button className="btn btn-secondary"
                         onClick={this.handleRequestClose.bind(this)}>
@@ -117,11 +113,9 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
      * Handles editing the criterion on the user clicking 'edit'.
      */
     private handleClickEdit() {
-        const currentSubject = this.props.subjects.find(
-            subject => subject.name === this.props.selectedSubjectName)!;
-        this.props.dispatch(deleteInstance(currentSubject,
-            this.props.selectedInstanceName!));
-        this.props.dispatch(addInstance(currentSubject, {
+        this.props.dispatch(deleteInstance(this.props.selectedSubject,
+            this.props.selectedInstance!.name));
+        this.props.dispatch(addInstance(this.props.selectedSubject, {
             name: this.instanceNameInput.value,
             values: this.parseKeyValues()
         }));
@@ -134,7 +128,7 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
      * dialog component is not actually dismounted from the DOM.
      */
     private handleRequestClose() {
-        this.props.dispatch(setSelectedInstanceName(null));
+        this.props.dispatch(setSelectedInstance(null));
         this.props.dispatch(closeModal());
     }
 
@@ -154,8 +148,8 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
  * @returns - This component's props, taken from the application state
  */
 const mapStateToProps = (state: IState) => ({
-    selectedSubjectName: state.selectedSubjectName,
-    selectedInstanceName: state.selectedInstanceName,
+    selectedSubject: state.selectedSubject,
+    selectedInstance: state.selectedInstance,
     subjects: state.subjects,
     isShowingModal: state.isShowingModal === "editInstanceDialog"
 });

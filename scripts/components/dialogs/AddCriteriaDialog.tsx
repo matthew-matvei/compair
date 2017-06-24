@@ -26,9 +26,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
      * Defines the rendering of this component.
      */
     public render(): JSX.Element | null {
-
-        const selectedSubject = this.props.subjects.find(subject =>
-            subject.name === this.props.selectedSubjectName);
+        const { selectedSubject } = this.props;
 
         if (!selectedSubject) {
             return null;
@@ -50,7 +48,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
             <div className="card">
                 <div className="card-header dialog-header">
                     <h2 className="card-title text-muted">
-                        {`Add a criterion - ${this.props.selectedSubjectName}`}
+                        {`Add a criterion - ${this.props.selectedSubject.name}`}
                     </h2>
                     <button className="btn btn-secondary"
                         onClick={this.handleRequestClose.bind(this)}>
@@ -88,13 +86,10 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
      * Handles creating the new criterion on the user clicking 'create'.
      */
     private handleClickCreate() {
-        const currentSubject = this.props.subjects.find(
-            subject => subject.name === this.props.selectedSubjectName)!;
-
         const criterion = this.newCriterion.state;
 
         if (criterion.keyInputValue) {
-            this.props.dispatch(addCriterion(currentSubject, {
+            this.props.dispatch(addCriterion(this.props.selectedSubject, {
                 key: criterion.keyInputValue,
                 order: criterion.orderInputChecked ? "asc" : "desc",
                 priority: (criterion.priorityInputValue || 1) as Priority
@@ -107,10 +102,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
      * Handles deleting the subject on the user clicking 'delete'.
      */
     private handleClickDelete() {
-        const currentSubject = this.props.subjects.find(
-            subject => subject.name === this.props.selectedSubjectName)!;
-
-        this.props.dispatch(deleteSubject(currentSubject.name));
+        this.props.dispatch(deleteSubject(this.props.selectedSubject.name));
         this.handleRequestClose();
     }
 
@@ -120,10 +112,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
      * @param criterion - The criterion to edit
      */
     private handleCriterionChange(criterion: ICriterion) {
-        const currentSubject = this.props.subjects.find(
-            subject => subject.name === this.props.selectedSubjectName)!;
-
-        this.props.dispatch(editCriterion(currentSubject, criterion));
+        this.props.dispatch(editCriterion(this.props.selectedSubject, criterion));
     }
 
     /**
@@ -141,7 +130,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
  * @returns - This component's props, taken from the application state
  */
 const mapStateToProps = (state: IState) => ({
-    selectedSubjectName: state.selectedSubjectName,
+    selectedSubject: state.selectedSubject,
     subjects: state.subjects,
     isShowingModal: state.isShowingModal === "addCriterionDialog"
 });

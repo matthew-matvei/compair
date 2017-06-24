@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { deleteInstance, setSelectedInstanceName } from "actions/instances";
+import { deleteInstance, setSelectedInstance } from "actions/instances";
 import { openModal } from "actions/modals";
 import { orderInstances } from "helpers";
 import { IInstance, IState } from "models";
@@ -19,8 +19,7 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
      * @returns - The JSX required to create this component
      */
     public render(): JSX.Element | null {
-        const selectedSubject = this.props.subjects.find(
-            subject => subject.name === this.props.selectedSubjectName);
+        const { selectedSubject } = this.props;
 
         if (!selectedSubject) {
             return null;
@@ -39,7 +38,6 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
             <div className="row">
                 {instanceElements}
                 <InstanceCard instance={null}
-                    key="New Instance"
                     currentSubject={null}
                     openDialog={this.handleOpenDialog.bind(this)} />
             </div>
@@ -50,16 +48,14 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
      * Handles deleting the given instance.
      */
     private handleDeleteInstance(instance: IInstance) {
-        const selectedSubject = this.props.subjects.find(
-            subject => subject.name === this.props.selectedSubjectName)!;
-        this.props.dispatch(deleteInstance(selectedSubject, instance.name));
+        this.props.dispatch(deleteInstance(this.props.selectedSubject, instance.name));
     }
 
     /**
      * Handles editing the given instance.
      */
     private handleEditInstance(instance: IInstance) {
-        this.props.dispatch(setSelectedInstanceName(instance.name));
+        this.props.dispatch(setSelectedInstance(instance));
         this.props.dispatch(openModal("editInstanceDialog"));
     }
 
@@ -74,11 +70,12 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
 /**
  * @function mapStateToProps - Maps the relevant properties of the application's
  *      state to this component's props.
+ *
  * @param state - The central state of the application
  * @returns - This component's props, taken from the application state
  */
 const mapStateToProps = (state: IState) => ({
-    selectedSubjectName: state.selectedSubjectName,
+    selectedSubject: state.selectedSubject,
     subjects: state.subjects
 });
 

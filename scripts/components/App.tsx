@@ -10,8 +10,6 @@ class App extends React.Component<IAppProps, {}> {
 
     /**
      * Defines the rendering of this component.
-     *
-     * @returns - The JSX required to create this component
      */
     public render(): JSX.Element {
         return <div>

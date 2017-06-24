@@ -1,20 +1,15 @@
+import { IInstance } from "models";
 import { IDialogProps } from "models/props";
 
 /**
  * The properties for an EditInstanceDialog.
- *
- * @interface IEditInstanceDialogProps
- * @extends {IDispatchableProps}
  */
 interface IEditInstanceDialogProps extends IDialogProps {
 
     /**
-     * The selected instance's name, if any.
-     *
-     * @type {(string | null)}
-     * @memberof IEditInstanceDialogProps
+     * The selected instance, if any.
      */
-    selectedInstanceName: string | null;
+    selectedInstance: IInstance | null;
 }
 
 export default IEditInstanceDialogProps;

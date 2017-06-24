@@ -12,6 +12,7 @@ import IInstanceCardProps from "models/props/IInstanceCardProps";
 import IInstancesPanelProps from "models/props/IInstancesPanelProps";
 import IMainProps from "models/props/IMainProps";
 import ISubjectsPanelProps from "models/props/ISubjectsPanelProps";
+import ISubjectsProps from "models/props/ISubjectsProps";
 
 export {
     IAppProps,
@@ -27,5 +28,6 @@ export {
     IInstancesPanelProps,
     IMainProps,
     ISimpleTooltipProps,
-    ISubjectsPanelProps
+    ISubjectsPanelProps,
+    ISubjectsProps
 };

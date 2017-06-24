@@ -80,7 +80,7 @@ export function isMissingKeyValue(criteria: ICriterion[],
  */
 export function saveSubjects(filepath: string, subjects: ISubject[]) {
     fs.writeFileSync(path.join(filepath, subjectsFile),
-        JSON.stringify(subjects));
+        JSON.stringify(subjects.reverse()));
 }
 
 /**
