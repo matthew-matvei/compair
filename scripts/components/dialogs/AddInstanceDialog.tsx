@@ -37,9 +37,8 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
 
     /**
      * Creates an instance of AddInstanceDialog.
-     * @param {IAddInstanceDialogProps} props - The props for this component
      *
-     * @memberof AddInstanceDialog
+     * @param props - The props for this component
      */
     constructor(props: IAddInstanceDialogProps) {
         super(props);
