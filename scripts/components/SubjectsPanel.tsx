@@ -26,7 +26,7 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
                 "active": subject.name === this.props.selectedSubject.name
             });
 
-            return <div className="btn-group btn-block">
+            return <div className="btn-group btn-block" key={subject.name}>
                 <button className={`btn btn-primary btn-block ${selected}`}
                     id={subject.name}
                     onClick={this.handleClickSetSelectedSubject.bind(this)}>
