@@ -23,12 +23,6 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
      */
     private newCriterion: Criterion;
 
-    /**
-     * A lookup of the created criteria, with criterion.key used as a key.
-     */
-    private criteria: {
-        [criterionKey: string]: Criterion
-    } = {};
 
     /**
      * Defines the rendering of this component.
@@ -44,8 +38,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
 
         const criteriaElements = selectedSubject.criteria.map(criterion => {
             return <Criterion key={criterion.key}
-                ref={(criterionElement) =>
-                    this.criteria[criterion.key] = criterionElement}
+
                 onChange={this.handleCriterionChange.bind(this)}
                 keyInputValue={criterion.key}
                 orderInputChecked={criterion.order === "asc"}

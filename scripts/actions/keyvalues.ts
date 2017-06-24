@@ -1,6 +1,6 @@
 import { createAction } from "redux-actions";
 
-import { ADD_KEYVALUE, DELETE_KEYVALUE } from "actions/types";
+import { ADD_KEYVALUE, DELETE_KEYVALUE, EDIT_KEYVALUE } from "actions/types";
 import { IKeyValue, ISubject } from "models";
 
 export const addKeyValue = createAction<ISubject, ISubject, IKeyValue>(
@@ -33,3 +33,17 @@ export const deleteKeyValue = createAction<ISubject, ISubject, string>(
         };
     }
 );
+
+export const editKeyValue = createAction<ISubject, ISubject, IKeyValue>(
+    EDIT_KEYVALUE,
+    (subject: ISubject, keyValue: IKeyValue): ISubject => {
+        return {
+            name: subject.name,
+            criteria: subject.criteria,
+            instances: [{
+                name: "",
+                values: [keyValue]
+            }]
+        };
+    }
+)

@@ -8,6 +8,11 @@ import { Priority } from "types";
 
 class Criterion extends React.Component<ICriterionProps, ICriterionState> {
 
+    /**
+     * Creates an instance of Criterion.
+     *
+     * @param props - The props for this component
+     */
     constructor(props: ICriterionProps) {
         super(props);
 
@@ -46,7 +51,7 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
                         <input type="checkbox"
                             className="form-check-input"
                             checked={this.state.orderInputChecked}
-                            onChange={this.handleClickOrder.bind(this)} />
+                            onChange={this.handleChangeOrder.bind(this)} />
                         Ascending
                     </label>
                 </SimpleTooltip>
@@ -66,18 +71,33 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
         </form>;
     }
 
+    /**
+     * Handles setting the keyInputValue on change.
+     *
+     * @param event - The change event from whose target the value is gotten
+     */
     private handleChangeKey(event: React.ChangeEvent<HTMLInputElement>) {
         const typedTarget = event.target as HTMLInputElement;
         this.setState({ keyInputValue: typedTarget.value });
     }
 
-    private handleClickOrder(event: React.MouseEvent<HTMLInputElement>) {
+    /**
+     * Handles setting the orderInputChecked on change.
+     *
+     * @param event - The change event from whose target the checked status is gotten
+     */
+    private handleChangeOrder(event: React.MouseEvent<HTMLInputElement>) {
         const typedTarget = event.target as HTMLInputElement;
         this.setState({ orderInputChecked: typedTarget.checked }, () => {
             this.sendCriterionUp();
         });
     }
 
+    /**
+     * Handles setting the priorityInputValue on change.
+     *
+     * @param event - The change event from whose target the value is gotten
+     */
     private handlePriorityChange(event: React.ChangeEvent<HTMLInputElement>) {
         const typedTarget = event.target as HTMLInputElement;
         this.setState({
@@ -87,6 +107,9 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
         });
     }
 
+    /**
+     * Handles sending the criterion up to the parent component as an ICriterion.
+     */
     private sendCriterionUp() {
         if (this.props.onChange) {
             const criterion: ICriterion = {

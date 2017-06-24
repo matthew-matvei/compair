@@ -6,6 +6,7 @@ import IDialogProps from "models/props/dialogs/IDialogProps";
 import IEditInstanceDialogProps from "models/props/dialogs/IEditInstanceDialogProps";
 import IAppProps from "models/props/IAppProps";
 import IDispatchableProps from "models/props/IDispatchableProps";
+import IKeyValueProps from "models/props/blocks/IKeyValueProps";
 import IHeaderProps from "models/props/IHeaderProps";
 import IInstanceCardProps from "models/props/IInstanceCardProps";
 import IInstancesPanelProps from "models/props/IInstancesPanelProps";
@@ -18,6 +19,7 @@ export {
     IAddInstanceDialogProps,
     IEditInstanceDialogProps,
     IDialogProps,
+    IKeyValueProps,
     ICriterionProps,
     IDispatchableProps,
     IHeaderProps,

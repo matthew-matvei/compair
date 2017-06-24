@@ -9,6 +9,7 @@ import {
     DELETE_INSTANCE,
     DELETE_SUBJECT,
     EDIT_CRITERION,
+    EDIT_KEYVALUE,
     RENAME_SUBJECT
 } from "actions/types";
 import { ISubject } from "models";
@@ -280,6 +281,40 @@ export default handleActions<ISubject[], ISubject>({
 
             return subject;
         });
+    },
+
+    /**
+     * @function EDIT_KEYVALUE - Edits keyValue from a list of keyValues.
+     *
+     * @param state - The current list of subjects
+     * @param action - An action containing the subject with the edited keyValue
+     *
+     * @returns - A list of subjects with the given keyValue edited
+     */
+    [EDIT_KEYVALUE]:
+    (state: ISubject[], action: Action<ISubject>): ISubject[] => {
+
+        if (!action.payload) {
+            return state;
+        }
+
+        return state.map(subject => {
+            if (subject.name === action.payload!.name) {
+                return <ISubject>{
+                    name: subject.name,
+                    criteria: subject.criteria,
+                    instances: subject.instances.map(instance => {
+                        if (instance.name === action.payload!.instances[0].name) {
+                            return action.payload!.instances[0];
+                        }
+
+                        return instance;
+                    })
+                }
+            }
+
+            return subject;
+        })
     }
 
 }, initialState);

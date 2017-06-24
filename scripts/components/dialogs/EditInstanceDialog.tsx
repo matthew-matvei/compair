@@ -3,6 +3,7 @@ import { Icon } from "react-fa";
 import * as ReactModal from "react-modal";
 import { connect } from "react-redux";
 
+import { KeyValue } from "components";
 import {
     addInstance,
     deleteInstance,
@@ -15,48 +16,25 @@ import { IEditInstanceDialogProps } from "models/props";
 
 /**
  * A dialog for creating new criteria.
- *
- * @class EditInstanceDialog
- * @extends {React.Component<IEditInstanceDialogProps, {}>}
  */
 class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
 
     /**
      * The text input for the instance's name.
-     *
-     * @private
-     * @type {HTMLInputElement}
-     * @memberof EditInstanceDialog
      */
     private instanceNameInput: HTMLInputElement;
 
     /**
-     * An array of the number inputs for the instance's key values.
-     *
-     * @private
-     * @type {HTMLInputElement[]}
-     * @memberof EditInstanceDialog
+     * A lookup to the keyValues for this instance.
      */
-    private criteriaInputs: HTMLInputElement[];
-
-    /**
-     * Creates an instance of EditInstanceDialog.
-     * @param {IEditInstanceDialogProps} props - The props for this component
-     *
-     * @memberof EditInstanceDialog
-     */
-    constructor(props: IEditInstanceDialogProps) {
-        super(props);
-
-        this.criteriaInputs = new Array<HTMLInputElement>();
-    }
+    private keyValues: {
+        [keyName: string]: KeyValue
+    } = {};
 
     /**
      * Defines the rendering of this component.
      *
-     * @returns {JSX.Element | null} - The JSX required to create this component
-     *
-     * @memberof EditInstanceDialog
+     * @returns - The JSX required to create this component
      */
     public render(): JSX.Element | null {
         const selectedSubject = this.props.subjects.find(
@@ -79,40 +57,20 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
                     keyValue => keyValue.key === criterion.key);
             const nextRelevantKeyValue = selectedInstance &&
                 selectedInstance.values.find(
-                    keyValue => {
-                        if (nextCriterion) {
-                            return keyValue.key === nextCriterion.key;
-                        }
+                    keyValue => nextCriterion !== null &&
+                        keyValue.key === nextCriterion.key);
 
-                        return false;
-                    });
-            const thisElement = <div className="col-6" key={criterion.key}>
-                <div className="input-group">
-                    <span className="input-group-addon">{criterion.key}</span>
-                    <input type="number"
-                        id={criterion.key}
-                        value={relevantKeyValue && relevantKeyValue.value}
-                        className="form-control"
-                        ref={(input) => this.criteriaInputs.push(input)} />
-                </div>
-            </div>;
-            const nextElement = nextCriterion ?
-                <div className="col-6" key={nextCriterion.key}>
-                    <div className="input-group">
-                        <span className="input-group-addon">
-                            {nextCriterion.key}
-                        </span>
-                        <input type="number"
-                            id={nextCriterion.key}
-                            value={nextRelevantKeyValue &&
-                                nextRelevantKeyValue.value}
-                            className="form-control"
-                            ref={(input) => this.criteriaInputs.push(input)} />
-                    </div>
-                </div> : null;
             const row = <div className="row pb-2" key={`row-${i}`}>
-                {thisElement}
-                {nextElement}
+                <KeyValue key={criterion.key}
+                    keyName={criterion.key}
+                    value={relevantKeyValue && relevantKeyValue.value}
+                    ref={(keyValueElement) => this.keyValues[criterion.key] = keyValueElement} />
+                {nextCriterion ?
+                    <KeyValue key={nextCriterion.key}
+                        keyName={criterion.key}
+                        value={nextRelevantKeyValue && nextRelevantKeyValue.value}
+                        ref={(keyValueElement) => this.keyValues[nextCriterion.key] = keyValueElement} />
+                    : null}
             </div>;
 
             rows.push(row);
@@ -157,10 +115,6 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
 
     /**
      * Handles editing the criterion on the user clicking 'edit'.
-     *
-     * @private
-     *
-     * @memberof EditInstanceDialog
      */
     private handleClickEdit() {
         const currentSubject = this.props.subjects.find(
@@ -169,7 +123,7 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
             this.props.selectedInstanceName!));
         this.props.dispatch(addInstance(currentSubject, {
             name: this.instanceNameInput.value,
-            values: this.parseInputs()
+            values: this.parseKeyValues()
         }));
 
         this.handleRequestClose();
@@ -178,28 +132,16 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
     /**
      * Handles closing the modal and nulling the modals inputs, since the
      * dialog component is not actually dismounted from the DOM.
-     *
-     * @private
-     *
-     * @memberof EditInstanceDialog
      */
     private handleRequestClose() {
         this.props.dispatch(setSelectedInstanceName(null));
         this.props.dispatch(closeModal());
     }
 
-    /**
-     * Parses the values of the inputs and returns corresponding key values.
-     *
-     * @private
-     * @returns {IKeyValue[]} - Key values based on the parsed inputs
-     *
-     * @memberof EditInstanceDialog
-     */
-    private parseInputs(): IKeyValue[] {
-        return this.criteriaInputs.filter(input => input).map(input => ({
-            key: input.id,
-            value: parseInt(input.value)
+    private parseKeyValues(): IKeyValue[] {
+        return Object.keys(this.keyValues).map(key => ({
+            key,
+            value: this.keyValues[key].state.value || 0
         } as IKeyValue));
     }
 };
@@ -207,6 +149,7 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
 /**
  * @function mapStateToProps - Maps the relevant properties of the application's
  *      state to this component's props.
+ *
  * @param state - The central state of the application
  * @returns - This component's props, taken from the application state
  */
