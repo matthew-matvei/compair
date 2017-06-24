@@ -33,7 +33,7 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
             "Ascending = Smaller wins, like golf!" :
             "Descending = The more the merrier!";
 
-        return <form className="form-inline">
+        return <form className="form-inline mb-3">
             <div className="input-group col-6">
                 <span className="input-group-addon">
                     Criterion Key
