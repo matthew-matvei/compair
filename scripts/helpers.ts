@@ -4,14 +4,13 @@ import * as path from "path";
 import { ICriterion, IInstance, IKeyValue, ISubject } from "models";
 import { subjectsFile } from "const";
 
-
 /**
  * Orders given instances according to the given criteria.
  *
- * @param {ICriterion[]} criteria - a set of criteria by which to order the
+ * @param criteria - a set of criteria by which to order the
  *      instances
- * @param {IInstance[]} instances - the instances to be ordered
- * @returns {IInstance[]} - the ordered instances
+ * @param instances - the instances to be ordered
+ * @returns - the ordered instances
  */
 export function orderInstances(criteria: ICriterion[],
     instances: IInstance[]): IInstance[] {
