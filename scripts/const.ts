@@ -12,3 +12,8 @@ export const dialogStyles: Styles = {
         right: "80px"
     }
 };
+
+/**
+ * Filename for user-saved subjects.
+ */
+export const subjectsFile = ".subjects";

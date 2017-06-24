@@ -2,13 +2,12 @@ import * as fs from "fs";
 import * as path from "path";
 
 import { ICriterion, IInstance, IKeyValue, ISubject } from "models";
+import { subjectsFile } from "const";
 
-const subjectsFile = ".subjects";
 
 /**
  * Orders given instances according to the given criteria.
  *
- * @export
  * @param {ICriterion[]} criteria - a set of criteria by which to order the
  *      instances
  * @param {IInstance[]} instances - the instances to be ordered
@@ -41,9 +40,9 @@ export function orderInstances(criteria: ICriterion[],
 /**
  * Calculates the value of a matching criterion and keyValue.
  *
- * @param {ICriterion} criterion - a criterion with a key equal to keyValue.key
- * @param {IKeyValue} keyValue - a keyValue with a key equal to criterion.key
- * @returns {number} - the value of the keyValue according to the criterion
+ * @param criterion - a criterion with a key equal to keyValue.key
+ * @param keyValue - a keyValue with a key equal to criterion.key
+ * @returns - the value of the keyValue according to the criterion
  */
 function calculateValue(criterion: ICriterion, keyValue: IKeyValue): number {
     const order = criterion.order === "asc" ? 1 : -1;
@@ -54,9 +53,9 @@ function calculateValue(criterion: ICriterion, keyValue: IKeyValue): number {
 /**
  * Returns whether an instance's keyValues that exist in criteria are missing.
  *
- * @param {ICriterion[]} criteria - the criteria to check keyValues against
- * @param {IKeyValue[]} keyValues - the list of keyValues to check
- * @returns {boolean} - true if a keyValue is missing that exists in criteria
+ * @param criteria - the criteria to check keyValues against
+ * @param keyValues - the list of keyValues to check
+ * @returns - true if a keyValue is missing that exists in criteria
  */
 export function isMissingKeyValue(criteria: ICriterion[],
     keyValues: IKeyValue[]): boolean {
@@ -76,9 +75,8 @@ export function isMissingKeyValue(criteria: ICriterion[],
 /**
  * Synchronously saves given subjects at the given filepath.
  *
- * @export
- * @param {string} filepath - the directory in which to store the subjects
- * @param {ISubject[]} subjects - the subjects to store
+ * @param filepath - the directory in which to store the subjects
+ * @param subjects - the subjects to store
  */
 export function saveSubjects(filepath: string, subjects: ISubject[]) {
     fs.writeFileSync(path.join(filepath, subjectsFile),
@@ -88,9 +86,8 @@ export function saveSubjects(filepath: string, subjects: ISubject[]) {
 /**
  * Synchronously reads subjects from given filepath.
  *
- * @export
- * @param {string} filepath - the directory where subjects can be read
- * @returns {ISubject[]} - the subjects read from disk
+ * @param filepath - the directory where subjects can be read
+ * @returns - the subjects read from disk
  */
 export function readSubjects(filepath: string): ISubject[] {
     const filename = path.join(filepath, subjectsFile);
