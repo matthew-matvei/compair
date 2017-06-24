@@ -1,4 +1,5 @@
 import * as React from "react";
+import Toggle from "react-toggle";
 
 import { SimpleTooltip } from "components";
 import { ICriterion } from "models";
@@ -48,11 +49,9 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
             <div className="input-group col-2">
                 <SimpleTooltip message={orderTooltip}>
                     <label className="form-check-label">
-                        <input type="checkbox"
-                            className="form-check-input"
-                            checked={this.state.orderInputChecked}
+                        <Toggle checked={this.state.orderInputChecked}
                             onChange={this.handleChangeOrder.bind(this)} />
-                        Ascending
+                        <span>Ascending</span>
                     </label>
                 </SimpleTooltip>
             </div>
