@@ -18,6 +18,11 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
         };
     }
 
+    /**
+     * Defines the rendering of this component.
+     *
+     * @returns - The JSX required to create this component
+     */
     public render(): JSX.Element {
         const orderTooltip = this.state.orderInputChecked ?
             "Ascending = Smaller wins, like golf!" :

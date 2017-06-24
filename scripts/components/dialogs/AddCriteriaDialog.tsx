@@ -18,8 +18,14 @@ import { Priority } from "types";
  */
 class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
 
+    /**
+     * A reference to the new criterion to be created.
+     */
     private newCriterion: Criterion;
 
+    /**
+     * A lookup of the created criteria, with criterion.key used as a key.
+     */
     private criteria: {
         [criterionKey: string]: Criterion
     } = {};
@@ -103,6 +109,9 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
         this.handleRequestClose();
     }
 
+    /**
+     * Handles deleting the subject on the user clicking 'delete'.
+     */
     private handleClickDelete() {
         const currentSubject = this.props.subjects.find(
             subject => subject.name === this.props.selectedSubjectName)!;
@@ -111,6 +120,11 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
         this.handleRequestClose();
     }
 
+    /**
+     * Handles editing a criterion upon any of its values changing.
+     *
+     * @param criterion - The criterion to edit
+     */
     private handleCriterionChange(criterion: ICriterion) {
         const currentSubject = this.props.subjects.find(
             subject => subject.name === this.props.selectedSubjectName)!;
@@ -119,8 +133,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
     }
 
     /**
-     * Handles closing the modal and nulling the modals inputs, since the
-     * dialog component is not actually dismounted from the DOM.
+     * Handles closing the modal.
      */
     private handleRequestClose() {
         this.props.dispatch(closeModal());
