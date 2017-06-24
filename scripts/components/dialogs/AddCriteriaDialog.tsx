@@ -23,6 +23,10 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
 
     private newCriterion: Criterion;
 
+    private criteria: {
+        [criterionKey: string]: Criterion
+    } = {};
+
     /**
      * Defines the rendering of this component.
      *
@@ -40,42 +44,12 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
         }
 
         const criteriaElements = selectedSubject.criteria.map(criterion => {
-            // const orderTooltip = criterion.order === "asc" ?
-            //     "The more the merrier!" : "Smaller wins, like golf!";
-
-            return (
-                /*<form className="form-inline pb-2"
-                    key={`form-${criterion.key}`}>
-                    <div className="input-group col-6">
-                        <span className="input-group-addon">Criterion Key</span>
-                        <input type="text" className="form-control"
-                            id={criterion.key}
-                            value={criterion.key} />
-                    </div>
-                    <div className="input-group col-2">
-                        <Tooltip overlay={<span>{orderTooltip}</span>}>
-                            <label className="form-check-label">
-                                <input type="checkbox"
-                                    className="form-check-input"
-                                    checked={criterion.order === "asc"} />
-                                Ascending
-                            </label>
-                        </Tooltip>
-                    </div>
-                    <div className="input-group col-4">
-                        <span className="input-group-addon">Priority</span>
-                        <Tooltip overlay={
-                            <span>
-                                1 = unimportant; 5 = very important
-                            </span>}>
-                            <input type="number" className="form-control"
-                                min="1" max="5" value={criterion.priority} />
-                        </Tooltip>
-                    </div>
-                </form>*/
-                <Criterion keyInputValue={criterion.key}
-                    orderInputChecked={criterion.order === "asc"}
-                    priorityInputValue={criterion.priority} />);
+            return <Criterion key={criterion.key}
+                ref={(criterionElement) =>
+                    this.criteria[criterion.key] = criterionElement}
+                keyInputValue={criterion.key}
+                orderInputChecked={criterion.order === "asc"}
+                priorityInputValue={criterion.priority} />;
         });
 
         return <ReactModal isOpen={this.props.isShowingModal}
@@ -128,11 +102,6 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
         const currentSubject = this.props.subjects.find(
             subject => subject.name === this.props.selectedSubjectName)!;
 
-        /*this.props.dispatch(addCriterion(currentSubject, {
-            key: this.criterionKeyInput.value,
-            order: this.criterionOrderInput.checked ? "asc" : "desc",
-            priority: parseInt(this.criterionPriorityInput.value) as Priority
-        }));*/
         const criterion = this.newCriterion.state;
 
         this.props.dispatch(addCriterion(currentSubject, {
