@@ -34,7 +34,7 @@ export function orderInstances(criteria: ICriterion[],
                 relevantCriterion, keyValue) : total;
         }, 0);
 
-        return valueB - valueA;
+        return valueA - valueB;
     });
 };
 

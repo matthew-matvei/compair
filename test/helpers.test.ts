@@ -18,25 +18,25 @@ describe("Helper function", () => {
     before(() => {
         testCriterion1 = {
             key: "Test Criterion 1",
-            order: "asc",
+            order: "desc",
             priority: 1
         };
 
         testCriterion2 = {
             key: "Test Criterion 2",
-            order: "asc",
+            order: "desc",
             priority: 5
         };
 
         testCriterion3 = {
             key: "Test Criterion 3",
-            order: "desc",
+            order: "asc",
             priority: 3
         };
 
         testCriterion4 = {
             key: "Test Criterion 4",
-            order: "desc",
+            order: "asc",
             priority: 5
         };
 
