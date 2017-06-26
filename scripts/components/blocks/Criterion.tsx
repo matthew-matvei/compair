@@ -56,18 +56,24 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
                     </label>
                 </SimpleTooltip>
             </div>
-            <div className="input-group col-4">
-                <Slider dots step={1} defaultValue={3} min={1} max={5} />
-                <span className="input-group-addon">
-                    Priority
-                </span>
-                <SimpleTooltip message={"1 = unimportant; 5 = very important"}>
-                    <input type="number"
-                        className="form-control"
-                        value={this.state.priorityInputValue}
-                        onChange={this.handlePriorityChange.bind(this)}
-                        min="1" max="5" />
-                </SimpleTooltip>
+            <div className="col-4" style={{ display: "flex", flexDirection: "column" }}>
+                <div className="input-group">
+                    <span className="input-group-addon">
+                        Priority
+                        </span>
+                    <SimpleTooltip message={"1 = unimportant; 5 = very important"}>
+                        <input type="number"
+                            className="form-control"
+                            value={this.state.priorityInputValue}
+                            onChange={this.handlePriorityChange.bind(this)}
+                            min="1" max="5" />
+                    </SimpleTooltip>
+                </div>
+                <Slider dots step={1}
+                    defaultValue={3}
+                    value={this.state.priorityInputValue}
+                    onChange={this.handlePrioritySliderChange.bind(this)}
+                    min={1} max={5} />
             </div>
         </form>;
     }
@@ -104,6 +110,12 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
         this.setState({
             priorityInputValue: parseInt(typedTarget.value) as Priority
         }, () => {
+            this.sendCriterionUp();
+        });
+    }
+
+    private handlePrioritySliderChange(value: number) {
+        this.setState({ priorityInputValue: value as Priority }, () => {
             this.sendCriterionUp();
         });
     }
