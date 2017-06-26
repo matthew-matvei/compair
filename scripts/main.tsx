@@ -16,6 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import "rc-slider/assets/index.css";
+import "rc-tooltip/assets/bootstrap.css";
+import "react-toggle/style.css";
+
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";

@@ -70,7 +70,8 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                     </button>
                     <button className="btn btn-primary mr-3"
                         onClick={this.handleClickCreate.bind(this)}
-                        disabled={this.newCriterion && this.newCriterion.state.keyInputValue === ""}>
+                        disabled={this.newCriterion &&
+                            this.newCriterion.state.keyInputValue === ""}>
                         Create
                     </button>
                     <button className="btn btn-secondary"

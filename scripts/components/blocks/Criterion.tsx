@@ -1,3 +1,4 @@
+import Slider from "rc-slider";
 import * as React from "react";
 import Toggle from "react-toggle";
 
@@ -56,6 +57,7 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
                 </SimpleTooltip>
             </div>
             <div className="input-group col-4">
+                <Slider dots step={1} defaultValue={3} min={1} max={5} />
                 <span className="input-group-addon">
                     Priority
                 </span>
