@@ -1,5 +1,6 @@
 import Slider from "rc-slider";
 import * as React from "react";
+import { Icon } from "react-fa";
 import Toggle from "react-toggle";
 
 import { SimpleTooltip } from "components";
@@ -47,16 +48,21 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
                     onChange={this.props.newCriterion ?
                         this.handleChangeKey.bind(this) : undefined} />
             </div>
-            <div className="input-group col-2">
+            <div className="input-group col-3">
                 <SimpleTooltip message={orderTooltip}>
                     <label className="form-check-label">
                         <Toggle checked={this.state.orderInputChecked}
-                            onChange={this.handleChangeOrder.bind(this)} />
+                            onChange={this.handleChangeOrder.bind(this)}
+                            className="text-white"
+                            icons={{
+                                checked: <Icon name="level-up" />,
+                                unchecked: <Icon name="level-down" />
+                            }} />
                         <span>Ascending</span>
                     </label>
                 </SimpleTooltip>
             </div>
-            <div className="col-4" style={{ display: "flex", flexDirection: "column" }}>
+            <div className="col-3" style={{ display: "flex", flexDirection: "column" }}>
                 <div className="input-group">
                     <span className="input-group-addon">
                         Priority
