@@ -4,9 +4,9 @@ import { Icon } from "react-fa";
 import { connect } from "react-redux";
 
 import { openModal } from "actions/modals";
-import { enterKey } from "const";
 import { createSubject, setSelectedSubject } from "actions/subjects";
 import { AddCriteriaDialog } from "components";
+import { enterKey } from "const";
 import { IState } from "models";
 import { ISubjectsPanelProps } from "models/props";
 
