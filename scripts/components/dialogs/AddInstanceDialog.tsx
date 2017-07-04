@@ -3,9 +3,9 @@ import { Icon } from "react-fa";
 import * as ReactModal from "react-modal";
 import { connect } from "react-redux";
 
-import { KeyValue } from "components";
 import { addInstance } from "actions/instances";
 import { closeModal } from "actions/modals";
+import { KeyValue } from "components";
 import { dialogStyles } from "const";
 import { IKeyValue, IState } from "models";
 import { IAddInstanceDialogProps } from "models/props";
@@ -28,7 +28,7 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
      */
     private keyValues: {
         [keyName: string]: KeyValue;
-    }
+    } = {};
 
     /**
      * Defines the rendering of this component.
