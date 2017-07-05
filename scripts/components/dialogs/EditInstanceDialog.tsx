@@ -3,13 +3,13 @@ import { Icon } from "react-fa";
 import * as ReactModal from "react-modal";
 import { connect } from "react-redux";
 
-import { KeyValue } from "components";
 import {
     addInstance,
     deleteInstance,
     setSelectedInstance
 } from "actions/instances";
 import { closeModal } from "actions/modals";
+import { KeyValue } from "components";
 import { dialogStyles } from "const";
 import { IKeyValue, IState } from "models";
 import { IEditInstanceDialogProps } from "models/props";
