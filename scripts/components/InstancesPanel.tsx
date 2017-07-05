@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { deleteInstance, setSelectedInstance } from "actions/instances";
 import { openModal } from "actions/modals";
-import { orderInstances } from "helpers";
+import { getMaxValues, getMinValues, orderInstances } from "helpers";
 import { IInstance, IState } from "models";
 import { IInstancesPanelProps } from "models/props";
 import { InstanceCard } from ".";
@@ -25,8 +25,11 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
             return null;
         }
 
+        const minValues = getMinValues(selectedSubject.instances);
+        const maxValues = getMaxValues(selectedSubject.instances);
+
         const instanceElements = orderInstances(
-            selectedSubject.criteria, selectedSubject.instances)
+            selectedSubject.criteria, selectedSubject.instances, minValues, maxValues)
             .map(instance =>
                 <InstanceCard instance={instance}
                     key={instance.name}

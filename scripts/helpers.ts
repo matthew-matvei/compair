@@ -1,8 +1,8 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import { ICriterion, IInstance, IKeyValue, ISubject } from "models";
 import { subjectsFile } from "const";
+import { ICriterion, IInstance, IKeyValue, ISubject } from "models";
 
 /**
  * Orders given instances according to the given criteria.
@@ -13,23 +13,35 @@ import { subjectsFile } from "const";
  * @returns - the ordered instances
  */
 export function orderInstances(criteria: ICriterion[],
-    instances: IInstance[]): IInstance[] {
+    instances: IInstance[], minValues: IKeyValue[], maxValues: IKeyValue[]): IInstance[] {
 
     return instances.sort((instanceA, instanceB): number => {
         const valueA = instanceA.values.reduce((total, keyValue) => {
             const relevantCriterion = criteria.find(
                 criterion => criterion.key === keyValue.key);
+            const minValue = minValues.find(
+                value => value.key === keyValue.key);
+            const maxValue = maxValues.find(
+                value => value.key === keyValue.key);
 
-            return relevantCriterion ? total + calculateValue(
-                relevantCriterion, keyValue) : total;
+            const thisValue = relevantCriterion ? calculateValue(
+                relevantCriterion, keyValue, minValue!, maxValue!) : 0;
+
+            return isNaN(thisValue) ? 0 + total : thisValue + total;
         }, 0);
 
         const valueB = instanceB.values.reduce((total, keyValue) => {
             const relevantCriterion = criteria.find(
                 criterion => criterion.key === keyValue.key);
+            const minValue = minValues.find(
+                value => value.key === keyValue.key);
+            const maxValue = maxValues.find(
+                value => value.key === keyValue.key);
 
-            return relevantCriterion ? total + calculateValue(
-                relevantCriterion, keyValue) : total;
+            const thisValue = relevantCriterion ? calculateValue(
+                relevantCriterion, keyValue, minValue!, maxValue!) : 0;
+
+            return isNaN(thisValue) ? 0 + total : thisValue + total;
         }, 0);
 
         return valueA - valueB;
@@ -43,10 +55,48 @@ export function orderInstances(criteria: ICriterion[],
  * @param keyValue - a keyValue with a key equal to criterion.key
  * @returns - the value of the keyValue according to the criterion
  */
-function calculateValue(criterion: ICriterion, keyValue: IKeyValue): number {
+function calculateValue(criterion: ICriterion, keyValue: IKeyValue, minValue: IKeyValue, maxValue: IKeyValue): number {
     const order = criterion.order === "asc" ? 1 : -1;
 
-    return keyValue.value * order * Math.log(criterion.priority);
+    return normaliseValue(keyValue.value, minValue.value, maxValue.value) * order * Math.log(criterion.priority);
+}
+
+function normaliseValue(value: number, minValue: number, maxValue: number): number {
+    return (value - minValue) / (maxValue - minValue);
+}
+
+export function getMinValues(values: IInstance[]): IKeyValue[] {
+    let minValues: {
+        [key: string]: number
+    } = {};
+
+    values.forEach(instance => {
+        instance.values.forEach(keyValue => {
+            if (minValues[keyValue.key] === undefined ||
+                keyValue.value < minValues[keyValue.key]) {
+                minValues[keyValue.key] = keyValue.value;
+            }
+        });
+    });
+
+    return Object.keys(minValues).map(key => (<IKeyValue>{ key, value: minValues[key] }));
+}
+
+export function getMaxValues(values: IInstance[]): IKeyValue[] {
+    let maxValues: {
+        [key: string]: number
+    } = {};
+
+    values.forEach(instance => {
+        instance.values.forEach(keyValue => {
+            if (maxValues[keyValue.key] === undefined ||
+                keyValue.value > maxValues[keyValue.key]) {
+                maxValues[keyValue.key] = keyValue.value;
+            }
+        });
+    });
+
+    return Object.keys(maxValues).map(key => (<IKeyValue>{ key, value: maxValues[key] }));
 }
 
 /**
