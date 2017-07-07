@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 
 import { subjectsFile } from "const";
-import { ICriterion, IInstance, IKeyValue, ISubject } from "models";
+import { ICriterion, IInstance, IKeyValue, IMinMax, ISubject } from "models";
 
 /**
  * Orders given instances according to the given criteria.
@@ -10,22 +10,21 @@ import { ICriterion, IInstance, IKeyValue, ISubject } from "models";
  * @param criteria - a set of criteria by which to order the
  *      instances
  * @param instances - the instances to be ordered
+ * @param minMaxValues - a list of minimum and maximum values for each keyValue
  * @returns - the ordered instances
  */
 export function orderInstances(criteria: ICriterion[],
-    instances: IInstance[], minValues: IKeyValue[], maxValues: IKeyValue[]): IInstance[] {
+    instances: IInstance[], minMaxValues: IMinMax[]): IInstance[] {
 
     return instances.sort((instanceA, instanceB): number => {
         const valueA = instanceA.values.reduce((total, keyValue) => {
             const relevantCriterion = criteria.find(
                 criterion => criterion.key === keyValue.key);
-            const minValue = minValues.find(
-                value => value.key === keyValue.key);
-            const maxValue = maxValues.find(
+            const minMaxValue = minMaxValues.find(
                 value => value.key === keyValue.key);
 
             const thisValue = relevantCriterion ? calculateValue(
-                relevantCriterion, keyValue, minValue!, maxValue!) : 0;
+                relevantCriterion, keyValue, minMaxValue!) : 0;
 
             return isNaN(thisValue) ? 0 + total : thisValue + total;
         }, 0);
@@ -33,13 +32,11 @@ export function orderInstances(criteria: ICriterion[],
         const valueB = instanceB.values.reduce((total, keyValue) => {
             const relevantCriterion = criteria.find(
                 criterion => criterion.key === keyValue.key);
-            const minValue = minValues.find(
-                value => value.key === keyValue.key);
-            const maxValue = maxValues.find(
+            const minMaxValue = minMaxValues.find(
                 value => value.key === keyValue.key);
 
             const thisValue = relevantCriterion ? calculateValue(
-                relevantCriterion, keyValue, minValue!, maxValue!) : 0;
+                relevantCriterion, keyValue, minMaxValue!) : 0;
 
             return isNaN(thisValue) ? 0 + total : thisValue + total;
         }, 0);
@@ -53,50 +50,61 @@ export function orderInstances(criteria: ICriterion[],
  *
  * @param criterion - a criterion with a key equal to keyValue.key
  * @param keyValue - a keyValue with a key equal to criterion.key
+ * @param minMaxValue - minimum and maximum values for given keyValue
  * @returns - the value of the keyValue according to the criterion
  */
-function calculateValue(criterion: ICriterion, keyValue: IKeyValue, minValue: IKeyValue, maxValue: IKeyValue): number {
+function calculateValue(criterion: ICriterion, keyValue: IKeyValue, minMaxValue: IMinMax): number {
     const order = criterion.order === "asc" ? 1 : -1;
 
-    return normaliseValue(keyValue.value, minValue.value, maxValue.value) * order * Math.log(criterion.priority);
+    return normaliseValue(keyValue.value, minMaxValue.min, minMaxValue.max) * order * Math.log(criterion.priority);
 }
 
+/**
+ * Returns a normalised version of the given value, using minValue and maxValue as a
+ * floor and ceiling.
+ *
+ * @param value - the value to be normalised
+ * @param minValue - the minimum value to serve as the floor of the conversion
+ * @param maxValue - the maximum value to serve as the ceiling of the conversion
+ * @returns - the normalised value
+ */
 function normaliseValue(value: number, minValue: number, maxValue: number): number {
     return (value - minValue) / (maxValue - minValue);
 }
 
-export function getMinValues(values: IInstance[]): IKeyValue[] {
-    let minValues: {
-        [key: string]: number
+/**
+ * Returns a list of minimum and maximum values for all keyValues contained in the
+ * list of given values.
+ *
+ * @param values - a list of instances from which to analyse keyValues
+ * @returns - a list of minimum and maximum values from given instances' keyValues
+ */
+export function getMinMaxValues(values: IInstance[]): IMinMax[] {
+    let minMaxValues: {
+        [key: string]: IMinMax
     } = {};
 
     values.forEach(instance => {
         instance.values.forEach(keyValue => {
-            if (minValues[keyValue.key] === undefined ||
-                keyValue.value < minValues[keyValue.key]) {
-                minValues[keyValue.key] = keyValue.value;
+            if (minMaxValues[keyValue.key] === undefined) {
+                minMaxValues[keyValue.key] = {
+                    key: keyValue.key,
+                    min: keyValue.value,
+                    max: keyValue.value
+                };
+            } else if (keyValue.value < minMaxValues[keyValue.key].min) {
+                minMaxValues[keyValue.key].min = keyValue.value;
+            } else if (keyValue.value > minMaxValues[keyValue.key].max) {
+                minMaxValues[keyValue.key].max = keyValue.value;
             }
         });
     });
 
-    return Object.keys(minValues).map(key => (<IKeyValue>{ key, value: minValues[key] }));
-}
-
-export function getMaxValues(values: IInstance[]): IKeyValue[] {
-    let maxValues: {
-        [key: string]: number
-    } = {};
-
-    values.forEach(instance => {
-        instance.values.forEach(keyValue => {
-            if (maxValues[keyValue.key] === undefined ||
-                keyValue.value > maxValues[keyValue.key]) {
-                maxValues[keyValue.key] = keyValue.value;
-            }
-        });
-    });
-
-    return Object.keys(maxValues).map(key => (<IKeyValue>{ key, value: maxValues[key] }));
+    return Object.keys(minMaxValues).map(key => (<IMinMax>{
+        key,
+        min: minMaxValues[key].min,
+        max: minMaxValues[key].max
+    }));
 }
 
 /**
