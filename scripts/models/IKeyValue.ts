@@ -1,7 +1,5 @@
 /**
  * A key value pair where the key relates to the key of a subject's criterion.
- *
- * @interface IKeyValue
  */
 interface IKeyValue {
 
