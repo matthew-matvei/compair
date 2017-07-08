@@ -1,7 +1,7 @@
 import { expect } from "chai";
 
-import { isMissingKeyValue, orderInstances } from "helpers";
-import { ICriterion, IInstance, IKeyValue } from "models";
+import { getMinMaxValues, isMissingKeyValue, orderInstances } from "helpers";
+import { ICriterion, IInstance, IKeyValue, IMinMax } from "models";
 
 describe("Helper function", () => {
 
@@ -14,6 +14,28 @@ describe("Helper function", () => {
     let testKeyValue2: IKeyValue;
     let testKeyValue3: IKeyValue;
     let testKeyValue4: IKeyValue;
+
+    let testInstances: IInstance[];
+
+    /**
+     * The instance that should be first in an ordered list.
+     */
+    let testInstance1: IInstance;
+
+    /**
+     * The instance that should be second in the ordered list.
+     */
+    let testInstance2: IInstance;
+
+    /**
+     * The instance that should be third in the ordered list.
+     */
+    let testInstance3: IInstance;
+
+    /**
+     * An instance missing some criteria.
+     */
+    let testInstanceEmpty: IInstance;
 
     before(() => {
         testCriterion1 = {
@@ -49,27 +71,14 @@ describe("Helper function", () => {
     describe("orderInstances", () => {
 
         let testCriteria: ICriterion[];
-        let testInstances: IInstance[];
 
-        /**
-         * The instance that should be first in the ordered list.
-         */
-        let testInstance1: IInstance;
 
-        /**
-         * The instance that should be second in the ordered list.
-         */
-        let testInstance2: IInstance;
 
-        /**
-         * The instance that should be third in the ordered list.
-         */
-        let testInstance3: IInstance;
 
-        /**
-         * An instance missing some criteria.
-         */
-        let testInstanceEmpty: IInstance;
+
+
+
+        let testMinMaxValues: IMinMax[];
 
         before(() => {
             testCriteria = [
@@ -119,31 +128,35 @@ describe("Helper function", () => {
 
         beforeEach(() => {
             testInstances = new Array<IInstance>();
+            testMinMaxValues = getMinMaxValues(testInstances);
         });
 
         it("returns an empty list when given one", () => {
-            const result = orderInstances(testCriteria, testInstances);
+            const result = orderInstances(testCriteria, testInstances, testMinMaxValues);
 
             expect(result).to.be.empty;
         });
 
         it("returns a list of one instance when given one", () => {
             testInstances.push(testInstance1);
-            const result = orderInstances(testCriteria, testInstances);
+            testMinMaxValues = getMinMaxValues(testInstances);
+            const result = orderInstances(testCriteria, testInstances, testMinMaxValues);
 
             expect(result).to.deep.equal([testInstance1]);
         });
 
         it("returns an ordered list of two instances", () => {
             testInstances.push(testInstance2, testInstance1);
-            const result = orderInstances(testCriteria, testInstances);
+            testMinMaxValues = getMinMaxValues(testInstances);
+            const result = orderInstances(testCriteria, testInstances, testMinMaxValues);
 
             expect(result).to.deep.equal([testInstance1, testInstance2]);
         });
 
         it("returns an ordered list of three instances", () => {
             testInstances.push(testInstance3, testInstance2, testInstance1);
-            const result = orderInstances(testCriteria, testInstances);
+            testMinMaxValues = getMinMaxValues(testInstances);
+            const result = orderInstances(testCriteria, testInstances, testMinMaxValues);
 
             expect(result).to.deep.equal(
                 [testInstance1, testInstance2, testInstance3]);
@@ -151,7 +164,8 @@ describe("Helper function", () => {
 
         it("handles a list including an instance with missing criteria", () => {
             testInstances.push(testInstanceEmpty);
-            const result = orderInstances(testCriteria, testInstances);
+            testMinMaxValues = getMinMaxValues(testInstances);
+            const result = orderInstances(testCriteria, testInstances, testMinMaxValues);
 
             expect(result).to.deep.equal([testInstanceEmpty]);
         });
@@ -210,6 +224,48 @@ describe("Helper function", () => {
             const result = isMissingKeyValue(testCriteria, testKeyValues);
 
             expect(result).to.be.false;
+        });
+    });
+
+    describe("getMinMaxValues function", () => {
+
+        beforeEach(() => {
+            testInstances = new Array<IInstance>();
+        });
+
+        it("returns an empty list when given an empty list", () => {
+            const result = getMinMaxValues(testInstances);
+
+            expect(result).to.be.empty;
+        });
+
+        it("contains the first keyValue per key when given one instance", () => {
+            testInstance1.values = [{ key: "1", value: 10 }];
+            testInstances.push(testInstance1);
+            const expected: IMinMax[] = [{ key: "1", max: 10, min: 10 }];
+            const result = getMinMaxValues(testInstances);
+
+            expect(result).to.deep.equal(expected);
+        });
+
+        it("can identify and return a minimum value", () => {
+            testInstance1.values = [{ key: "1", value: 10 }];
+            testInstance2.values = [{ key: "1", value: 5 }];
+            testInstances.push(testInstance1, testInstance2);
+            const expected: IMinMax[] = [{ key: "1", max: 10, min: 5 }];
+            const result = getMinMaxValues(testInstances);
+
+            expect(result[0].min).to.equal(expected[0].min);
+        });
+
+        it("can identify and return a maximum value", () => {
+            testInstance1.values = [{ key: "1", value: 10 }];
+            testInstance2.values = [{ key: "1", value: 15 }];
+            testInstances.push(testInstance1, testInstance2);
+            const expected: IMinMax[] = [{ key: "1", max: 15, min: 10 }];
+            const result = getMinMaxValues(testInstances);
+
+            expect(result[0].max).to.equal(expected[0].max);
         });
     });
 });
