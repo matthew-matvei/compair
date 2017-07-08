@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import { deleteInstance, setSelectedInstance } from "actions/instances";
 import { openModal } from "actions/modals";
+import { setSelectedSubject } from "actions/subjects";
 import { orderInstances } from "helpers";
 import { IInstance, IState } from "models";
 import { IInstancesPanelProps } from "models/props";
@@ -42,6 +43,40 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
                     openDialog={this.handleOpenDialog.bind(this)} />
             </div>
         </main>;
+    }
+
+    /**
+     * Determines whether this component should update. It also handles getting the
+     * properly updated selected subject from nextProps.subjects.
+     *
+     * @param nextProps - the incoming props
+     * @returns - whether this component should update or not
+     */
+    public shouldComponentUpdate(nextProps: IInstancesPanelProps): boolean {
+
+        // since nextProps.selectedSubject does not represent the properly updated subject,
+        // it must be gotten from nextProps.subjects
+        const updatedSelectedSubject = nextProps.subjects.find(
+            subject => subject.name === this.props.selectedSubject.name)!;
+
+        this.props.dispatch(setSelectedSubject(updatedSelectedSubject));
+
+        if (this.props.selectedSubject.instances.length !==
+            updatedSelectedSubject.instances.length) {
+
+            return true;
+        }
+
+        for (let i = 0; i < this.props.selectedSubject.instances.length; i++) {
+            const oldInstance = this.props.selectedSubject.instances[i];
+            const newInstance = updatedSelectedSubject.instances[i];
+
+            if (oldInstance.score !== newInstance.score) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
