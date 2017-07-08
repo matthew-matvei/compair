@@ -9,6 +9,9 @@ import { ICriterionProps } from "models/props";
 import { ICriterionState } from "models/states";
 import { Priority } from "types";
 
+/**
+ * A panel containing controls to define a criterion.
+ */
 class Criterion extends React.Component<ICriterionProps, ICriterionState> {
 
     /**
@@ -114,7 +117,8 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
     private handlePriorityChange(event: React.ChangeEvent<HTMLInputElement>) {
         const typedTarget = event.target as HTMLInputElement;
         this.setState({
-            priorityInputValue: parseInt(typedTarget.value) as Priority
+            // if typedTarget.value is an empty string, a fallback of undefined is used
+            priorityInputValue: (parseInt(typedTarget.value) || undefined) as Priority
         }, () => {
             this.sendCriterionUp();
         });
