@@ -72,14 +72,6 @@ describe("Helper function", () => {
 
         let testCriteria: ICriterion[];
 
-
-
-
-
-
-
-        let testMinMaxValues: IMinMax[];
-
         before(() => {
             testCriteria = [
                 testCriterion1,
@@ -128,35 +120,31 @@ describe("Helper function", () => {
 
         beforeEach(() => {
             testInstances = new Array<IInstance>();
-            testMinMaxValues = getMinMaxValues(testInstances);
         });
 
         it("returns an empty list when given one", () => {
-            const result = orderInstances(testCriteria, testInstances, testMinMaxValues);
+            const result = orderInstances(testCriteria, testInstances);
 
             expect(result).to.be.empty;
         });
 
         it("returns a list of one instance when given one", () => {
             testInstances.push(testInstance1);
-            testMinMaxValues = getMinMaxValues(testInstances);
-            const result = orderInstances(testCriteria, testInstances, testMinMaxValues);
+            const result = orderInstances(testCriteria, testInstances);
 
             expect(result).to.deep.equal([testInstance1]);
         });
 
         it("returns an ordered list of two instances", () => {
             testInstances.push(testInstance2, testInstance1);
-            testMinMaxValues = getMinMaxValues(testInstances);
-            const result = orderInstances(testCriteria, testInstances, testMinMaxValues);
+            const result = orderInstances(testCriteria, testInstances);
 
             expect(result).to.deep.equal([testInstance1, testInstance2]);
         });
 
         it("returns an ordered list of three instances", () => {
             testInstances.push(testInstance3, testInstance2, testInstance1);
-            testMinMaxValues = getMinMaxValues(testInstances);
-            const result = orderInstances(testCriteria, testInstances, testMinMaxValues);
+            const result = orderInstances(testCriteria, testInstances);
 
             expect(result).to.deep.equal(
                 [testInstance1, testInstance2, testInstance3]);
@@ -164,8 +152,7 @@ describe("Helper function", () => {
 
         it("handles a list including an instance with missing criteria", () => {
             testInstances.push(testInstanceEmpty);
-            testMinMaxValues = getMinMaxValues(testInstances);
-            const result = orderInstances(testCriteria, testInstances, testMinMaxValues);
+            const result = orderInstances(testCriteria, testInstances);
 
             expect(result).to.deep.equal([testInstanceEmpty]);
         });

@@ -14,7 +14,9 @@ import { ICriterion, IInstance, IKeyValue, IMinMax, ISubject } from "models";
  * @returns - the ordered instances
  */
 export function orderInstances(criteria: ICriterion[],
-    instances: IInstance[], minMaxValues: IMinMax[]): IInstance[] {
+    instances: IInstance[]): IInstance[] {
+
+    const minMaxValues = getMinMaxValues(instances);
 
     return instances.sort((instanceA, instanceB): number => {
         const valueA = instanceA.values.reduce((total, keyValue) => {
