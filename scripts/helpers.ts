@@ -10,7 +10,6 @@ import { ICriterion, IInstance, IKeyValue, IMinMax, ISubject } from "models";
  * @param criteria - a set of criteria by which to order the
  *      instances
  * @param instances - the instances to be ordered
- * @param minMaxValues - a list of minimum and maximum values for each keyValue
  * @returns - the ordered instances
  */
 export function orderInstances(criteria: ICriterion[],
