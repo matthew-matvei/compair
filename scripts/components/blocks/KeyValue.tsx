@@ -18,13 +18,13 @@ class KeyValue extends React.Component<IKeyValueProps, IKeyValueState> {
 
         this.state = {
             value: props.value
-        }
+        };
     }
 
     public render(): JSX.Element {
         const { keyName } = this.props;
 
-        return <div className="col-6" key={keyName}>
+        return <div className="col-6">
             <div className="input-group">
                 <span className="input-group-addon">{keyName}</span>
                 <input type="number"
@@ -36,6 +36,11 @@ class KeyValue extends React.Component<IKeyValueProps, IKeyValueState> {
         </div>;
     }
 
+    /**
+     * Handles changing the value in this KeyValue's number input.
+     *
+     * @param event - the change event from which the value is gotten
+     */
     private handleValueChange(event: React.ChangeEvent<HTMLInputElement>) {
         const typedTarget = event.target as HTMLInputElement;
         this.setState({ value: parseInt(typedTarget.value) });
