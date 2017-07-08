@@ -139,7 +139,6 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
  */
 const mapStateToProps = (state: IState) => ({
     selectedSubject: state.selectedSubject,
-    subjects: state.subjects,
     isShowingModal: state.isShowingModal === "addInstanceDialog"
 });
 

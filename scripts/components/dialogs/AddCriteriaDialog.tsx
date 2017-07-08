@@ -132,7 +132,6 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
  */
 const mapStateToProps = (state: IState) => ({
     selectedSubject: state.selectedSubject,
-    subjects: state.subjects,
     isShowingModal: state.isShowingModal === "addCriterionDialog"
 });
 
