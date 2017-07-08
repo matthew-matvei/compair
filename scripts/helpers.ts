@@ -30,6 +30,8 @@ export function orderInstances(criteria: ICriterion[],
             return isNaN(thisValue) ? 0 + total : thisValue + total;
         }, 0);
 
+        instanceA.score = valueA;
+
         const valueB = instanceB.values.reduce((total, keyValue) => {
             const relevantCriterion = criteria.find(
                 criterion => criterion.key === keyValue.key);
@@ -41,6 +43,8 @@ export function orderInstances(criteria: ICriterion[],
 
             return isNaN(thisValue) ? 0 + total : thisValue + total;
         }, 0);
+
+        instanceB.score = valueB;
 
         return valueA - valueB;
     });
@@ -156,4 +160,14 @@ export function readSubjects(filepath: string): ISubject[] {
     }
 
     return [];
+}
+
+/**
+ * Converts optional score to readable, absolute value.
+ *
+ * @param score - a floating point value representing a score
+ * @returns - a more readable, absolute version of the given score
+ */
+export function showScore(score?: number): number {
+    return score ? Math.abs(Math.round(score * 100) / 100) : 0;
 }

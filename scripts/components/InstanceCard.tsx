@@ -2,7 +2,7 @@ import * as classNames from "classnames";
 import * as React from "react";
 import { Icon } from "react-fa";
 
-import { isMissingKeyValue } from "helpers";
+import { isMissingKeyValue, showScore } from "helpers";
 import { IInstanceCardProps } from "models/props";
 import { AddInstanceDialog, EditInstanceDialog } from ".";
 
@@ -34,6 +34,9 @@ export default class InstanceCard extends
                 </div>
                 <div className="card-footer text-right">
                     <EditInstanceDialog />
+                    <span className="text-muted mr-3">
+                        {showScore(this.props.instance!.score)}
+                    </span>
                     <button className="btn btn-sm btn-danger"
                         onClick={this.handleClickDelete.bind(this)}>
                         <Icon name="close" />
