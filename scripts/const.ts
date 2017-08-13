@@ -1,8 +1,6 @@
 import { Styles } from "react-modal";
 
-/**
- * Custom stylings for all modal dialog windows.
- */
+/** Custom stylings for all modal dialog windows. */
 export const dialogStyles: Styles = {
     overlay: {
         backgroundColor: "rgba(0, 0, 0, 0.7)"
@@ -13,12 +11,11 @@ export const dialogStyles: Styles = {
     }
 };
 
-/**
- * Filename for user-saved subjects.
- */
+/** Filename for user-saved subjects. */
 export const subjectsFile = ".subjects";
 
-/**
- * The numeric value of the Enter key.
- */
+/** The numeric value of the Enter key. */
 export const enterKey = 13;
+
+/** The ceiling value for a score. */
+export const scoreCeiling = 10;

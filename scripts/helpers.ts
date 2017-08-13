@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import { subjectsFile } from "const";
+import { scoreCeiling, subjectsFile } from "const";
 import { ICriterion, IInstance, IKeyValue, IMinMax, ISubject } from "models";
 
 /**
@@ -61,7 +61,9 @@ export function orderInstances(criteria: ICriterion[],
 function calculateValue(criterion: ICriterion, keyValue: IKeyValue, minMaxValue: IMinMax): number {
     const order = criterion.order === "asc" ? 1 : -1;
 
-    return normaliseValue(keyValue.value, minMaxValue.min, minMaxValue.max) * order * Math.log(criterion.priority);
+    return normaliseValue(keyValue.value, minMaxValue.min, minMaxValue.max) *
+        order *
+        Math.log(criterion.priority);
 }
 
 /**
@@ -168,6 +170,11 @@ export function readSubjects(filepath: string): ISubject[] {
  * @param score - a floating point value representing a score
  * @returns - a more readable, absolute version of the given score
  */
-export function showScore(score?: number): number {
-    return score ? Math.abs(Math.round(score * 100) / 100) : 0;
+export function showScore(score: number | undefined, maxScore: number): number {
+    return score ? Math.abs(Math.round(score * 100) / 100) / maxScore * scoreCeiling : 0;
+}
+
+export function getMaxScore(instances: IInstance[]): number {
+    return Math.max(...instances.map(
+        instance => Math.abs(Math.round(instance.score || 0 * 100) / 100 || 0)));
 }

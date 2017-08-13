@@ -2,7 +2,7 @@ import * as classNames from "classnames";
 import * as React from "react";
 import { Icon } from "react-fa";
 
-import { isMissingKeyValue, showScore } from "helpers";
+import { getMaxScore, isMissingKeyValue, showScore } from "helpers";
 import { IInstanceCardProps } from "models/props";
 import { AddInstanceDialog, EditInstanceDialog } from ".";
 
@@ -26,6 +26,8 @@ export default class InstanceCard extends
                     currentSubject.criteria, instance.values)
             }) : "";
 
+        const maxScore = currentSubject && getMaxScore(currentSubject.instances) || 0;
+
         const cardContent = instance && currentSubject ?
             <div className={"card mb-4"}>
                 <div className={`card-block clickable ${classes}`}
@@ -35,7 +37,7 @@ export default class InstanceCard extends
                 <div className="card-footer text-right">
                     <EditInstanceDialog />
                     <span className="text-muted mr-3">
-                        {showScore(this.props.instance!.score)}
+                        {showScore(this.props.instance!.score, maxScore)}
                     </span>
                     <button className="btn btn-sm btn-danger"
                         onClick={this.handleClickDelete.bind(this)}>
