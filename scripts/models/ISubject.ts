@@ -2,8 +2,6 @@ import { ICriterion, IInstance } from "models";
 
 /**
  * A subject containing instances.
- *
- * @interface ISubject
  */
 interface ISubject {
 
@@ -19,17 +17,11 @@ interface ISubject {
 
     /**
      * The criteria that each instance of this subject must adhere to.
-     *
-     * @type {ICriterion[]}
-     * @memberof ISubject
      */
     criteria: ICriterion[];
 
     /**
      * All the instances associated with this subject.
-     *
-     * @type {IInstance[]}
-     * @memberof ISubject
      */
     instances: IInstance[];
 }

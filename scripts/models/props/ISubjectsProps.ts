@@ -1,5 +1,8 @@
 import { ISubject } from "models";
 
+/**
+ * The properties for all components that track subjects.
+ */
 interface ISubjectsProps {
 
     /**

@@ -13,9 +13,6 @@ import { IAddInstanceDialogProps } from "models/props";
 
 /**
  * A dialog for creating a new instance.
- *
- * @class AddInstanceDialog
- * @extends {React.Component<IAddInstanceDialogProps, {}>}
  */
 class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
 

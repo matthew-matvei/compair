@@ -59,6 +59,9 @@ export default class InstanceCard extends
         </div>;
     }
 
+    /**
+     * Handles opening an AddInstanceDialog on click.
+     */
     private handleClickOpenDialog() {
         this.props.openDialog!();
     }

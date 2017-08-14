@@ -168,6 +168,8 @@ export function readSubjects(filepath: string): ISubject[] {
  * Converts optional score to readable, absolute value.
  *
  * @param score - a floating point value representing a score
+ * @param minScore - the min score that provides context for score
+ * @param maxScore - the max score that provides context for score
  * @returns - a more readable, absolute version of the given score
  */
 export function showScore(score: number | undefined, minScore: number, maxScore: number): number {

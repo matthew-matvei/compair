@@ -21,6 +21,11 @@ class KeyValue extends React.Component<IKeyValueProps, IKeyValueState> {
         };
     }
 
+    /**
+     * Defines the rendering of this component.
+     *
+     * @returns - The JSX required to create this component
+     */
     public render(): JSX.Element {
         const { keyName } = this.props;
 

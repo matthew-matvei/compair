@@ -139,6 +139,9 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
         this.props.dispatch(closeModal());
     }
 
+    /**
+     * Parses and returns the keyValues in this dialog's inputs.
+     */
     private parseKeyValues(): IKeyValue[] {
         return Object.keys(this.keyValues).map(key => ({
             key,

@@ -1,7 +1,7 @@
 import { Action, handleActions } from "redux-actions";
 
-import { IInstance } from "models";
 import { SET_SELECTED_INSTANCE } from "actions/types";
+import { IInstance } from "models";
 
 const initialState: string | null = null;
 

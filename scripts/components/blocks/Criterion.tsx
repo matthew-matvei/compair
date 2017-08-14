@@ -124,6 +124,11 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
         });
     }
 
+    /**
+     * Handles setting the priorityInputValue on slider change.
+     *
+     * @param value - the value to set as the priority input's value
+     */
     private handlePrioritySliderChange(value: number) {
         this.setState({ priorityInputValue: value as Priority }, () => {
             this.sendCriterionUp();

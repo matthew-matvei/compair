@@ -2,7 +2,7 @@ import { Action, handleActions } from "redux-actions";
 
 import { SET_SELECTED_SUBJECT_NAME } from "actions/types";
 
-const initialState: string = "Blah";
+const initialState: string = "";
 
 export default handleActions<string, string>({
 

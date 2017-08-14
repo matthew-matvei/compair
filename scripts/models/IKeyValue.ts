@@ -5,17 +5,11 @@ interface IKeyValue {
 
     /**
      * The key of this key value pair.
-     *
-     * @type {string}
-     * @memberof IKeyValue
      */
     key: string;
 
     /**
      * The value of this key value pair.
-     *
-     * @type {number}
-     * @memberof IKeyValue
      */
     value: number;
 }
