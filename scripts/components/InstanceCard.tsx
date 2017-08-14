@@ -2,7 +2,7 @@ import * as classNames from "classnames";
 import * as React from "react";
 import { Icon } from "react-fa";
 
-import { getMaxScore, isMissingKeyValue, showScore } from "helpers";
+import { getMaxScore, getMinScore, isMissingKeyValue, showScore } from "helpers";
 import { IInstanceCardProps } from "models/props";
 import { AddInstanceDialog, EditInstanceDialog } from ".";
 
@@ -26,6 +26,7 @@ export default class InstanceCard extends
                     currentSubject.criteria, instance.values)
             }) : "";
 
+        const minScore = currentSubject && getMinScore(currentSubject.instances) || 0;
         const maxScore = currentSubject && getMaxScore(currentSubject.instances) || 0;
 
         const cardContent = instance && currentSubject ?
@@ -37,7 +38,7 @@ export default class InstanceCard extends
                 <div className="card-footer text-right">
                     <EditInstanceDialog />
                     <span className="text-muted mr-3">
-                        {showScore(this.props.instance!.score, maxScore)}
+                        {showScore(this.props.instance!.score, minScore, maxScore)}
                     </span>
                     <button className="btn btn-sm btn-danger"
                         onClick={this.handleClickDelete.bind(this)}>

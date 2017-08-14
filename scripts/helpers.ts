@@ -170,13 +170,30 @@ export function readSubjects(filepath: string): ISubject[] {
  * @param score - a floating point value representing a score
  * @returns - a more readable, absolute version of the given score
  */
-export function showScore(score: number | undefined, maxScore: number): number {
-    return score ? Math.abs(Math.round(score * 100) / 100) / maxScore * scoreCeiling : 0;
+export function showScore(score: number | undefined, minScore: number, maxScore: number): number {
+    return score ? Math.round((
+        scoreCeiling - normaliseValue(score, minScore, maxScore) * scoreCeiling) * 100
+    ) / 100 : 0;
 }
 
+/**
+ * Return the max score from a list of instances.
+ *
+ * @param instances - the instances from which to extract the scores
+ */
 export function getMaxScore(instances: IInstance[]): number {
     return Math.max(...instances.map(
-        instance => Math.abs(Math.round(instance.score || 0 * 100) / 100 || 0)));
+        instance => instance.score || 0));
+}
+
+/**
+ * Return the min score from a list of instances.
+ *
+ * @param instances - the instances from which to extract the scores
+ */
+export function getMinScore(instances: IInstance[]): number {
+    return Math.min(...instances.map(
+        instance => instance.score || 0));
 }
 
 /**
