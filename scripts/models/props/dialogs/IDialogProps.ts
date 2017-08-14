@@ -11,7 +11,9 @@ interface IDialogProps extends IDispatchableProps {
      */
     isShowingModal: boolean;
 
-    selectedSubject: ISubject;
+    selectedSubjectName: string;
+
+    subjects: ISubject[];
 }
 
 export default IDialogProps;

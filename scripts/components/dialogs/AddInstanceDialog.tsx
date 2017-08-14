@@ -7,6 +7,7 @@ import { addInstance } from "actions/instances";
 import { closeModal } from "actions/modals";
 import { KeyValue } from "components";
 import { dialogStyles } from "const";
+import { getSelectedSubject } from "helpers";
 import { IKeyValue, IState } from "models";
 import { IAddInstanceDialogProps } from "models/props";
 
@@ -36,7 +37,9 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
      * @returns - The JSX required to create this component
      */
     public render(): JSX.Element | null {
-        const { selectedSubject } = this.props;
+        const { selectedSubjectName, subjects } = this.props;
+
+        const selectedSubject = getSelectedSubject(selectedSubjectName, subjects);
 
         if (!selectedSubject) {
             return null;
@@ -68,7 +71,7 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
             <div className="card">
                 <div className="card-header dialog-header">
                     <h2 className="card-title text-muted">
-                        {`Add an instance - ${this.props.selectedSubject.name}`}
+                        {`Add an instance - ${selectedSubject.name}`}
                     </h2>
                     <button className="btn btn-secondary"
                         onClick={this.handleRequestClose.bind(this)}>
@@ -102,7 +105,11 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
      * Handles creating the new criterion on the user clicking 'create'.
      */
     private handleClickCreate() {
-        this.props.dispatch(addInstance(this.props.selectedSubject, {
+        const selectedSubject = getSelectedSubject(
+            this.props.selectedSubjectName, this.props.subjects
+        )!;
+
+        this.props.dispatch(addInstance(selectedSubject, {
             name: this.instanceNameInput.value,
             values: this.parseInputs()
         }));
@@ -138,7 +145,7 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
  * @returns - This component's props, taken from the application state
  */
 const mapStateToProps = (state: IState) => ({
-    selectedSubject: state.selectedSubject,
+    selectedSubjectName: state.selectedSubjectName,
     isShowingModal: state.isShowingModal === "addInstanceDialog"
 });
 

@@ -178,3 +178,19 @@ export function getMaxScore(instances: IInstance[]): number {
     return Math.max(...instances.map(
         instance => Math.abs(Math.round(instance.score || 0 * 100) / 100 || 0)));
 }
+
+/**
+ * Returns the subject in subjects identified by subjectName, or null if it can't be found.
+ *
+ * @param subjectName - the name of the subject to search for
+ * @param subjects - the subjects in which to search
+ */
+export function getSelectedSubject(subjectName: string, subjects: ISubject[] = []): ISubject | null {
+    for (let subject of subjects) {
+        if (subject.name === subjectName) {
+            return subject;
+        }
+    }
+
+    return null;
+}

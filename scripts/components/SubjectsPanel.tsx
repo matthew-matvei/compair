@@ -4,9 +4,10 @@ import { Icon } from "react-fa";
 import { connect } from "react-redux";
 
 import { openModal } from "actions/modals";
-import { createSubject, setSelectedSubject } from "actions/subjects";
+import { createSubject, setSelectedSubjectName } from "actions/subjects";
 import { AddCriteriaDialog } from "components";
 import { enterKey } from "const";
+import { getSelectedSubject } from "helpers";
 import { IState } from "models";
 import { ISubjectsPanelProps } from "models/props";
 
@@ -21,9 +22,12 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
      * @returns - The JSX required to create this component
      */
     public render(): JSX.Element {
+        const selectedSubject = getSelectedSubject(
+            this.props.selectedSubjectName, this.props.subjects
+        );
         const subjectElements = this.props.subjects.map(subject => {
             const selected = classNames({
-                "active": subject.name === this.props.selectedSubject.name
+                "active": selectedSubject && subject.name === selectedSubject.name
             });
 
             return <div className="btn-group btn-block" key={subject.name}>
@@ -89,8 +93,8 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
      */
     private handleClickSetSelectedSubject(event: React.MouseEvent<HTMLButtonElement>) {
         const typedTarget = event.target as HTMLButtonElement;
-        const subject = this.props.subjects.find(subject => subject.name === typedTarget.id)!;
-        this.props.dispatch(setSelectedSubject(subject));
+        const subject = getSelectedSubject(typedTarget.id, this.props.subjects)!;
+        this.props.dispatch(setSelectedSubjectName(subject.name));
     }
 }
 
@@ -103,7 +107,7 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
  */
 const mapStateToProps = (state: IState) => ({
     subjects: state.subjects,
-    selectedSubject: state.selectedSubject
+    selectedSubjectName: state.selectedSubjectName
 });
 
 export default connect(mapStateToProps)(SubjectsPanel);

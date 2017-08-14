@@ -2,13 +2,13 @@ import { combineReducers } from "redux";
 
 import isShowingModal from "reducers/modals";
 import selectedInstance from "reducers/selectedInstance";
-import selectedSubject from "reducers/selectedSubject";
+import selectedSubjectName from "reducers/selectedSubjectName";
 import subjects from "reducers/subjects";
 
 const rootReducer = combineReducers({
     isShowingModal,
     selectedInstance,
-    selectedSubject,
+    selectedSubjectName,
     subjects
 });
 

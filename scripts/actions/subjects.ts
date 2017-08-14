@@ -7,7 +7,7 @@ import {
     CREATE_SUBJECT,
     DELETE_SUBJECT,
     RENAME_SUBJECT,
-    SET_SELECTED_SUBJECT
+    SET_SELECTED_SUBJECT_NAME
 } from "./types";
 
 export const addSubject = createAction<ISubject, ISubject>(
@@ -36,7 +36,7 @@ export const renameSubject = createAction<ISubject, string, string>(
     }
 );
 
-export const setSelectedSubject = createAction<ISubject, ISubject>(
-    SET_SELECTED_SUBJECT,
-    (subject: ISubject): ISubject => subject
+export const setSelectedSubjectName = createAction<string, string>(
+    SET_SELECTED_SUBJECT_NAME,
+    (name: string): string => name
 );

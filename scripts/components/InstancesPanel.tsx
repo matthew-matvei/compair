@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 
 import { deleteInstance, setSelectedInstance } from "actions/instances";
 import { openModal } from "actions/modals";
-import { setSelectedSubject } from "actions/subjects";
-import { orderInstances } from "helpers";
+import { getSelectedSubject, orderInstances } from "helpers";
 import { IInstance, IState } from "models";
 import { IInstancesPanelProps } from "models/props";
 import { InstanceCard } from ".";
@@ -20,7 +19,9 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
      * @returns - The JSX required to create this component
      */
     public render(): JSX.Element | null {
-        const { selectedSubject } = this.props;
+        const { selectedSubjectName, subjects } = this.props;
+
+        const selectedSubject = getSelectedSubject(selectedSubjectName, subjects);
 
         if (!selectedSubject) {
             return null;
@@ -46,44 +47,12 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
     }
 
     /**
-     * Determines whether this component should update. It also handles getting the
-     * properly updated selected subject from nextProps.subjects.
-     *
-     * @param nextProps - the incoming props
-     * @returns - whether this component should update or not
-     */
-    public shouldComponentUpdate(nextProps: IInstancesPanelProps): boolean {
-
-        // since nextProps.selectedSubject does not represent the properly updated subject,
-        // it must be gotten from nextProps.subjects
-        const updatedSelectedSubject = nextProps.subjects.find(
-            subject => subject.name === this.props.selectedSubject.name)!;
-
-        this.props.dispatch(setSelectedSubject(updatedSelectedSubject));
-
-        if (this.props.selectedSubject.instances.length !==
-            updatedSelectedSubject.instances.length) {
-
-            return true;
-        }
-
-        for (let i = 0; i < this.props.selectedSubject.instances.length; i++) {
-            const oldInstance = this.props.selectedSubject.instances[i];
-            const newInstance = updatedSelectedSubject.instances[i];
-
-            if (oldInstance.score !== newInstance.score) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Handles deleting the given instance.
      */
     private handleDeleteInstance(instance: IInstance) {
-        this.props.dispatch(deleteInstance(this.props.selectedSubject, instance.name));
+        const selectedSubject = getSelectedSubject(
+            this.props.selectedSubjectName, this.props.subjects)!;
+        this.props.dispatch(deleteInstance(selectedSubject, instance.name));
     }
 
     /**
@@ -110,7 +79,7 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
  * @returns - This component's props, taken from the application state
  */
 const mapStateToProps = (state: IState) => ({
-    selectedSubject: state.selectedSubject,
+    selectedSubjectName: state.selectedSubjectName,
     subjects: state.subjects
 });
 

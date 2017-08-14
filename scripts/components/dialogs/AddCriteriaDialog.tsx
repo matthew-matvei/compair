@@ -8,6 +8,7 @@ import { closeModal } from "actions/modals";
 import { deleteSubject } from "actions/subjects";
 import { Criterion } from "components";
 import { dialogStyles } from "const";
+import { getSelectedSubject } from "helpers";
 import { ICriterion, IState } from "models";
 import { IAddCriteriaDialogProps } from "models/props";
 import { Priority } from "types";
@@ -26,7 +27,9 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
      * Defines the rendering of this component.
      */
     public render(): JSX.Element | null {
-        const { selectedSubject } = this.props;
+        const { selectedSubjectName, subjects } = this.props;
+
+        const selectedSubject = getSelectedSubject(selectedSubjectName, subjects);
 
         if (!selectedSubject) {
             return null;
@@ -34,7 +37,6 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
 
         const criteriaElements = selectedSubject.criteria.map(criterion => {
             return <Criterion key={criterion.key}
-
                 onChange={this.handleCriterionChange.bind(this)}
                 keyInputValue={criterion.key}
                 orderInputChecked={criterion.order === "asc"}
@@ -48,7 +50,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
             <div className="card">
                 <div className="card-header dialog-header">
                     <h2 className="card-title text-muted">
-                        {`Add a criterion - ${this.props.selectedSubject.name}`}
+                        {`Add a criterion - ${selectedSubject.name}`}
                     </h2>
                     <button className="btn btn-secondary"
                         onClick={this.handleRequestClose.bind(this)}>
@@ -88,9 +90,11 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
      */
     private handleClickCreate() {
         const criterion = this.newCriterion.state;
+        const selectedSubject = getSelectedSubject(
+            this.props.selectedSubjectName, this.props.subjects)!;
 
         if (criterion.keyInputValue) {
-            this.props.dispatch(addCriterion(this.props.selectedSubject, {
+            this.props.dispatch(addCriterion(selectedSubject, {
                 key: criterion.keyInputValue,
                 order: criterion.orderInputChecked ? "asc" : "desc",
                 priority: (criterion.priorityInputValue || 1) as Priority
@@ -103,7 +107,9 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
      * Handles deleting the subject on the user clicking 'delete'.
      */
     private handleClickDelete() {
-        this.props.dispatch(deleteSubject(this.props.selectedSubject.name));
+        const selectedSubject = getSelectedSubject(
+            this.props.selectedSubjectName, this.props.subjects)!;
+        this.props.dispatch(deleteSubject(selectedSubject.name));
         this.handleRequestClose();
     }
 
@@ -113,7 +119,10 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
      * @param criterion - The criterion to edit
      */
     private handleCriterionChange(criterion: ICriterion) {
-        this.props.dispatch(editCriterion(this.props.selectedSubject, criterion));
+        const selectedSubject = getSelectedSubject(
+            this.props.selectedSubjectName, this.props.subjects)!;
+
+        this.props.dispatch(editCriterion(selectedSubject, criterion));
     }
 
     /**
@@ -131,7 +140,8 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
  * @returns - This component's props, taken from the application state
  */
 const mapStateToProps = (state: IState) => ({
-    selectedSubject: state.selectedSubject,
+    selectedSubjectName: state.selectedSubjectName,
+    subjects: state.subjects,
     isShowingModal: state.isShowingModal === "addCriterionDialog"
 });
 

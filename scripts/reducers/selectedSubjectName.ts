@@ -1,15 +1,10 @@
 import { Action, handleActions } from "redux-actions";
 
-import { ISubject } from "models";
-import { SET_SELECTED_SUBJECT } from "actions/types";
+import { SET_SELECTED_SUBJECT_NAME } from "actions/types";
 
-const initialState: ISubject = {
-    name: "Blah",
-    criteria: [],
-    instances: []
-};
+const initialState: string = "Blah";
 
-export default handleActions<ISubject, ISubject>({
+export default handleActions<string, string>({
 
     /**
      * @function SET_SELECTED_SUBJECT - Set the name of the selected subject.
@@ -19,8 +14,8 @@ export default handleActions<ISubject, ISubject>({
      *
      * @returns - The newly selected subject
      */
-    [SET_SELECTED_SUBJECT]:
-    (state: ISubject, action: Action<ISubject>): ISubject => {
+    [SET_SELECTED_SUBJECT_NAME]:
+    (state: string, action: Action<string>): string => {
 
         return action.payload ? action.payload : state;
     }

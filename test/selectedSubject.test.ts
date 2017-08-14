@@ -1,32 +1,23 @@
 import { expect } from "chai";
 
-import { ISubject } from "models";
-import { setSelectedSubject } from "actions/subjects";
-import selectedSubjectReducers from "reducers/selectedSubject";
+import { setSelectedSubjectName } from "actions/subjects";
+import selectedSubjectReducers from "reducers/selectedSubjectName";
 
 describe("SelectedSubject reducers", () => {
 
-    let testSelectedSubject: ISubject;
+    let testSelectedSubjectName: string;
 
     beforeEach(() => {
-        testSelectedSubject = {
-            name: "Cities",
-            criteria: [],
-            instances: []
-        };
+        testSelectedSubjectName = "Cities";
     });
 
     describe("set", () => {
 
         it("the selected subject when given subject is different", () => {
-            const result = selectedSubjectReducers(testSelectedSubject,
-                setSelectedSubject({
-                    name: "People",
-                    criteria: [],
-                    instances: []
-                }));
+            const result = selectedSubjectReducers(testSelectedSubjectName,
+                setSelectedSubjectName("People"));
 
-            expect(result.name).to.equal("People");
+            expect(result).to.equal("People");
         });
     });
 });

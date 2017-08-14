@@ -26,7 +26,7 @@ import { Provider } from "react-redux";
 import { createStore, Store } from "redux";
 const app = (window as any).require("electron").remote.app;
 
-import { addSubject, setSelectedSubject } from "actions/subjects";
+import { addSubject, setSelectedSubjectName } from "actions/subjects";
 import { App } from "components";
 import { readSubjects, saveSubjects } from "helpers";
 import { ISubject } from "models";
@@ -37,7 +37,7 @@ const store: Store<any> = createStore(rootReducer);
 const subjects: ISubject[] = readSubjects(app.getPath("userData"));
 subjects.forEach(subject => store.dispatch(addSubject(subject)));
 if (subjects.length > 0) {
-    store.dispatch(setSelectedSubject(subjects[subjects.length - 1]));
+    store.dispatch(setSelectedSubjectName(subjects[subjects.length - 1].name));
 }
 
 // Subjects are stored in userData on closing of the main window

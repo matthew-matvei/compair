@@ -12,9 +12,9 @@ interface IState {
     subjects: ISubject[];
 
     /**
-     * The subject currently selected.
+     * The name of the currently selected subject.
      */
-    selectedSubject: ISubject;
+    selectedSubjectName: string;
 
     /**
      * The name of the instance currently selected, if any.

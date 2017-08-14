@@ -5,7 +5,7 @@ interface ISubjectsProps {
     /**
      * The selected subject's name.
      */
-    selectedSubject: ISubject;
+    selectedSubjectName: string;
 
     /**
      * The subjects in the application.
