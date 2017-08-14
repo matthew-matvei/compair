@@ -157,6 +157,7 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
 const mapStateToProps = (state: IState) => ({
     selectedSubjectName: state.selectedSubjectName,
     selectedInstance: state.selectedInstance,
+    subjects: state.subjects,
     isShowingModal: state.isShowingModal === "editInstanceDialog"
 });
 
