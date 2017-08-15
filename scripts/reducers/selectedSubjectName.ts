@@ -7,7 +7,7 @@ const initialState: string = "";
 export default handleActions<string, string>({
 
     /**
-     * @function SET_SELECTED_SUBJECT - Set the name of the selected subject.
+     * @function SET_SELECTED_SUBJECT_NAME - Set the name of the selected subject.
      *
      * @param state - The currently selected subject
      * @param action - The action describing the newly selected subject

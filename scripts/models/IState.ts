@@ -1,4 +1,4 @@
-import { IInstance, ISubject } from "models";
+import { ISubject } from "models";
 import { Modals } from "types";
 
 /**
@@ -19,7 +19,7 @@ interface IState {
     /**
      * The name of the instance currently selected, if any.
      */
-    selectedInstance: IInstance | null;
+    selectedInstanceName: string | null;
 
     /**
      * Whether the modal is showing and if so, which one.

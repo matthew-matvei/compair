@@ -213,3 +213,23 @@ export function getSelectedSubject(subjectName: string, subjects: ISubject[] = [
 
     return null;
 }
+
+/**
+ * Returns the instance in instances identified by instanceName, or null if it can't be found.
+ *
+ * @param instanceName - the name of the instance to search for
+ * @param instances - the instances in which to search
+ */
+export function getSelectedInstance(instanceName: string | null, instances: IInstance[] = []): IInstance | null {
+    if (!instanceName) {
+        return null;
+    }
+
+    for (let instance of instances) {
+        if (instance.name === instanceName) {
+            return instance;
+        }
+    }
+
+    return null;
+}

@@ -6,12 +6,12 @@ import { connect } from "react-redux";
 import {
     addInstance,
     deleteInstance,
-    setSelectedInstance
+    setSelectedInstanceName
 } from "actions/instances";
 import { closeModal } from "actions/modals";
 import { KeyValue } from "components";
 import { dialogStyles } from "const";
-import { getSelectedSubject } from "helpers";
+import { getSelectedInstance, getSelectedSubject } from "helpers";
 import { IKeyValue, IState } from "models";
 import { IEditInstanceDialogProps } from "models/props";
 
@@ -38,11 +38,14 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
      * @returns - The JSX required to create this component
      */
     public render(): JSX.Element | null {
-        const { selectedInstance, selectedSubjectName, subjects } = this.props;
+        const { selectedInstanceName, selectedSubjectName, subjects } = this.props;
 
-        const selectedSubject = getSelectedSubject(selectedSubjectName, subjects);
+        const selectedSubject = getSelectedSubject(selectedSubjectName, subjects)!;
 
-        if (!selectedSubject) {
+        const selectedInstance = getSelectedInstance(
+            selectedInstanceName, selectedSubject.instances);
+
+        if (!selectedInstance) {
             return null;
         }
 
@@ -51,13 +54,11 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
             const criterion = selectedSubject.criteria[i];
             const nextCriterion = i < selectedSubject.criteria.length - 1 ?
                 selectedSubject.criteria[i + 1] : null;
-            const relevantKeyValue = selectedInstance! &&
-                selectedInstance!.values.find(
-                    keyValue => keyValue.key === criterion.key);
-            const nextRelevantKeyValue = selectedInstance! &&
-                selectedInstance!.values.find(
-                    keyValue => nextCriterion !== null &&
-                        keyValue.key === nextCriterion.key);
+            const relevantKeyValue = selectedInstance.values.find(
+                keyValue => keyValue.key === criterion.key);
+            const nextRelevantKeyValue = selectedInstance.values.find(
+                keyValue => nextCriterion !== null &&
+                    keyValue.key === nextCriterion.key);
 
             const row = <div className="row pb-2" key={`row-${i}`}>
                 <KeyValue key={criterion.key}
@@ -90,7 +91,7 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
                     </button>
                 </div>
                 <div className="card-block">
-                    {selectedInstance && <input className="form-control"
+                    {selectedInstanceName && <input className="form-control"
                         value={selectedInstance.name}
                         ref={(input) =>
                             this.instanceNameInput = input} />}
@@ -119,9 +120,10 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
         const selectedSubject = getSelectedSubject(
             this.props.selectedSubjectName, this.props.subjects
         )!;
+        const selectedInstance = getSelectedInstance(
+            this.props.selectedInstanceName, selectedSubject.instances);
 
-        this.props.dispatch(deleteInstance(selectedSubject,
-            this.props.selectedInstance!.name));
+        this.props.dispatch(deleteInstance(selectedSubject, selectedInstance!.name));
         this.props.dispatch(addInstance(selectedSubject, {
             name: this.instanceNameInput.value,
             values: this.parseKeyValues()
@@ -135,7 +137,7 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
      * dialog component is not actually dismounted from the DOM.
      */
     private handleRequestClose() {
-        this.props.dispatch(setSelectedInstance(null));
+        this.props.dispatch(setSelectedInstanceName(null));
         this.props.dispatch(closeModal());
     }
 
@@ -159,7 +161,7 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
  */
 const mapStateToProps = (state: IState) => ({
     selectedSubjectName: state.selectedSubjectName,
-    selectedInstance: state.selectedInstance,
+    selectedInstanceName: state.selectedInstanceName,
     subjects: state.subjects,
     isShowingModal: state.isShowingModal === "editInstanceDialog"
 });

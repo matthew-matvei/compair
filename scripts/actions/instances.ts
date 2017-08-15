@@ -4,7 +4,7 @@ import {
     ADD_INSTANCE,
     DELETE_INSTANCE,
     RENAME_INSTANCE,
-    SET_SELECTED_INSTANCE
+    SET_SELECTED_INSTANCE_NAME
 } from "actions/types";
 import { IInstance, ISubject } from "models";
 
@@ -41,7 +41,7 @@ export const renameInstance = createAction<IInstance, string, string>(
     }
 );
 
-export const setSelectedInstance = createAction<IInstance | null, IInstance | null>(
-    SET_SELECTED_INSTANCE,
-    (instance: IInstance | null): IInstance | null => instance
+export const setSelectedInstanceName = createAction<string | null, string | null>(
+    SET_SELECTED_INSTANCE_NAME,
+    (name: string | null): string | null => name
 );

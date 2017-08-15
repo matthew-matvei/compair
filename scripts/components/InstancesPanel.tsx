@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { deleteInstance, setSelectedInstance } from "actions/instances";
+import { deleteInstance, setSelectedInstanceName } from "actions/instances";
 import { openModal } from "actions/modals";
 import { getSelectedSubject, orderInstances } from "helpers";
 import { IInstance, IState } from "models";
@@ -59,7 +59,7 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
      * Handles editing the given instance.
      */
     private handleEditInstance(instance: IInstance) {
-        this.props.dispatch(setSelectedInstance(instance));
+        this.props.dispatch(setSelectedInstanceName(instance.name));
         this.props.dispatch(openModal("editInstanceDialog"));
     }
 

@@ -1,4 +1,3 @@
-import { IInstance } from "models";
 import { IDialogProps } from "models/props";
 
 /**
@@ -7,9 +6,9 @@ import { IDialogProps } from "models/props";
 interface IEditInstanceDialogProps extends IDialogProps {
 
     /**
-     * The selected instance, if any.
+     * The selected instance's name, if any.
      */
-    selectedInstance: IInstance | null;
+    selectedInstanceName: string | null;
 }
 
 export default IEditInstanceDialogProps;
