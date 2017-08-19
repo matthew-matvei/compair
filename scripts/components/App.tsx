@@ -1,3 +1,4 @@
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import * as React from "react";
 
 import { IAppProps } from "models/props";
@@ -12,10 +13,12 @@ class App extends React.Component<IAppProps, {}> {
      * Defines the rendering of this component.
      */
     public render(): JSX.Element {
-        return <div>
-            <Header />
-            <Main />
-        </div>;
+        return <MuiThemeProvider>
+            <div>
+                <Header />
+                <Main />
+            </div>
+        </MuiThemeProvider>;
     };
 }
 
