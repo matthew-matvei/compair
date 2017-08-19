@@ -1,7 +1,7 @@
-import Slider from "rc-slider";
+import Slider from "material-ui/Slider";
+import TextField from "material-ui/TextField";
+import Toggle from "material-ui/Toggle";
 import * as React from "react";
-import { Icon } from "react-fa";
-import Toggle from "react-toggle";
 
 import { SimpleTooltip } from "components";
 import { ICriterion } from "models";
@@ -41,28 +41,21 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
 
         return <form className="form-inline mb-3">
             <div className="input-group col-6">
-                <span className="input-group-addon">
-                    Criterion Key
-                </span>
-                <input type="text"
-                    className="form-control"
-                    placeholder="Criterion name..."
+                <TextField
+                    floatingLabelText="Criterion key"
+                    floatingLabelFixed
+                    hintText="Criterion name..."
                     value={this.state.keyInputValue}
                     onChange={this.props.newCriterion ?
                         this.handleChangeKey.bind(this) : undefined} />
             </div>
             <div className="input-group col-3">
                 <SimpleTooltip message={orderTooltip}>
-                    <label className="form-check-label">
-                        <Toggle defaultChecked={this.state.orderInputChecked}
-                            onChange={this.handleChangeOrder.bind(this)}
-                            className="text-white"
-                            icons={{
-                                checked: <Icon name="level-up" />,
-                                unchecked: <Icon name="level-down" />
-                            }} />
-                        <span>Ascending</span>
-                    </label>
+                    <Toggle
+                        label="Ascending"
+                        labelPosition="right"
+                        defaultToggled={this.state.orderInputChecked}
+                        onChange={this.handleChangeOrder.bind(this)} />
                 </SimpleTooltip>
             </div>
             <div className="col-3" style={{ display: "flex", flexDirection: "column" }}>
@@ -78,11 +71,12 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
                             min="1" max="5" />
                     </SimpleTooltip>
                 </div>
-                <Slider dots step={1}
-                    defaultValue={3}
+                <Slider
+                    step={1}
                     value={this.state.priorityInputValue}
-                    onChange={this.handlePrioritySliderChange.bind(this)}
-                    min={1} max={5} />
+                    min={1}
+                    max={5}
+                    onChange={this.handlePrioritySliderChange.bind(this)} />
             </div>
         </form>;
     }
