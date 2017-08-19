@@ -1,5 +1,4 @@
 import { Card, CardActions, CardHeader } from "material-ui/Card";
-import FontIcon from "material-ui/FontIcon";
 import RaisedButton from "material-ui/RaisedButton";
 import * as React from "react";
 
@@ -29,52 +28,26 @@ export default class InstanceCard extends
         const minScore = currentSubject && getMinScore(currentSubject.instances) || 0;
         const maxScore = currentSubject && getMaxScore(currentSubject.instances) || 0;
 
-        /*const cardContent = instance && currentSubject ?
-            <div className={"card mb-4"}>
-                <div className={`card-block clickable ${classes}`}
-                    onClick={this.handleClick.bind(this)}>
-                    <h3 className="card-title">{instance.name}</h3>
-                </div>
-                <div className="card-footer text-right">
-                    <span className="text-muted mr-3">
-                        {showScore(this.props.instance!.score, minScore, maxScore)}
-                    </span>
-                    <button className="btn btn-sm btn-danger"
-                        onClick={this.handleClickDelete.bind(this)}>
-                        <Icon name="close" />
-                    </button>
-                </div>
-            </div > :
-            <div className="card mb-4 bg-faded clickable">
-                <div className="card-block"
-                    onClick={this.handleClickOpenDialog.bind(this)}>
-                    <p className="text-muted">Click for new instance</p>
-                </div>
-            </div>;*/
-
-        const cardContent = instance && currentSubject ? <Card>
-            <CardHeader
-                title={instance.name}
-                subtitle={showScore(this.props.instance!.score, minScore, maxScore)}
-            />
-            <CardActions>
-                <RaisedButton
-                    icon={<FontIcon className="fa fa-plus" />}
-                    onClick={this.handleClick.bind(this)}
-                />
-                <RaisedButton
-                    icon={<FontIcon className="fa fa-times" />}
-                    secondary
-                    onClick={this.handleClickDelete.bind(this)}
-                />
-            </CardActions>
-        </Card> : <Card>
-                <CardHeader subtitle="Click for new instance" />
-                <CardActions>
+        const cardContent = instance && currentSubject ?
+            <Card className="mb-4">
+                <CardHeader
+                    title={instance.name}
+                    subtitle={showScore(instance.score, minScore, maxScore)} />
+                <CardActions style={{ textAlign: "right" }}>
                     <RaisedButton
-                        icon={<FontIcon className="fa fa-plus" />}
-                        onClick={this.handleClickOpenDialog.bind(this)}
-                    />
+                        label="Edit"
+                        onClick={this.handleClick.bind(this)} />
+                    <RaisedButton
+                        label="Delete"
+                        secondary
+                        onClick={this.handleClickDelete.bind(this)} />
+                </CardActions>
+            </Card> : <Card className="mb-4">
+                <CardHeader subtitle="New instance" />
+                <CardActions >
+                    <RaisedButton
+                        label="Create"
+                        onClick={this.handleClickOpenDialog.bind(this)} />
                 </CardActions>
             </Card>;
 
