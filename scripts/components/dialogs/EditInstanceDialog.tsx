@@ -64,12 +64,12 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
                 <KeyValue key={criterion.key}
                     keyName={criterion.key}
                     value={relevantKeyValue && relevantKeyValue.value}
-                    ref={(keyValueElement) => this.keyValues[criterion.key] = keyValueElement} />
+                    ref={(keyValueElement) => this.keyValues[criterion.key] = keyValueElement!} />
                 {nextCriterion ?
                     <KeyValue key={nextCriterion.key}
                         keyName={nextCriterion.key}
                         value={nextRelevantKeyValue && nextRelevantKeyValue.value}
-                        ref={(keyValueElement) => this.keyValues[nextCriterion.key] = keyValueElement} />
+                        ref={(keyValueElement) => this.keyValues[nextCriterion.key] = keyValueElement!} />
                     : null}
             </div>;
 
@@ -94,7 +94,7 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
                     {selectedInstanceName && <input className="form-control"
                         value={selectedInstance.name}
                         ref={(input) =>
-                            this.instanceNameInput = input} />}
+                            this.instanceNameInput = input!} />}
                 </div>
                 <div className="card-block">
                     {rows}

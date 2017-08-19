@@ -54,7 +54,7 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
             <div className="input-group col-3">
                 <SimpleTooltip message={orderTooltip}>
                     <label className="form-check-label">
-                        <Toggle checked={this.state.orderInputChecked}
+                        <Toggle defaultChecked={this.state.orderInputChecked}
                             onChange={this.handleChangeOrder.bind(this)}
                             className="text-white"
                             icons={{

@@ -59,7 +59,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                 </div>
                 <div className="card-block">
                     <Criterion ref={(criterion) =>
-                        this.newCriterion = criterion}
+                        this.newCriterion = criterion!}
                         newCriterion />
                 </div>
                 <div className="card-block">

@@ -50,11 +50,11 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
             const row = <div className="row pb-2">
                 <KeyValue key={criterion.key}
                     keyName={criterion.key}
-                    ref={(keyValueElement) => this.keyValues[criterion.key] = keyValueElement} />
+                    ref={(keyValueElement) => this.keyValues[criterion.key] = keyValueElement!} />
                 {nextCriterion ?
                     <KeyValue key={nextCriterion.key}
                         keyName={nextCriterion.key}
-                        ref={(keyValueElement) => this.keyValues[nextCriterion.key] = keyValueElement} />
+                        ref={(keyValueElement) => this.keyValues[nextCriterion.key] = keyValueElement!} />
                     : null}
             </div>;
 
@@ -79,7 +79,7 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
                     <input className="form-control"
                         placeholder="Instance name..."
                         ref={(input) =>
-                            this.instanceNameInput = input} />
+                            this.instanceNameInput = input!} />
                 </div>
                 <div className="card-block">
                     {rows}
