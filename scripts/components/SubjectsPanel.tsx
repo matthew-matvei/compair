@@ -36,7 +36,6 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
                 <ListItem
                     id={subject.name}
                     primaryText={subject.name}
-                    insetChildren
                     onClick={this.handleClickSetSelectedSubject.bind(this)}
                     rightIconButton={
                         <IconButton
@@ -52,7 +51,7 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
             <List>
                 <Subheader>Subjects</Subheader>
                 {subjectElements}
-                <ListItem insetChildren>
+                <ListItem>
                     <TextField
                         hintText="Subject name..."
                         onKeyDown={this.handleKeyDown.bind(this)} />
