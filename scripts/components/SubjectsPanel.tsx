@@ -1,13 +1,14 @@
-import * as classNames from "classnames";
+import Divider from "material-ui/Divider";
+import IconButton from "material-ui/IconButton";
+import { List, ListItem } from "material-ui/List";
+import Subheader from "material-ui/Subheader";
+import TextField from "material-ui/TextField";
 import * as React from "react";
-import { Icon } from "react-fa";
 import { connect } from "react-redux";
 
 import { openModal } from "actions/modals";
 import { createSubject, setSelectedSubjectName } from "actions/subjects";
-import { AddCriteriaDialog } from "components";
 import { enterKey } from "const";
-import { getSelectedSubject } from "helpers";
 import { IState } from "models";
 import { ISubjectsPanelProps } from "models/props";
 
@@ -22,43 +23,42 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
      * @returns - The JSX required to create this component
      */
     public render(): JSX.Element {
-        const selectedSubject = getSelectedSubject(
+        /*const selectedSubject = getSelectedSubject(
             this.props.selectedSubjectName, this.props.subjects
-        );
+        );*/
         const subjectElements = this.props.subjects.map(subject => {
-            const selected = classNames({
+            /*const selected = classNames({
                 "active": selectedSubject && subject.name === selectedSubject.name
-            });
+            });*/
 
-            return <div className="btn-group btn-block" key={subject.name}>
-                <button className={`btn btn-primary btn-block ${selected}`}
+            return <div key={subject.name}>
+                <Divider />
+                <ListItem
                     id={subject.name}
-                    onClick={this.handleClickSetSelectedSubject.bind(this)}>
-                    {subject.name}
-                </button>
-                <button className="btn btn-secondary"
-                    id={subject.name}
-                    onClick={this.handleClickOpenDialog.bind(this)}>
-                    <Icon id={subject.name} name="bars"
-                        onClick={this.handleClickOpenDialog.bind(this)} />
-                </button>
-                <AddCriteriaDialog />
+                    primaryText={subject.name}
+                    insetChildren
+                    onClick={this.handleClickSetSelectedSubject.bind(this)}
+                    rightIconButton={
+                        <IconButton
+                            id={subject.name}
+                            iconClassName="fa fa-plus"
+                            onClick={this.handleClickOpenDialog.bind(this)} />
+                    }
+                />
             </div>;
         });
 
-        return <nav className="col-sm-4 col-md-3 bg-faded sidebar">
-            <ul className="list-group flex-column">
-                {this.props.subjects.length > 0 && <li className="list-group-item">
-                    {subjectElements}
-                </li>}
-                <li className="list-group-item">
-                    <input type="text"
-                        className="form-control"
-                        placeholder="Subject name..."
+        return <div className="col-sm-4 col-md-3 sidebar">
+            <List>
+                <Subheader>Subjects</Subheader>
+                {subjectElements}
+                <ListItem insetChildren>
+                    <TextField
+                        hintText="Subject name..."
                         onKeyDown={this.handleKeyDown.bind(this)} />
-                </li>
-            </ul>
-        </nav>;
+                </ListItem>
+            </List>
+        </div>;
     }
 
     /**
@@ -68,7 +68,7 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
      */
     private handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
         if (event.which === enterKey) {
-            const typedTarget = event.target as HTMLInputElement;
+            const typedTarget = event.currentTarget as HTMLInputElement;
             const newSubjectName = typedTarget.value.trim();
             this.props.dispatch(createSubject(newSubjectName));
             typedTarget.value = "";
@@ -92,9 +92,8 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
      * @param event - the event from which to identify the selected subject
      */
     private handleClickSetSelectedSubject(event: React.MouseEvent<HTMLButtonElement>) {
-        const typedTarget = event.target as HTMLButtonElement;
-        const subject = getSelectedSubject(typedTarget.id, this.props.subjects)!;
-        this.props.dispatch(setSelectedSubjectName(subject.name));
+        const typedTarget = event.currentTarget as HTMLButtonElement;
+        this.props.dispatch(setSelectedSubjectName(typedTarget.id));
     }
 }
 
