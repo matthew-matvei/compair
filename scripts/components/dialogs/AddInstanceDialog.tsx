@@ -47,12 +47,12 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
             const criterion = selectedSubject.criteria[i];
             const nextCriterion = i < selectedSubject.criteria.length - 1 ?
                 selectedSubject.criteria[i + 1] : null;
-            const row = <div className="row pb-2">
-                <KeyValue key={criterion.key}
+            const row = <div key={`row${i}`} className="row pb-2">
+                <KeyValue
                     keyName={criterion.key}
                     ref={(keyValueElement) => this.keyValues[criterion.key] = keyValueElement!} />
                 {nextCriterion ?
-                    <KeyValue key={nextCriterion.key}
+                    <KeyValue
                         keyName={nextCriterion.key}
                         ref={(keyValueElement) => this.keyValues[nextCriterion.key] = keyValueElement!} />
                     : null}
