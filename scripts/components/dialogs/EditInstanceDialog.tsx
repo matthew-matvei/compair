@@ -1,16 +1,12 @@
+import Dialog from "material-ui/Dialog";
+import FlatButton from "material-ui/FlatButton";
 import * as React from "react";
-import { Icon } from "react-fa";
-import * as ReactModal from "react-modal";
 import { connect } from "react-redux";
 
-import {
-    addInstance,
-    deleteInstance,
-    setSelectedInstanceName
-} from "actions/instances";
+import { addInstance, deleteInstance, setSelectedInstanceName } from "actions/instances";
 import { closeModal } from "actions/modals";
 import { KeyValue } from "components";
-import { dialogStyles } from "const";
+import { modalStyles } from "const";
 import { getSelectedInstance, getSelectedSubject } from "helpers";
 import { IKeyValue, IState } from "models";
 import { IEditInstanceDialogProps } from "models/props";
@@ -38,7 +34,7 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
      * @returns - The JSX required to create this component
      */
     public render(): JSX.Element | null {
-        const { selectedInstanceName, selectedSubjectName, subjects } = this.props;
+        const { isShowingModal, selectedInstanceName, selectedSubjectName, subjects } = this.props;
 
         const selectedSubject = getSelectedSubject(selectedSubjectName, subjects)!;
 
@@ -76,52 +72,45 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
             rows.push(row);
         }
 
-        return <ReactModal isOpen={this.props.isShowingModal}
-            contentLabel="EditCriteraDialog"
+        const actions: JSX.Element[] = [
+            <FlatButton
+                label="Cancel"
+                onClick={this.handleRequestClose.bind(this)} />,
+            <FlatButton
+                label="Edit"
+                primary
+                onClick={this.handleClickEdit.bind(this)} />
+        ];
+
+        return <Dialog
+            title={`Add an instance - ${selectedSubject.name}`}
+            open={isShowingModal}
             onRequestClose={this.handleRequestClose.bind(this)}
-            style={dialogStyles}>
-            <div className="card">
-                <div className="card-header dialog-header">
-                    <h2 className="card-title text-muted">
-                        {`Edit an instance - ${selectedSubject.name}`}
-                    </h2>
-                    <button className="btn btn-secondary"
-                        onClick={this.handleRequestClose.bind(this)}>
-                        <Icon name="close" />
-                    </button>
-                </div>
-                <div className="card-block">
-                    {selectedInstanceName && <input className="form-control"
-                        value={selectedInstance.name}
-                        ref={(input) =>
-                            this.instanceNameInput = input!} />}
-                </div>
-                <div className="card-block">
-                    {rows}
-                </div>
-                <div className="card-footer text-right">
-                    <button className="btn btn-primary mr-3"
-                        onClick={this.handleClickEdit.bind(this)}>
-                        Edit
-                            </button>
-                    <button className="btn btn-secondary"
-                        onClick={this.handleRequestClose.bind(this)}>
-                        Close
-                            </button>
-                </div>
+            contentStyle={modalStyles}
+            actions={actions}
+            modal={false}
+            autoScrollBodyContent>
+            <div className="card-block">
+                {selectedInstanceName && <input className="form-control"
+                    value={selectedInstance.name}
+                    ref={(input) =>
+                        this.instanceNameInput = input!} />}
             </div>
-        </ReactModal >;
+            <div className="card-block">
+                {rows}
+            </div>
+        </Dialog>;
     }
 
     /**
      * Handles editing the criterion on the user clicking 'edit'.
      */
     private handleClickEdit() {
-        const selectedSubject = getSelectedSubject(
-            this.props.selectedSubjectName, this.props.subjects
-        )!;
+        const { selectedInstanceName, selectedSubjectName, subjects } = this.props;
+
+        const selectedSubject = getSelectedSubject(selectedSubjectName, subjects)!;
         const selectedInstance = getSelectedInstance(
-            this.props.selectedInstanceName, selectedSubject.instances);
+            selectedInstanceName, selectedSubject.instances);
 
         this.props.dispatch(deleteInstance(selectedSubject, selectedInstance!.name));
         this.props.dispatch(addInstance(selectedSubject, {

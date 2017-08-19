@@ -1,13 +1,13 @@
+import Dialog from "material-ui/Dialog";
+import FlatButton from "material-ui/FlatButton";
 import * as React from "react";
-import { Icon } from "react-fa";
-import * as ReactModal from "react-modal";
 import { connect } from "react-redux";
 
 import { addCriterion, editCriterion } from "actions/criteria";
 import { closeModal } from "actions/modals";
 import { deleteSubject } from "actions/subjects";
 import { Criterion } from "components";
-import { dialogStyles } from "const";
+import { modalStyles } from "const";
 import { getSelectedSubject } from "helpers";
 import { ICriterion, IState } from "models";
 import { IAddCriteriaDialogProps } from "models/props";
@@ -27,7 +27,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
      * Defines the rendering of this component.
      */
     public render(): JSX.Element | null {
-        const { selectedSubjectName, subjects } = this.props;
+        const { isShowingModal, selectedSubjectName, subjects } = this.props;
 
         const selectedSubject = getSelectedSubject(selectedSubjectName, subjects);
 
@@ -43,58 +43,50 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                 priorityInputValue={criterion.priority} />;
         });
 
-        return <ReactModal isOpen={this.props.isShowingModal}
-            contentLabel="AddCriteraDialog"
+        const actions: JSX.Element[] = [
+            <FlatButton
+                label="Delete"
+                secondary
+                onClick={this.handleClickDelete.bind(this)} />,
+            <FlatButton
+                label="Cancel"
+                onClick={this.handleRequestClose.bind(this)} />,
+            <FlatButton
+                label="Create"
+                primary
+                onClick={this.handleClickCreate.bind(this)} />
+        ];
+
+        return <Dialog
+            title={`Add a criterion - ${selectedSubjectName}`}
+            open={isShowingModal}
+            contentStyle={modalStyles}
+            actions={actions}
             onRequestClose={this.handleRequestClose.bind(this)}
-            style={dialogStyles}>
-            <div className="card">
-                <div className="card-header dialog-header">
-                    <h2 className="card-title text-muted">
-                        {`Add a criterion - ${selectedSubject.name}`}
-                    </h2>
-                    <button className="btn btn-secondary"
-                        onClick={this.handleRequestClose.bind(this)}>
-                        <Icon name="close" />
-                    </button>
-                </div>
-                <div className="card-block">
-                    <Criterion ref={(criterion) =>
-                        this.newCriterion = criterion!}
-                        newCriterion />
-                </div>
-                <div className="card-block">
-                    {criteriaElements}
-                </div>
-                <div className="card-footer text-right">
-                    <button className="btn btn-danger mr-3"
-                        onClick={this.handleClickDelete.bind(this)}>
-                        Delete
-                    </button>
-                    <button className="btn btn-primary mr-3"
-                        onClick={this.handleClickCreate.bind(this)}
-                        disabled={this.newCriterion &&
-                            this.newCriterion.state.keyInputValue === ""}>
-                        Create
-                    </button>
-                    <button className="btn btn-secondary"
-                        onClick={this.handleRequestClose.bind(this)}>
-                        Close
-                    </button>
-                </div>
+            modal={false}
+            autoScrollBodyContent>
+            <div>
+                <Criterion ref={(criterion) =>
+                    this.newCriterion = criterion!}
+                    newCriterion />
             </div>
-        </ReactModal>;
+            <div className="card-block">
+                {criteriaElements}
+            </div>
+        </Dialog>;
     }
 
     /**
      * Handles creating the new criterion on the user clicking 'create'.
      */
     private handleClickCreate() {
+        const { dispatch, selectedSubjectName, subjects } = this.props;
+
         const criterion = this.newCriterion.state;
-        const selectedSubject = getSelectedSubject(
-            this.props.selectedSubjectName, this.props.subjects)!;
+        const selectedSubject = getSelectedSubject(selectedSubjectName, subjects)!;
 
         if (criterion.keyInputValue) {
-            this.props.dispatch(addCriterion(selectedSubject, {
+            dispatch(addCriterion(selectedSubject, {
                 key: criterion.keyInputValue,
                 order: criterion.orderInputChecked ? "asc" : "desc",
                 priority: (criterion.priorityInputValue || 1) as Priority

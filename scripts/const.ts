@@ -1,14 +1,8 @@
-import { Styles } from "react-modal";
+import * as React from "react";
 
 /** Custom stylings for all modal dialog windows. */
-export const dialogStyles: Styles = {
-    overlay: {
-        backgroundColor: "rgba(0, 0, 0, 0.7)"
-    },
-    content: {
-        left: "80px",
-        right: "80px"
-    }
+export const modalStyles: React.CSSProperties = {
+    maxWidth: "80%"
 };
 
 /** Filename for user-saved subjects. */
