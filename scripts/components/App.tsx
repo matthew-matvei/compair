@@ -3,7 +3,7 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import * as React from "react";
 
 import { IAppProps } from "models/props";
-import { Main } from ".";
+import { AddCriteriaDialog, AddInstanceDialog, EditInstanceDialog, Main } from ".";
 
 /**
  * The root component for the application.
@@ -18,6 +18,9 @@ class App extends React.Component<IAppProps, {}> {
             <div>
                 <AppBar title="Compair" showMenuIconButton={false} zDepth={2} />
                 <Main />
+                <AddCriteriaDialog />
+                <AddInstanceDialog />
+                <EditInstanceDialog />
             </div>
         </MuiThemeProvider>;
     };

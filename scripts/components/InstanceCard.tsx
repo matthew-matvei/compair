@@ -4,7 +4,6 @@ import { Icon } from "react-fa";
 
 import { getMaxScore, getMinScore, isMissingKeyValue, showScore } from "helpers";
 import { IInstanceCardProps } from "models/props";
-import { AddInstanceDialog, EditInstanceDialog } from ".";
 
 /**
  * A card representing an instance of a subject.
@@ -36,7 +35,6 @@ export default class InstanceCard extends
                     <h3 className="card-title">{instance.name}</h3>
                 </div>
                 <div className="card-footer text-right">
-                    <EditInstanceDialog />
                     <span className="text-muted mr-3">
                         {showScore(this.props.instance!.score, minScore, maxScore)}
                     </span>
@@ -51,7 +49,6 @@ export default class InstanceCard extends
                     onClick={this.handleClickOpenDialog.bind(this)}>
                     <p className="text-muted">Click for new instance</p>
                 </div>
-                <AddInstanceDialog />
             </div>;
 
         return <div className="col-4">
