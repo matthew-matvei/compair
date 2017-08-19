@@ -1,8 +1,9 @@
+import AppBar from "material-ui/AppBar";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import * as React from "react";
 
 import { IAppProps } from "models/props";
-import { Header, Main } from ".";
+import { Main } from ".";
 
 /**
  * The root component for the application.
@@ -15,7 +16,7 @@ class App extends React.Component<IAppProps, {}> {
     public render(): JSX.Element {
         return <MuiThemeProvider>
             <div>
-                <Header />
+                <AppBar title="Compair" showMenuIconButton={false} zDepth={2} />
                 <Main />
             </div>
         </MuiThemeProvider>;
