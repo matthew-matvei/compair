@@ -11,7 +11,10 @@ class SimpleTooltip extends React.PureComponent<ISimpleTooltipProps, {}> {
      * @returns - The JSX required to create this component
      */
     public render(): JSX.Element {
-        return <Tooltip overlay={<span>{this.props.message}</span>}>
+        return <Tooltip
+            overlay={<span>{this.props.message}</span>}
+            overlayStyle={{ zIndex: 2000 }}
+            placement="top">
             {this.props.children}
         </Tooltip>;
     }
