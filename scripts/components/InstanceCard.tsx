@@ -1,4 +1,5 @@
 import { Card, CardActions, CardHeader } from "material-ui/Card";
+import { GridTile } from "material-ui/GridList";
 import RaisedButton from "material-ui/RaisedButton";
 import * as React from "react";
 
@@ -51,9 +52,9 @@ export default class InstanceCard extends
                 </CardActions>
             </Card>;
 
-        return <div className="col-4">
+        return <GridTile>
             {cardContent}
-        </div>;
+        </GridTile>;
     }
 
     /**

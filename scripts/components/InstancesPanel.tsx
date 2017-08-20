@@ -1,3 +1,4 @@
+import { GridList } from "material-ui/GridList";
 import * as React from "react";
 import { connect } from "react-redux";
 
@@ -37,12 +38,12 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
                     editInstance={this.handleEditInstance.bind(this)} />);
 
         return <main className="col-sm-8 offset-sm-4 col-md-9 offset-md-3 pt-3">
-            <div className="row">
+            <GridList cellHeight="auto" cols={3}>
                 {instanceElements}
                 <InstanceCard instance={null}
                     currentSubject={null}
                     openDialog={this.handleOpenDialog.bind(this)} />
-            </div>
+            </GridList>
         </main>;
     }
 
