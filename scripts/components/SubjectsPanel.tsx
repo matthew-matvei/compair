@@ -53,7 +53,7 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
                 {subjectElements}
                 <ListItem>
                     <TextField
-                        hintText="Subject name..."
+                        floatingLabelText="Subject name..."
                         onKeyDown={this.handleKeyDown.bind(this)} />
                 </ListItem>
             </List>

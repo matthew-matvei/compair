@@ -42,10 +42,9 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
         return <form className="form-inline mb-3">
             <div className="input-group col-6">
                 <TextField
-                    floatingLabelText="Criterion key"
-                    floatingLabelFixed
-                    hintText="Criterion name..."
+                    floatingLabelText="Criterion name"
                     value={this.state.keyInputValue}
+                    fullWidth
                     onChange={this.props.newCriterion ?
                         this.handleChangeKey.bind(this) : undefined} />
             </div>
@@ -58,13 +57,14 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
                         onChange={this.handleChangeOrder.bind(this)} />
                 </SimpleTooltip>
             </div>
-            <div className="col-3" style={{ display: "flex", flexDirection: "column" }}>
+            <div className="col-3">
                 <SimpleTooltip message={"1 = unimportant; 5 = very important"}>
                     <TextField
+                        // style={{ width: "100%" }}
                         floatingLabelText="Priority"
-                        hintText="Enter priority"
                         type="number"
                         value={this.state.priorityInputValue}
+                        fullWidth
                         onChange={this.handlePriorityChange.bind(this)}
                         min={1} max={5} />
                 </SimpleTooltip>
