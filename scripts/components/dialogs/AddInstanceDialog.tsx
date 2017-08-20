@@ -1,6 +1,7 @@
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
 import TextField from "material-ui/TextField";
+import { GridList, GridTile } from "material-ui/GridList";
 import * as React from "react";
 import { connect } from "react-redux";
 
@@ -43,24 +44,13 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
             return null;
         }
 
-        let rows: JSX.Element[] = [];
-        for (let i = 0; i < selectedSubject.criteria.length; i += 2) {
-            const criterion = selectedSubject.criteria[i];
-            const nextCriterion = i < selectedSubject.criteria.length - 1 ?
-                selectedSubject.criteria[i + 1] : null;
-            const row = <div key={`row${i}`} className="row pb-2">
+        const keyValueTiles = selectedSubject.criteria.map(criterion => {
+            return <GridTile key={criterion.key}>
                 <KeyValue
                     keyName={criterion.key}
                     ref={(keyValueElement) => this.keyValues[criterion.key] = keyValueElement!} />
-                {nextCriterion ?
-                    <KeyValue
-                        keyName={nextCriterion.key}
-                        ref={(keyValueElement) => this.keyValues[nextCriterion.key] = keyValueElement!} />
-                    : null}
-            </div>;
-
-            rows.push(row);
-        }
+            </GridTile>;
+        });
 
         const actions: JSX.Element[] = [
             <FlatButton
@@ -85,9 +75,9 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
                     floatingLabelText="Instance name"
                     ref={(input) => this.instanceNameInput = input!} />
             </div>
-            <div>
-                {rows}
-            </div>
+            <GridList cellHeight="auto" cols={3}>
+                {keyValueTiles}
+            </GridList>
         </Dialog>;
     }
 
