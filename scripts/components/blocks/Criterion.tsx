@@ -60,7 +60,6 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
             <div className="col-3">
                 <SimpleTooltip message={"1 = unimportant; 5 = very important"}>
                     <TextField
-                        // style={{ width: "100%" }}
                         floatingLabelText="Priority"
                         type="number"
                         value={this.state.priorityInputValue}
@@ -120,7 +119,7 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
      *
      * @param value - the value to set as the priority input's value
      */
-    private handlePrioritySliderChange(value: number) {
+    private handlePrioritySliderChange({ }, value: number) {
         this.setState({ priorityInputValue: value as Priority }, () => {
             this.sendCriterionUp();
         });
