@@ -59,18 +59,15 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
                 </SimpleTooltip>
             </div>
             <div className="col-3" style={{ display: "flex", flexDirection: "column" }}>
-                <div className="input-group">
-                    <span className="input-group-addon">
-                        Priority
-                        </span>
-                    <SimpleTooltip message={"1 = unimportant; 5 = very important"}>
-                        <input type="number"
-                            className="form-control"
-                            value={this.state.priorityInputValue}
-                            onChange={this.handlePriorityChange.bind(this)}
-                            min="1" max="5" />
-                    </SimpleTooltip>
-                </div>
+                <SimpleTooltip message={"1 = unimportant; 5 = very important"}>
+                    <TextField
+                        floatingLabelText="Priority"
+                        hintText="Enter priority"
+                        type="number"
+                        value={this.state.priorityInputValue}
+                        onChange={this.handlePriorityChange.bind(this)}
+                        min={1} max={5} />
+                </SimpleTooltip>
                 <Slider
                     step={1}
                     value={this.state.priorityInputValue}
