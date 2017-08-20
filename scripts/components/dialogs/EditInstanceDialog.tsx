@@ -1,5 +1,6 @@
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
+import TextField from "material-ui/TextField";
 import * as React from "react";
 import { connect } from "react-redux";
 
@@ -19,7 +20,7 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
     /**
      * The text input for the instance's name.
      */
-    private instanceNameInput: HTMLInputElement;
+    private instanceNameInput: TextField;
 
     /**
      * A lookup to the keyValues for this instance.
@@ -90,13 +91,14 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
             actions={actions}
             modal={false}
             autoScrollBodyContent>
-            <div className="card-block">
-                {selectedInstanceName && <input className="form-control"
+            <div>
+                {selectedInstanceName && <TextField
+                    floatingLabelText="Instance name"
                     value={selectedInstance.name}
                     ref={(input) =>
                         this.instanceNameInput = input!} />}
             </div>
-            <div className="card-block">
+            <div>
                 {rows}
             </div>
         </Dialog>;
@@ -114,7 +116,7 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
 
         this.props.dispatch(deleteInstance(selectedSubject, selectedInstance!.name));
         this.props.dispatch(addInstance(selectedSubject, {
-            name: this.instanceNameInput.value,
+            name: this.instanceNameInput.getValue(),
             values: this.parseKeyValues()
         }));
 

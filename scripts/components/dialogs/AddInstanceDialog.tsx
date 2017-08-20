@@ -1,5 +1,6 @@
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
+import TextField from "material-ui/TextField";
 import * as React from "react";
 import { connect } from "react-redux";
 
@@ -19,7 +20,7 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
     /**
      * The text input for the new instance's name.
      */
-    private instanceNameInput: HTMLInputElement;
+    private instanceNameInput: TextField;
 
     /**
      * A lookup to the keyValues for this instance.
@@ -79,13 +80,12 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
             actions={actions}
             modal={false}
             autoScrollBodyContent>
-            <div className="card-block">
-                <input className="form-control"
-                    placeholder="Instance name..."
-                    ref={(input) =>
-                        this.instanceNameInput = input!} />
+            <div>
+                <TextField
+                    floatingLabelText="Instance name"
+                    ref={(input) => this.instanceNameInput = input!} />
             </div>
-            <div className="card-block">
+            <div>
                 {rows}
             </div>
         </Dialog>;
@@ -100,7 +100,7 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
         )!;
 
         this.props.dispatch(addInstance(selectedSubject, {
-            name: this.instanceNameInput.value,
+            name: this.instanceNameInput.getValue(),
             values: this.parseInputs()
         }));
         this.handleRequestClose();

@@ -1,4 +1,5 @@
 import * as React from "react";
+import TextField from "material-ui/TextField";
 
 import { IKeyValueProps } from "models/props";
 import { IKeyValueState } from "models/states";
@@ -28,16 +29,15 @@ class KeyValue extends React.Component<IKeyValueProps, IKeyValueState> {
      */
     public render(): JSX.Element {
         const { keyName } = this.props;
+        const { value } = this.state;
 
         return <div className="col-6">
-            <div className="input-group">
-                <span className="input-group-addon">{keyName}</span>
-                <input type="number"
-                    id={keyName}
-                    value={this.state.value}
-                    className="form-control"
-                    onChange={this.handleValueChange.bind(this)} />
-            </div>
+            <TextField
+                type="number"
+                id={keyName}
+                floatingLabelText={keyName}
+                value={value}
+                onChange={this.handleValueChange.bind(this)} />
         </div>;
     }
 
