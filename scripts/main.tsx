@@ -17,7 +17,6 @@
  */
 
 import "rc-tooltip/assets/bootstrap.css";
-import "react-toggle/style.css";
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
