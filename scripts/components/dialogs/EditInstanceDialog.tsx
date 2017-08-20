@@ -1,5 +1,6 @@
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
+import { GridList, GridTile } from "material-ui/GridList";
 import TextField from "material-ui/TextField";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -46,32 +47,17 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
             return null;
         }
 
-        let rows: JSX.Element[] = [];
-        for (let i = 0; i < selectedSubject.criteria.length; i += 2) {
-            const criterion = selectedSubject.criteria[i];
-            const nextCriterion = i < selectedSubject.criteria.length - 1 ?
-                selectedSubject.criteria[i + 1] : null;
+        const keyValueTiles = selectedSubject.criteria.map(criterion => {
             const relevantKeyValue = selectedInstance.values.find(
                 keyValue => keyValue.key === criterion.key);
-            const nextRelevantKeyValue = selectedInstance.values.find(
-                keyValue => nextCriterion !== null &&
-                    keyValue.key === nextCriterion.key);
 
-            const row = <div className="row pb-2" key={`row-${i}`}>
-                <KeyValue key={criterion.key}
+            return <GridTile key={criterion.key}>
+                <KeyValue
                     keyName={criterion.key}
                     value={relevantKeyValue && relevantKeyValue.value}
                     ref={(keyValueElement) => this.keyValues[criterion.key] = keyValueElement!} />
-                {nextCriterion ?
-                    <KeyValue key={nextCriterion.key}
-                        keyName={nextCriterion.key}
-                        value={nextRelevantKeyValue && nextRelevantKeyValue.value}
-                        ref={(keyValueElement) => this.keyValues[nextCriterion.key] = keyValueElement!} />
-                    : null}
-            </div>;
-
-            rows.push(row);
-        }
+            </GridTile>;
+        });
 
         const actions: JSX.Element[] = [
             <FlatButton
@@ -98,9 +84,9 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
                     ref={(input) =>
                         this.instanceNameInput = input!} />}
             </div>
-            <div>
-                {rows}
-            </div>
+            <GridList cellHeight="auto" cols={3}>
+                {keyValueTiles}
+            </GridList>
         </Dialog>;
     }
 
