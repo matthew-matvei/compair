@@ -47,7 +47,7 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
             </div>;
         });
 
-        return <div className="col-sm-4 col-md-3 sidebar">
+        return <div className="col-sm-4 col-md-3 main-section sidebar">
             <List>
                 <Subheader>Subjects</Subheader>
                 {subjectElements}

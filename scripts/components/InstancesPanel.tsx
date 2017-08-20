@@ -1,4 +1,6 @@
 import { GridList } from "material-ui/GridList";
+import { grey200 } from "material-ui/styles/colors";
+import Subheader from "material-ui/Subheader";
 import * as React from "react";
 import { connect } from "react-redux";
 
@@ -37,8 +39,11 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
                     deleteInstance={this.handleDeleteInstance.bind(this)}
                     editInstance={this.handleEditInstance.bind(this)} />);
 
-        return <main className="col-sm-8 offset-sm-4 col-md-9 offset-md-3 pt-3">
+        return <main
+            className="col-sm-8 offset-sm-4 col-md-9 offset-md-3 pt-3 main-section"
+            style={{ background: grey200 }}>
             <GridList cellHeight="auto" cols={3}>
+                <Subheader>Instances</Subheader>
                 {instanceElements}
                 <InstanceCard instance={null}
                     currentSubject={null}
