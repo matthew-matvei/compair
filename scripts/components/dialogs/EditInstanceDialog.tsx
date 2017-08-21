@@ -70,20 +70,18 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
         ];
 
         return <Dialog
-            title={`Add an instance - ${selectedSubject.name}`}
+            title={`Edit an instance - ${selectedSubject.name}`}
             open={isShowingModal}
             onRequestClose={this.handleRequestClose.bind(this)}
             contentStyle={modalStyles}
             actions={actions}
             modal={false}
             autoScrollBodyContent>
-            <div>
-                {selectedInstanceName && <TextField
-                    floatingLabelText="Instance name"
-                    value={selectedInstance.name}
-                    ref={(input) =>
-                        this.instanceNameInput = input!} />}
-            </div>
+            {selectedInstanceName && <TextField
+                floatingLabelText="Instance name"
+                value={selectedInstance.name}
+                ref={(input) =>
+                    this.instanceNameInput = input!} />}
             <GridList cellHeight="auto" cols={3}>
                 {keyValueTiles}
             </GridList>
