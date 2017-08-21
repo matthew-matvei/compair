@@ -2,7 +2,7 @@ import { Card, CardActions, CardHeader } from "material-ui/Card";
 import Chip from "material-ui/Chip";
 import { GridTile } from "material-ui/GridList";
 import RaisedButton from "material-ui/RaisedButton";
-import { red50, red600 } from "material-ui/styles/colors";
+import { grey50, grey500, red50, red600 } from "material-ui/styles/colors";
 import * as React from "react";
 
 import { getMaxScore, getMinScore, isMissingKeyValue, showScore } from "helpers";
@@ -48,8 +48,8 @@ export default class InstanceCard extends React.Component<IInstanceCardProps, {}
                         secondary
                         onClick={this.handleClickDelete.bind(this)} />
                 </CardActions>
-            </Card> : <Card className="mb-4">
-                <CardHeader subtitle="New instance" />
+            </Card> : <Card style={{ background: grey50 }}>
+                <CardHeader title="New instance" titleColor={grey500} subtitle="&nbsp;" />
                 <CardActions style={{ textAlign: "right" }}>
                     <RaisedButton
                         label="Create"
