@@ -43,7 +43,7 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
             className="col-sm-8 offset-sm-4 col-md-9 offset-md-3 pt-3 main-section"
             style={{ background: grey200 }}>
             <GridList padding={5} cellHeight="auto" cols={3}>
-                <Subheader>Instances</Subheader>
+                <Subheader>{selectedSubject.name}</Subheader>
                 {instanceElements}
                 <InstanceCard instance={null}
                     currentSubject={null}
