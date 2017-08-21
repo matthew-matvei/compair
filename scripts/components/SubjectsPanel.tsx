@@ -23,16 +23,8 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
      * @returns - The JSX required to create this component
      */
     public render(): JSX.Element {
-        /*const selectedSubject = getSelectedSubject(
-            this.props.selectedSubjectName, this.props.subjects
-        );*/
         const subjectElements = this.props.subjects.map(subject => {
-            /*const selected = classNames({
-                "active": selectedSubject && subject.name === selectedSubject.name
-            });*/
-
             return <div key={subject.name}>
-                <Divider />
                 <ListItem
                     id={subject.name}
                     primaryText={subject.name}
@@ -40,7 +32,7 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
                     rightIconButton={
                         <IconButton
                             id={subject.name}
-                            iconClassName="fa fa-plus"
+                            iconClassName="fa fa-cog"
                             onClick={this.handleClickOpenDialog.bind(this)} />
                     }
                 />
@@ -50,10 +42,15 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
         return <div className="col-sm-4 col-md-3 main-section sidebar">
             <List>
                 <Subheader>Subjects</Subheader>
+                <Divider />
                 {subjectElements}
+                <Divider />
                 <ListItem>
                     <TextField
-                        floatingLabelText="Subject name..."
+                        autoFocus
+                        floatingLabelText="New subject"
+                        floatingLabelFixed
+                        hintText="Subject name..."
                         onKeyDown={this.handleKeyDown.bind(this)} />
                 </ListItem>
             </List>

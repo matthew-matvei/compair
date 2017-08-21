@@ -35,25 +35,29 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
      * @returns - The JSX required to create this component
      */
     public render(): JSX.Element {
-        const orderTooltip = this.state.orderInputChecked ?
+        const { newCriterion } = this.props;
+        const { keyInputValue, orderInputChecked, priorityInputValue } = this.state;
+
+        const orderTooltip = orderInputChecked ?
             "Ascending = Smaller wins, like golf!" :
             "Descending = The more the merrier!";
 
-        return <form className="form-inline mb-3">
-            <div className="input-group col-6">
+        return <form className="form-inline">
+            <div className="col-6">
                 <TextField
                     floatingLabelText="Criterion name"
-                    value={this.state.keyInputValue}
+                    value={keyInputValue}
                     fullWidth
-                    onChange={this.props.newCriterion ?
-                        this.handleChangeKey.bind(this) : undefined} />
+                    onChange={newCriterion ?
+                        this.handleChangeKey.bind(this) : undefined}
+                    ref={textField => newCriterion && textField && textField.focus()} />
             </div>
-            <div className="input-group col-3">
+            <div className="col-3">
                 <SimpleTooltip message={orderTooltip}>
                     <Toggle
                         label="Ascending"
                         labelPosition="right"
-                        defaultToggled={this.state.orderInputChecked}
+                        defaultToggled={orderInputChecked}
                         onChange={this.handleChangeOrder.bind(this)} />
                 </SimpleTooltip>
             </div>
@@ -62,16 +66,17 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
                     <TextField
                         floatingLabelText="Priority"
                         type="number"
-                        value={this.state.priorityInputValue}
+                        value={priorityInputValue}
                         fullWidth
-                        onChange={this.handlePriorityChange.bind(this)}
-                        min={1} max={5} />
+                        style={{ marginTop: 0 }}
+                        min={1} max={5}
+                        onChange={this.handlePriorityChange.bind(this)} />
                 </SimpleTooltip>
                 <Slider
                     step={1}
-                    value={this.state.priorityInputValue}
-                    min={1}
-                    max={5}
+                    value={priorityInputValue}
+                    min={1} max={5}
+                    style={{ marginTop: 10, marginBottom: 10 }}
                     onChange={this.handlePrioritySliderChange.bind(this)} />
             </div>
         </form>;

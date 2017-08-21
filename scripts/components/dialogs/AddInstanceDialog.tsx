@@ -1,7 +1,7 @@
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
-import TextField from "material-ui/TextField";
 import { GridList, GridTile } from "material-ui/GridList";
+import TextField from "material-ui/TextField";
 import * as React from "react";
 import { connect } from "react-redux";
 
@@ -70,11 +70,12 @@ class AddInstanceDialog extends React.Component<IAddInstanceDialogProps, {}> {
             actions={actions}
             modal={false}
             autoScrollBodyContent>
-            <div>
-                <TextField
-                    floatingLabelText="Instance name"
-                    ref={(input) => this.instanceNameInput = input!} />
-            </div>
+            <TextField
+                floatingLabelText="Instance name"
+                ref={(input) => {
+                    this.instanceNameInput = input!;
+                    input && input.focus();
+                }} />
             <GridList cellHeight="auto" cols={3}>
                 {keyValueTiles}
             </GridList>

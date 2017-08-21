@@ -31,14 +31,12 @@ class KeyValue extends React.Component<IKeyValueProps, IKeyValueState> {
         const { keyName } = this.props;
         const { value } = this.state;
 
-        return <div className="col-6">
-            <TextField
-                type="number"
-                id={keyName}
-                floatingLabelText={keyName}
-                value={value}
-                onChange={this.handleValueChange.bind(this)} />
-        </div>;
+        return <TextField
+            type="number"
+            id={keyName}
+            floatingLabelText={keyName}
+            value={value}
+            onChange={this.handleValueChange.bind(this)} />;
     }
 
     /**

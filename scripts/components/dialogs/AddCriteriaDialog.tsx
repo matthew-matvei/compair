@@ -65,11 +65,9 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
             onRequestClose={this.handleRequestClose.bind(this)}
             modal={false}
             autoScrollBodyContent>
-            <div>
-                <Criterion ref={(criterion) =>
-                    this.newCriterion = criterion!}
-                    newCriterion />
-            </div>
+            <Criterion ref={(criterion) =>
+                this.newCriterion = criterion!}
+                newCriterion />
             <div className="card-block">
                 {criteriaElements}
             </div>
