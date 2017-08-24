@@ -1,5 +1,6 @@
 import { GridList } from "material-ui/GridList";
-import { grey200 } from "material-ui/styles/colors";
+import Paper from "material-ui/Paper";
+import { grey200, grey50, grey500 } from "material-ui/styles/colors";
 import Subheader from "material-ui/Subheader";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -27,7 +28,15 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
         const selectedSubject = getSelectedSubject(selectedSubjectName, subjects);
 
         if (!selectedSubject) {
-            return null;
+            return <main
+                className="col-sm-8 offset-sm-4 col-md-9 offset-md-3 pt-3 main-section"
+                style={{ background: grey200 }}>
+                <Paper zDepth={2} style={{ background: grey50 }}>
+                    <h3 style={{ padding: "1em", margin: "1em", color: grey500 }}>
+                        Choose a subject on the left, or make a new one
+                    </h3>
+                </Paper>
+            </main>;
         }
 
         const instanceElements = orderInstances(
@@ -43,7 +52,7 @@ class InstancesPanel extends React.Component<IInstancesPanelProps, {}> {
             className="col-sm-8 offset-sm-4 col-md-9 offset-md-3 pt-3 main-section"
             style={{ background: grey200 }}>
             <GridList padding={5} cellHeight="auto" cols={3}>
-                <Subheader>{selectedSubject.name}</Subheader>
+                <Subheader>Instances - {selectedSubject.name}</Subheader>
                 {instanceElements}
                 <InstanceCard instance={null}
                     currentSubject={null}
