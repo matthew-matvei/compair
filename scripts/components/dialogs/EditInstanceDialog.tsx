@@ -38,12 +38,11 @@ class EditInstanceDialog extends React.Component<IEditInstanceDialogProps, {}> {
     public render(): JSX.Element | null {
         const { isShowingModal, selectedInstanceName, selectedSubjectName, subjects } = this.props;
 
-        const selectedSubject = getSelectedSubject(selectedSubjectName, subjects)!;
-
-        const selectedInstance = getSelectedInstance(
+        const selectedSubject = getSelectedSubject(selectedSubjectName, subjects);
+        const selectedInstance = selectedSubject && getSelectedInstance(
             selectedInstanceName, selectedSubject.instances);
 
-        if (!selectedInstance) {
+        if (!selectedSubject || !selectedInstance) {
             return null;
         }
 
