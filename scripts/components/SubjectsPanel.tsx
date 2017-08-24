@@ -23,11 +23,20 @@ class SubjectsPanel extends React.Component<ISubjectsPanelProps, {}> {
      * @returns - The JSX required to create this component
      */
     public render(): JSX.Element {
-        const subjectElements = this.props.subjects.map(subject => {
+        const { selectedSubjectName, subjects } = this.props;
+
+        const selectedSubject = subjects.find(
+            subject => subject.name === selectedSubjectName);
+
+        const subjectElements = subjects.map(subject => {
+            const selectedSubjectFont: React.CSSProperties | undefined = selectedSubject &&
+                selectedSubject.name === subject.name ? { fontWeight: "bold" } : undefined;
+
             return <div key={subject.name}>
                 <ListItem
                     id={subject.name}
                     primaryText={subject.name}
+                    style={selectedSubjectFont}
                     onClick={this.handleClickSetSelectedSubject.bind(this)}
                     rightIconButton={
                         <IconButton
