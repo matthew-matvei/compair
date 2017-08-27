@@ -4,7 +4,6 @@
         "sourceMap": true,
         "noImplicitAny": true,
         "noImplicitReturns": true,
-        "noEmitOnError": true,
         "noImplicitThis": true,
         "jsx": "react",
         "module": "es2015",
