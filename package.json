@@ -1,6 +1,6 @@
 {
   "name": "compair",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "An extensible yet simple to use tool for comparing anything",
   "main": "server.js",
   "scripts": {
