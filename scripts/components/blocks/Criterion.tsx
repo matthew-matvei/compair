@@ -58,7 +58,7 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
                         label="Ascending"
                         labelPosition="right"
                         defaultToggled={orderInputChecked}
-                        onChange={this.handleChangeOrder.bind(this)} />
+                        onClick={this.handleChangeOrder.bind(this)} />
                 </SimpleTooltip>
             </div>
             <div className="col-3">
