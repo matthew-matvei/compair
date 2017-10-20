@@ -49,12 +49,12 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                 secondary
                 onClick={this.handleClickDelete.bind(this)} />,
             <FlatButton
-                label="Cancel"
+                label="Close"
                 onClick={this.handleRequestClose.bind(this)} />,
             <FlatButton
-                label="Create"
+                label="Add"
                 primary
-                onClick={this.handleClickCreate.bind(this)} />
+                onClick={this.handleClickAdd.bind(this)} />
         ];
 
         return <Dialog
@@ -77,7 +77,7 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
     /**
      * Handles creating the new criterion on the user clicking 'create'.
      */
-    private handleClickCreate() {
+    private handleClickAdd() {
         const { dispatch, selectedSubjectName, subjects } = this.props;
 
         const criterion = this.newCriterion.state;
@@ -89,7 +89,6 @@ class AddCriteriaDialog extends React.Component<IAddCriteriaDialogProps, {}> {
                 order: criterion.orderInputChecked ? "asc" : "desc",
                 priority: (criterion.priorityInputValue || 1) as Priority
             }));
-            this.handleRequestClose();
         }
     }
 
