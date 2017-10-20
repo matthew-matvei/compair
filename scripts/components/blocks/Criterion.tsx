@@ -58,7 +58,8 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
                         label="Ascending"
                         labelPosition="right"
                         defaultToggled={orderInputChecked}
-                        onClick={this.handleChangeOrder.bind(this)} />
+                        onClick={this.handleChangeOrder.bind(this)}
+                        disabled={!Boolean(keyInputValue)} />
                 </SimpleTooltip>
             </div>
             <div className="col-3">
@@ -70,14 +71,16 @@ class Criterion extends React.Component<ICriterionProps, ICriterionState> {
                         fullWidth
                         style={{ marginTop: 0 }}
                         min={1} max={5}
-                        onChange={this.handlePriorityChange.bind(this)} />
+                        onChange={this.handlePriorityChange.bind(this)}
+                        disabled={!Boolean(keyInputValue)} />
                 </SimpleTooltip>
                 <Slider
                     step={1}
                     value={priorityInputValue}
                     min={1} max={5}
                     style={{ marginTop: 10, marginBottom: 10 }}
-                    onChange={this.handlePrioritySliderChange.bind(this)} />
+                    onChange={this.handlePrioritySliderChange.bind(this)}
+                    disabled={!Boolean(keyInputValue)} />
             </div>
         </form>;
     }
